@@ -13,7 +13,6 @@ import com.dicycat.kroy.gamemap.TiledGameMap;
  *
  */
 public abstract class Entity extends GameObject{
-
 //  Pikachu said Trans Rights.
 	protected int healthPoints;
 	protected int radius;
