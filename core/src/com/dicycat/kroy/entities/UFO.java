@@ -22,6 +22,7 @@ public class UFO extends Entity {
 	// NEW SHIT
 	private Vector2[] waypoints;
 	private int currentWaypoint;
+	private int test = 1;
 	//
 
 	/**
@@ -29,14 +30,13 @@ public class UFO extends Entity {
 	public UFO() {
 		super(new Vector2(269 * 16, (400 - 254) * 16), Kroy.mainGameScreen.textures.getUFO(),
 				new Vector2(80, 80), 100);
-		// example waypoints
-		waypoints = new Vector2[]{new Vector2(269 * 16, (400 - 254) * 16), new Vector2(344 * 16, (400 - 254) * 16),
+		waypoints = new Vector2[]{new Vector2(268 * 16, (400 - 254) * 16), new Vector2(344 * 16, (400 - 254) * 16),
 				new Vector2(344 * 16, (400 - 310) * 16), new Vector2(246 * 16, (400 - 310) * 16),
-				new Vector2(246 * 16, (400 - 279) * 16), new Vector2(269 * 16, (400 - 279) * 16)};
+				new Vector2(246 * 16, (400 - 279) * 16), new Vector2(268 * 16, (400 - 279) * 16)};
 		dispenser = new BulletDispenser(this);
 		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20, 1, 0.5f));
 		currentWaypoint = 0;
-		speed = 100;
+		speed = 150;
 	}
 
 	/**
@@ -44,10 +44,18 @@ public class UFO extends Entity {
 	 */
 	@Override
 	public void update() {
-		//movement
+
 		nextWayPoint();
-		Vector2 newPos = moveAlongPatrol(waypoints[currentWaypoint]);
-		changePosition(new Vector2(newPos.x, newPos.y));
+		setPosition(new Vector2(moveAlongPatrol(waypoints[currentWaypoint])));
+
+//		test *= -1;
+//		if (test == 1) {
+//			setPosition(new Vector2(240 * 16, (400 - 150) * 16));
+//		}
+//		else {
+//			setPosition(new Vector2(233 * 16, (400 - 150) * 16));
+//		}
+
 
 		//weapons
 //		Bullet[] toShoot = dispenser.update(true);
@@ -64,14 +72,26 @@ public class UFO extends Entity {
 		if (getPosition().x == destination.x) {
 			if (destination.y > getPosition().y) {
 				nextPos.y += speed * Gdx.graphics.getDeltaTime();
+				if (nextPos.y > destination.y) {
+					nextPos.y = destination.y;
+				}
 			} else {
 				nextPos.y -= speed * Gdx.graphics.getDeltaTime();
+				if (nextPos.y < destination.y) {
+					nextPos.y = destination.y;
+				}
 			}
 		} else {
 			if (destination.x > getPosition().x) {
 				nextPos.x += speed * Gdx.graphics.getDeltaTime();
+				if (nextPos.x > destination.x) {
+					nextPos.x = destination.x;
+				}
 			} else {
 				nextPos.x -= speed * Gdx.graphics.getDeltaTime();
+				if (nextPos.x < destination.x) {
+					nextPos.x = destination.x;
+				}
 			}
 		}
 		return nextPos;
