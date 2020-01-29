@@ -206,6 +206,7 @@ public class GameScreen implements Screen{
 		for (GameObject aObject : objectsToAdd) {		//Add game objects to be added
 			gameObjects.add(aObject);
 		}
+
 		objectsToAdd.clear();	// Clears list as not to add new objects twice
 
 		for (GameObject dObject : deadObjects) { // loops through the destroyed but displayed items (such as destroyed bases)
