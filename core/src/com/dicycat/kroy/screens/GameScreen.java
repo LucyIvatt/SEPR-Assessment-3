@@ -129,8 +129,8 @@ public class GameScreen implements Screen{
 		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
 				new Vector2(256, 320), 500, 20));
 		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
-				new Vector2(400, 240), 500, 30));
-		// need to add health and damage for the new fortresses when they're done and then end the modification comment
+				new Vector2(400, 240), 600, 30));
+		// FORTRESS_HEALTH_1 - END OF MODIFICATION - NP STUDIOS
 	}
 
 	/**
