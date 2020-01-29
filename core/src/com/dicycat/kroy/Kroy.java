@@ -1,6 +1,8 @@
 package com.dicycat.kroy;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dicycat.kroy.screens.GameScreen;
 import com.dicycat.kroy.screens.MenuScreen;
@@ -32,6 +34,11 @@ public class Kroy extends Game {
 
 	@Override
 	public void render () {
+		// START OF MODIFICATION - NP STUDIOS -----------------------------------------
+		// Added in to prevent warping at the edge of the game map
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
+
 		super.render();
 	}
 	

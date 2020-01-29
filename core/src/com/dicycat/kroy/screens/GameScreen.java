@@ -261,7 +261,13 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawLine(Vector2 start, Vector2 end, int lineWidth, Color colour) {
+		// START OF MODIFICATION - NP STUDIOS -----------------------------------------
+		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
+		// code causes a memory leak and possibly crashes the game overtime.
+		if (showDebug) {
 		debugObjects.add(new DebugLine(start, end, lineWidth, colour));
+		}
+		// END OF MODIFICATION - NP STUDIOS -----------------------------------------
 	}
 
 	/**
@@ -272,7 +278,13 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawCircle(Vector2 position, float radius, int lineWidth, Color colour) {
-		debugObjects.add(new DebugCircle(position, radius, lineWidth, colour));
+		// START OF MODIFICATION - NP STUDIOS -----------------------------------------
+		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
+		// code causes a memory leak and possibly crashes the game overtime.
+		if (showDebug) {
+			debugObjects.add(new DebugCircle(position, radius, lineWidth, colour));
+		}
+		// END OF MODIFICATION - NP STUDIOS -----------------------------------------
 	}
 
 	/**
@@ -283,7 +295,13 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawRect(Vector2 bottomLeft, Vector2 dimensions, int lineWidth, Color colour) {
-		debugObjects.add(new DebugRect(bottomLeft, dimensions, lineWidth, colour));
+		// START OF MODIFICATION - NP STUDIOS -----------------------------------------
+		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
+		// code causes a memory leak and possibly crashes the game overtime.
+		if (showDebug) {
+			debugObjects.add(new DebugRect(bottomLeft, dimensions, lineWidth, colour));
+		}
+		// END OF MODIFICATION - NP STUDIOS -----------------------------------------
 	}
 
 	/**
