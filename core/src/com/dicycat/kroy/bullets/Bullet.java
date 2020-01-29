@@ -85,7 +85,7 @@ public class Bullet extends GameObject {
 			if(Intersector.overlaps(hitbox, truck.getHitbox())){
 				// FORTRESS_IMPROVE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
 				// After 7.5 minutes (half way through game) the damage of fortresses doubles
-				if 	(HUD.worldTimer > 450){
+				if 	(HUD.timer > 450){
 					bulletDamage = bulletDamage * 2;
 				}
 				// FORTRESS_IMPROVE_1 - END OF MODIFICATION - NP STUDIOS
