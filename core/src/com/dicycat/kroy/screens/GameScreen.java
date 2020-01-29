@@ -123,11 +123,19 @@ public class GameScreen implements Screen{
 		gameObjects.add(player);	//Player
 		
 		gameObjects.add(new FireStation());
-		gameObjects.add(new UFO());
-		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0), new Vector2(256, 218)));
-		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1), new Vector2(256, 320)));
-		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2), new Vector2(400, 240)));
 
+		// NEW SHIT
+		gameObjects.add(new UFO());
+
+		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+		// Added health and damage values for each fortress instantiation
+		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+				new Vector2(256, 218), 400, 10));
+		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+				new Vector2(256, 320), 500, 20));
+		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+				new Vector2(400, 240), 600, 30));
+		// FORTRESS_HEALTH_1 - END OF MODIFICATION - NP STUDIOS
 	}
 
 	/**
@@ -208,6 +216,7 @@ public class GameScreen implements Screen{
 		for (GameObject aObject : objectsToAdd) {		//Add game objects to be added
 			gameObjects.add(aObject);
 		}
+
 		objectsToAdd.clear();	// Clears list as not to add new objects twice
 
 		for (GameObject dObject : deadObjects) { // loops through the destroyed but displayed items (such as destroyed bases)
@@ -262,7 +271,7 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawLine(Vector2 start, Vector2 end, int lineWidth, Color colour) {
-		// START OF MODIFICATION - NP STUDIOS -----------------------------------------
+		// MEMORY LEAK FIX 2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
 		// code causes a memory leak and possibly crashes the game overtime.
 		if (showDebug) {
@@ -279,7 +288,7 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawCircle(Vector2 position, float radius, int lineWidth, Color colour) {
-		// START OF MODIFICATION - NP STUDIOS -----------------------------------------
+		// MEMORY LEAK FIX 3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
 		// code causes a memory leak and possibly crashes the game overtime.
 		if (showDebug) {
@@ -296,7 +305,7 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawRect(Vector2 bottomLeft, Vector2 dimensions, int lineWidth, Color colour) {
-		// START OF MODIFICATION - NP STUDIOS -----------------------------------------
+		// MEMORY LEAK FIX 4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
 		// code causes a memory leak and possibly crashes the game overtime.
 		if (showDebug) {

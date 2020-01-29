@@ -34,9 +34,10 @@ public class UFO extends Entity {
 				new Vector2(344 * 16, (400 - 310) * 16), new Vector2(246 * 16, (400 - 310) * 16),
 				new Vector2(246 * 16, (400 - 279) * 16), new Vector2(268 * 16, (400 - 279) * 16)};
 		dispenser = new BulletDispenser(this);
-		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20, 1, 0.5f));
+		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20, 1, 0.5f, 10)); // SORT DAMAGE ATTRIBUTE OUT (HARDCODED AS 10 FOR NOW)
 		currentWaypoint = 0;
 		speed = 150;
+
 	}
 
 	/**
