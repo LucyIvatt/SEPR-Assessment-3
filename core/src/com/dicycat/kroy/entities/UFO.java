@@ -23,7 +23,7 @@ public class UFO extends Entity {
 	public UFO(Vector2 spawnPos) {
 		super(spawnPos, Kroy.mainGameScreen.textures.getUFO(), new Vector2(80, 80), 100);
 		dispenser = new BulletDispenser(this);
-		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20, 1, 0.5f));
+		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20, 1, 0.5f, 10)); // SORT DAMAGE ATTRIBUTE OUT (HARDCODED AS 10 FOR NOW)
 	}
 
 	/**
