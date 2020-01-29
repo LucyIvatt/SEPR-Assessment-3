@@ -25,6 +25,7 @@ import com.dicycat.kroy.debug.DebugRect;
 import com.dicycat.kroy.entities.FireStation;
 import com.dicycat.kroy.entities.FireTruck;
 import com.dicycat.kroy.entities.Fortress;
+import com.dicycat.kroy.entities.UFO;
 import com.dicycat.kroy.gamemap.TiledGameMap;
 import com.dicycat.kroy.misc.WaterStream;
 import com.dicycat.kroy.scenes.HUD;
@@ -122,6 +123,7 @@ public class GameScreen implements Screen{
 		gameObjects.add(player);	//Player
 		
 		gameObjects.add(new FireStation());
+		gameObjects.add(new UFO());
 		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0), new Vector2(256, 218)));
 		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1), new Vector2(256, 320)));
 		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2), new Vector2(400, 240)));
