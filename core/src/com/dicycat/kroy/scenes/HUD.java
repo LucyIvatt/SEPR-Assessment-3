@@ -22,7 +22,11 @@ public class HUD {
 	private Viewport viewport;	//creating new port so that the HUD stays locked while map can move around independently
 	
 	private Integer trucks = 4;
-	private Integer worldTimer = 0;	//change to float maybe
+
+	// FORTRESS_IMPROVE_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+	//  Changed the type of worldTimer to public static
+	public static Integer worldTimer = 0;	//change to float maybe
+	// FORTRESS_IMPROVE_2 - END OF MODIFICATION - NP STUDIOS
 	private Integer score = 0;
 	private float timeCount = 0;
 	

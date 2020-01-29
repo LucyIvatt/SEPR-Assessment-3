@@ -122,10 +122,15 @@ public class GameScreen implements Screen{
 		gameObjects.add(player);	//Player
 		
 		gameObjects.add(new FireStation());
-		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0), new Vector2(256, 218)));
-		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1), new Vector2(256, 320)));
-		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2), new Vector2(400, 240)));
-
+		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+		// Added health and damage values for each fortress instantiation
+		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+				new Vector2(256, 218), 400, 10));
+		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+				new Vector2(256, 320), 500, 20));
+		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+				new Vector2(400, 240), 500, 30));
+		// need to add health and damage for the new fortresses when they're done and then end the modification comment
 	}
 
 	/**

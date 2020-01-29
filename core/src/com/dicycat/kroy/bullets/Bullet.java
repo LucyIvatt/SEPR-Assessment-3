@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.GameObject;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.entities.FireTruck;
+import com.dicycat.kroy.scenes.HUD;
 
 /**
  * Projectile fired by hostile entities
@@ -20,6 +21,7 @@ public class Bullet extends GameObject {
 	private float maxDist;		//Max distance to travel
 	private float travelDist; 	//Distance left to travel
 	private Circle hitbox;		//Bullet hit box
+	private int bulletDamage;
 
 
 	/**
@@ -28,8 +30,13 @@ public class Bullet extends GameObject {
 	 * @param speed speed the bullet should travel at
 	 * @param range distance the bullet should travel before it is removed
 	 */
-	public Bullet(Vector2 spawnPos, Vector2 direction, int speed, float range) {	//Constructor
+	public Bullet(Vector2 spawnPos, Vector2 direction, int speed, float range, int patternDamage) {	//Constructor
 		super(spawnPos, Kroy.mainGameScreen.textures.getBullet(), new Vector2(20,20));
+
+		// FORTRESS_DAMAGE_6 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+		// Created a new attribute "bulletDamage" and set it as patternDamage
+		this.bulletDamage = patternDamage;
+		// FORTRESS_HEALTH_6 - END OF MODIFICATION - NP STUDIOS
 		this.speed = speed;
 		changeDirection(direction);
 		maxDist = range;
@@ -76,8 +83,18 @@ public class Bullet extends GameObject {
 		FireTruck truck = Kroy.mainGameScreen.getPlayer();
 		if (truck.isAlive()) {
 			if(Intersector.overlaps(hitbox, truck.getHitbox())){
-				truck.applyDamage(10);
-				remove = true;
+				// FORTRESS_IMPROVE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+				// After 7.5 minutes (half way through game) the damage of fortresses doubles
+				if 	(HUD.worldTimer > 450){
+					bulletDamage = bulletDamage * 2;
+				}
+				// FORTRESS_IMPROVE_1 - END OF MODIFICATION - NP STUDIOS
+
+																// FORTRESS_DAMAGE_7 - START OF MODIFICATION - NP STUDIOS
+				truck.applyDamage(bulletDamage);				// - CASSANDRA LILLYSTONE ----
+																// Passed bulletDamage to applyDamage() function, allowing
+																// fortresses to have different damage levels
+				remove = true;									// FORTRESS_HEALTH_7 - END OF MODIFICATION - NP STUDIOS
 			}
 		}
 
