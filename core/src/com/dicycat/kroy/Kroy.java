@@ -34,10 +34,10 @@ public class Kroy extends Game {
 
 	@Override
 	public void render () {
-		// START OF MODIFICATION - NP STUDIOS -----------------------------------------
+		// WARPING - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 		// Added in to prevent warping at the edge of the game map
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
+		// WARPING - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
 		super.render();
 	}

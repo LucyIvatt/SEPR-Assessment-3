@@ -148,7 +148,7 @@ public class FireTruck extends Entity{
 		//Move the hit box to it's new centred position according to the sprite's position.
         hitbox.setCenter(getCentre().x, getCentre().y);
 
-        // START OF MODIFICATION - NP STUDIOS -----------------------------------------
+        // MEMORY LEAK FIX 1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 
 		// Deleted debug hitbox being drawn to the screen even if drawDebug in GameScreen == false.
 
