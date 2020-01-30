@@ -1,5 +1,4 @@
 package com.dicycat.kroy.entities;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.Kroy;
@@ -7,11 +6,13 @@ import com.dicycat.kroy.bullets.Bullet;
 import com.dicycat.kroy.bullets.BulletDispenser;
 import com.dicycat.kroy.bullets.Pattern;
 
+import java.util.Random;
+
 /**
- * Mobile hostile entity.
- * Fires at the player when within range.
+ * A mobile Alien which follows a predefined patrol coordinate path and will stop and attack
+ * the player if the player is within range.
  * 
- * @author Riju De
+ * @author Lucy Ivatt
  *
  */
 public class Alien extends Entity {
@@ -19,19 +20,17 @@ public class Alien extends Entity {
 	BulletDispenser dispenser;
 	int speed;
 
-	// NEW SHIT
-	private Vector2[] waypoints;
-	private int currentWaypoint;
-	private float movementCountdown;
-	private boolean truckInRange;
-	//
+	// PATROLS - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
+	private Vector2[] waypoints; // The waypoints that the alien will follow
+	private int currentWaypoint; // The waypoint index the alien is currently at
+	private float movementCountdown; // Delays first movement of the alien, stops them from overlapping at beginning.
 
-	/**
-	 */
 	public Alien(int patrolNumber, float movementCountdown, int radius) {
+		// Edited Entity constructor to include radius so that alien radius can be changed.
 		super(new Vector2(0, 0), Kroy.mainGameScreen.textures.getUFO(),
 				new Vector2(80, 80), 500, radius);
 
+		// Sets waypoints variable to be equal to the right array of pre-defined coordinates.
 		if (patrolNumber == 1) {
 			waypoints = new Vector2[]{new Vector2(268 * 16, (400 - 254) * 16), new Vector2(344 * 16, (400 - 254) * 16),
 					new Vector2(344 * 16, (400 - 310) * 16), new Vector2(246 * 16, (400 - 310) * 16),
@@ -54,28 +53,32 @@ public class Alien extends Entity {
 					new Vector2(91 * 16, (400 - 176) * 16), new Vector2(91 * 16, (400 - 138) * 16),
 					new Vector2(49 * 16, (400 - 138) * 16), new Vector2(49 * 16, (400 - 110) * 16)};
 		}
-
-		setPosition(waypoints[0]);
-		dispenser = new BulletDispenser(this);
-		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20, 1, 0.5f, 10)); // SORT DAMAGE ATTRIBUTE OUT (HARDCODED AS 10 FOR NOW)
-		currentWaypoint = 0;
+		setPosition(waypoints[0]); // Sets the starting position of the alien to the first waypoint
+		dispenser = new BulletDispenser(this); // Initialises the bullet dispenser
+		Random random = new Random(); // Creates instance of Random class to give Aliens random damage.
+		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20,
+				1, 0.5f, random.nextInt((20 - 5) + 1) + 5));  // Adds pattern and random
+																							// damage to the bullet dispenser.
+		currentWaypoint = 0; // Sets current waypoint as the first waypoint in the array.
 		this.movementCountdown = movementCountdown;
-		truckInRange = false;
 		speed = 150;
 	}
 
 	/**
-	 *
+	 * Called to update the Alien every game tick. Moves the alien around its patrol path until a player is in range.
+	 * If a player is in range, stops movement and instead shoots projectiles at the player.
 	 */
 	@Override
 	public void update() {
-		movementCountdown -= 1; // Adds space between the aliens
+		movementCountdown -= 1; // Decrements movement Countdown
 
+		// If the player is not in the aliens radius and the countdown is over, the moves the alien.
 		if(!playerInRadius() && movementCountdown < 0) {
 				nextWayPoint();
 				setPosition(new Vector2(moveAlongPatrol(waypoints[currentWaypoint])));
 		}
 
+		// If player in radius then shoots bullets towards them
 		Bullet[] toShoot = dispenser.update(playerInRadius());
 		if (toShoot != null) {
 			for (Bullet bullet : toShoot) {
@@ -85,6 +88,11 @@ public class Alien extends Entity {
 		}
 	}
 
+	/**
+	 * Calculates the position that the alien should be set to next game tick.
+	 * @param destination the coordinate of the next waypoint which is the aliens destination
+	 * @return Vector2 coordinate that the Aliens position will be set to when next updated.
+	 */
 	private Vector2 moveAlongPatrol(Vector2 destination) {
 		Vector2 nextPos = getPosition();
 		if (getPosition().x == destination.x) {
@@ -114,7 +122,10 @@ public class Alien extends Entity {
 		}
 		return nextPos;
 	}
-
+	/**
+	 * Checks if the alien has reached a waypoint and then increments currentWaypoint if so. If it has reached
+	 * the end of the path, sets destination waypoint back to the beginning.
+	 */
 	private void nextWayPoint() {
 		if (getPosition().y == waypoints[currentWaypoint].y && getPosition().x == waypoints[currentWaypoint].x) {
 			currentWaypoint++;
@@ -123,4 +134,5 @@ public class Alien extends Entity {
 			}
 		}
 	}
+	// PATROLS - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 }

@@ -25,6 +25,7 @@ public abstract class Entity extends GameObject{
 	 * @param imSize Size of the entity. Can be used to resize large/small textures
 	 * @param health Hit points of the entity
 	 */
+	// NEW SHIT
 	public Entity(Vector2 spawnPos, Texture img, Vector2 imSize,int health, int radius) {
 		super(spawnPos, img, imSize);
 		healthPoints = health;
