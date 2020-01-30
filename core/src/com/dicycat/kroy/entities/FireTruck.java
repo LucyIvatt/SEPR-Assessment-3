@@ -48,7 +48,7 @@ public class FireTruck extends Entity{
 	 * @param truckStats
 	 */
 	public FireTruck(Vector2 spawnPos, Float[] truckStats) {
-		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(), new Vector2(25,50), 100);
+		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(), new Vector2(25,50), 100, 500);
 
 		DIRECTIONS.put("n",0);			//North Facing Direction (up arrow)
 		DIRECTIONS.put("w",90);			//West Facing Direction (left arrow)
@@ -214,7 +214,8 @@ public class FireTruck extends Entity{
 		ArrayList<GameObject> outputArray = new ArrayList<GameObject>();	//create array list to output enemies in range
 
 		for (GameObject currentObject : Kroy.mainGameScreen.getGameObjects()) {		//iterates through all game objects
-			if ((currentObject instanceof Fortress) && (objectInRange(currentObject))){  	//checks if entity is in range and is an enemy
+			if ((currentObject instanceof Fortress) && (objectInRange(currentObject))
+			|| (currentObject instanceof Alien) && (objectInRange(currentObject))){  	//checks if entity is in range and is an enemy
 				outputArray.add(currentObject);												//adds the current entity to the output array list
 			}
 		}
