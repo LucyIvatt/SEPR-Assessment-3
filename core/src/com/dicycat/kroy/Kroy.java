@@ -38,7 +38,7 @@ public class Kroy extends Game {
 		// Added in to prevent warping at the edge of the game map
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		// WARPING - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
-
+		// WARPING - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 		super.render();
 	}
 	
