@@ -53,7 +53,11 @@ public class Fortress extends Entity {
 		// FORTRESS_HEALTH_3 - END OF MODIFICATION - NP STUDIOS
 
 		this.deadTexture = deadTexture;
-		Kroy.mainGameScreen.addFortress();
+
+		// END_GAME_FIX_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Deleted addFortress call
+		// END_GAME_FIX_2 - END OF MODIFICATION - NP STUDIOS
+
 		healthBar = new StatBar(new Vector2(getCentre().x, getCentre().y + 100), "Red.png", 10);
 		Kroy.mainGameScreen.addGameObject(healthBar);
 	}
@@ -69,7 +73,8 @@ public class Fortress extends Entity {
 		healthBar.setRemove(true);
 		displayable = true;
 		Kroy.mainGameScreen.removeFortress();
-		if (Kroy.mainGameScreen.fortressesLeft() == 0) {	//If last fortress
+		if (Kroy.mainGameScreen.fortressesLeft() == 0) {//If last fortress
+			Kroy.mainGameScreen.getHud().updateScore((int) ((15 * 60) - Kroy.mainGameScreen.getHud().timer) * 10); //time remaining bonus
 			Kroy.mainGameScreen.gameOver(true); 					//End game WIN
 		}
 	}

@@ -88,6 +88,9 @@ public class GameScreen implements Screen{
 	 * @param truckNum
 	 */
 	public GameScreen(Kroy _game, int truckNum) {
+		// END_GAME_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		fortressesCount = 3; // Initialize fortress count to 3
+		// END_GAME_FIX_1 - END OF MODIFICATION - NP STUDIOS
 		game = _game;
 		gamecam = new OrthographicCamera();
 		gameport = new FitViewport(Kroy.width, Kroy.height, gamecam);	//Mic:could also use StretchViewPort to make the screen stretch instead of adapt
