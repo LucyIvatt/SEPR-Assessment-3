@@ -22,14 +22,18 @@ public class HUD {
 	private Viewport viewport;	//creating new port so that the HUD stays locked while map can move around independently
 	
 	private Integer trucks = 4;
-	private Integer worldTimer = 0;	//change to float maybe
+
+	// FORTRESS_IMPROVE_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+	//  Deleted world timer attribute and changed to timer
+	public static float timer = 0;
+	// FORTRESS_IMPROVE_2 - END OF MODIFICATION - NP STUDIOS
 	private Integer score = 0;
-	private float timeCount = 0;
+
 	
 	private Label scoreLabel;
 	private Label timeLabel;
 	private Label trucksLabel;
-	private Label worldTimerLabel;
+	private Label timerLabel;
 	private Label scoreCountLabel;
 	private Label trucksCountLabel;	//we could put mini images of the trucks instead of using an int for the lives
 	
@@ -46,7 +50,7 @@ public class HUD {
 		tableHUD.top();	// puts widgets from the top instead of from the centre
 		tableHUD.setFillParent(true);	//makes the table the same size of the stage
 		
-		worldTimerLabel = new Label(String.format("%05d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		timerLabel = new Label(String.format("%.0f", timer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		timeLabel = new Label("TIME:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		scoreCountLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		scoreLabel = new Label("SCORE:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -55,7 +59,7 @@ public class HUD {
 		
 
 		tableHUD.add(timeLabel).expandX().padTop(10);
-		tableHUD.add(worldTimerLabel).expandX().padTop(10);
+		tableHUD.add(timerLabel).expandX().padTop(10);
 		tableHUD.add(scoreLabel).expandX().padTop(10);			// expandX so that all elements take up the same amount of space
 		tableHUD.add(scoreCountLabel).expandX().padTop(10);
 		tableHUD.add(trucksLabel).expandX().padTop(10);
@@ -72,14 +76,10 @@ public class HUD {
 	 * @param dt	Delta Time 
 	 */
 	public void update(float dt) {
-		timeCount += dt;
-		if (timeCount >= 1) {
-			worldTimer++;
-			worldTimerLabel.setText(String.format("%05d", worldTimer));
-			timeCount =0;
-			scoreCountLabel.setText(String.format("%06d", score));
-			trucksCountLabel.setText(String.format("%01d", Kroy.mainGameScreen.getLives()));
-		}
+		timer += dt;
+		timerLabel.setText(String.format("%.0f", timer));
+		scoreCountLabel.setText(String.format("%06d", score));
+
 	}
 
 

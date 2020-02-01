@@ -153,11 +153,12 @@ public class FireTruck extends Entity{
 		
 		//Move the hit box to it's new centred position according to the sprite's position.
         hitbox.setCenter(getCentre().x, getCentre().y);
-        
-        //Draw debugs
-    	Kroy.mainGameScreen.DrawRect(new Vector2(hitbox.x, hitbox.y), new Vector2(hitbox.width, hitbox.height), 2, Color.GREEN);
-    	Kroy.mainGameScreen.DrawCircle(getCentre(), range, 1, Color.BLUE);
-		
+
+        // MEMORY LEAK FIX 1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
+
+		// Deleted debug hitbox being drawn to the screen even if drawDebug in GameScreen == false.
+
+		// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
 		//water bar update
 		tank.setPosition(getCentre().add(0,20));
