@@ -66,16 +66,16 @@ public class GameScreen implements Screen{
 	private OptionsWindow optionsWindow;
 
 	private Float[][] truckStats = {	//Each list is a configuration of a specific truck. {speed, flowRate, capacity, range}
-			{450f, 1f, 400f, 300f},		//Speed
-			{300f, 1.5f, 400f, 300f},	//Flow rate
-			{300f, 1f, 500f, 300f},		//Capacity
-			{300f, 1f, 400f, 450f}		//Range
+			{450f, 0.5f, 400f, 300f},		//Speed
+			{300f, 1f, 400f, 300f},	//Flow rate
+			{300f, 0.5f, 500f, 300f},		//Capacity
+			{300f, 0.5f, 400f, 450f}		//Range
 		};
 	
 	
 	private int activeTruck; // Identifies the truck thats selected in the menu screen
-	private FireTruck player; //Reference to the player
 	private ArrayList<FireTruck> players;
+	private boolean[] alivePlayers;
 	private int lives = 4;
 	
 	private int fortressesCount;
@@ -117,10 +117,11 @@ public class GameScreen implements Screen{
 		deadObjects = new ArrayList<GameObject>();
 		debugObjects = new ArrayList<DebugDraw>();
 
-		players.add(new FireTruck(new Vector2(spawnPosition.x + 50, spawnPosition.y), truckStats[0]));
-		players.add(new FireTruck(new Vector2(spawnPosition.x - 50, spawnPosition.y), truckStats[1]));
-		players.add(new FireTruck(new Vector2(spawnPosition.x, spawnPosition.y), truckStats[2]));
-		players.add(new FireTruck(new Vector2(spawnPosition.x, spawnPosition.y - 50), truckStats[3]));
+		players.add(new FireTruck(new Vector2(spawnPosition.x + 50, spawnPosition.y), truckStats[0], 0));
+		players.add(new FireTruck(new Vector2(spawnPosition.x - 50, spawnPosition.y), truckStats[1], 1));
+		players.add(new FireTruck(new Vector2(spawnPosition.x, spawnPosition.y), truckStats[2], 2));
+		players.add(new FireTruck(new Vector2(spawnPosition.x, spawnPosition.y - 50), truckStats[3], 3));
+		alivePlayers = new boolean[]{true, true, true, true};
 
 		for (FireTruck truck : players) {
 			gameObjects.add(truck);	//Player
@@ -153,16 +154,16 @@ public class GameScreen implements Screen{
 					pauseWindow.visibility(true);
 					pause();
 				}
-				if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
+				if (Gdx.input.isKeyPressed(Keys.NUM_1) && alivePlayers[0]) {
 					activeTruck = 0;
 				}
-				else if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+				else if (Gdx.input.isKeyPressed(Keys.NUM_2) && alivePlayers[1]) {
 					activeTruck = 1;
 				}
-				else if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
+				else if (Gdx.input.isKeyPressed(Keys.NUM_3) && alivePlayers[2]) {
 					activeTruck = 2;
 				}
-				else if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
+				else if (Gdx.input.isKeyPressed(Keys.NUM_4) && alivePlayers[3]) {
 					activeTruck = 3;
 				}
 
@@ -240,6 +241,7 @@ public class GameScreen implements Screen{
 			objectsToRender.add(dObject);
 		}
 		if (players.get(activeTruck).isRemove()) {	//If the player is set for removal, respawn
+			alivePlayers[activeTruck] = false;
 			updateLives();
 		}
 	}
@@ -457,6 +459,7 @@ public class GameScreen implements Screen{
 	 * 
 	 */
 	public void updateLives() {
+		System.out.println(lives);
 		if (lives>1) {
 			lives -= 1;
 			respawn();
@@ -469,10 +472,13 @@ public class GameScreen implements Screen{
 	 * Respawns the player at the spawn position and updates the HUD
 	 */
 	public void respawn() {
-		int random = new Random().nextInt(players.size());
-		activeTruck = random;
+		for (int i = 0; i < alivePlayers.length; i++) {
+			if (alivePlayers[i] == true) {
+				activeTruck = i;
+				break;
+			}
+		}
 	}
-	
 	public HUD getHud(){
 		return hud;
 	}
