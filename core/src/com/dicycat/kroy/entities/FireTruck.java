@@ -30,6 +30,8 @@ public class FireTruck extends Entity{
 	private float flowRate;	//How fast the truck can dispense water
 	private float maxWater; //How much water the truck can hold
 	private float currentWater; //Current amount of water
+	private boolean selected;
+	private int truckNum;
 
 	private Rectangle hitbox = new Rectangle(20, 45, 20, 20);
 
@@ -48,7 +50,7 @@ public class FireTruck extends Entity{
 	 * @param truckStats
 	 */
 	public FireTruck(Vector2 spawnPos, Float[] truckStats) {
-		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(), new Vector2(25,50), 100);
+		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(1), new Vector2(25,50), 100);
 
 		DIRECTIONS.put("n",0);			//North Facing Direction (up arrow)
 		DIRECTIONS.put("w",90);			//West Facing Direction (left arrow)
@@ -75,6 +77,8 @@ public class FireTruck extends Entity{
 
 		healthBar= new StatBar(Vector2.Zero, "Green.png", 3);
 		Kroy.mainGameScreen.addGameObject(healthBar);
+
+		selected = false;
 	}
 
 	/**
@@ -134,16 +138,18 @@ public class FireTruck extends Entity{
 	 *its hitbox and checking whether any entity is inside its range
 	 */
 	public void update(){
-		if (Gdx.input.isKeyPressed(ARROWKEYS[0]) ||
-				Gdx.input.isKeyPressed(ARROWKEYS[1]) ||
-				Gdx.input.isKeyPressed(ARROWKEYS[2]) ||
-				Gdx.input.isKeyPressed(ARROWKEYS[3])) { // Runs movement code if any arrow key pressed
+		if (selected) {
+			if (Gdx.input.isKeyPressed(ARROWKEYS[0]) ||
+					Gdx.input.isKeyPressed(ARROWKEYS[1]) ||
+					Gdx.input.isKeyPressed(ARROWKEYS[2]) ||
+					Gdx.input.isKeyPressed(ARROWKEYS[3])) { // Runs movement code if any arrow key pressed
 
-			direction = updateDirection(); // updates direction based on current keyboard input
-			moveInDirection(); // moves in the direction previously specified
+				direction = updateDirection(); // updates direction based on current keyboard input
+				moveInDirection(); // moves in the direction previously specified
+			}
+
+			Kroy.mainGameScreen.updateCamera(); // Updates the screen position to always have the truck roughly centre
 		}
-
-		Kroy.mainGameScreen.updateCamera(); // Updates the screen position to always have the truck roughly centre
 		
 		//Move the hit box to it's new centred position according to the sprite's position.
         hitbox.setCenter(getCentre().x, getCentre().y);
@@ -273,5 +279,13 @@ public class FireTruck extends Entity{
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 }

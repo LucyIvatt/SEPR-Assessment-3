@@ -43,7 +43,7 @@ public class Kroy extends Game {
 	 * @param truckNum  Selected truck
 	 */
 	public void newGame(int truckNum) {
-		mainGameScreen = new GameScreen(this,truckNum);// Initialise new game
+		mainGameScreen = new GameScreen(this);// Initialise new game
 		setScreen(mainGameScreen);// Display new game
 	}
 
