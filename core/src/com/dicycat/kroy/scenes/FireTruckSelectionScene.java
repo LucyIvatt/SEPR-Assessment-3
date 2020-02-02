@@ -6,14 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
+
+import java.util.ArrayList;
 
 /**
  * Window for selecting FireTruck type
@@ -31,10 +31,11 @@ public class FireTruckSelectionScene {
     private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
     
     //Buttons initialised, labelled and stylised
-    public TextButton truckButton1 = new TextButton("Speed", skin);
-    public TextButton truckButton2 = new TextButton("Damage", skin);
-    public TextButton truckButton3 = new TextButton("Capacity", skin);
-    public TextButton truckButton4 = new TextButton("Range", skin);
+    public Label truck1 = new Label("Speed", skin);
+    public Label truck2 = new Label("Damage", skin);
+    public Label truck3 = new Label("Capacity", skin);
+    public Label truck4 = new Label("Range", skin);
+	public TextButton startGameButton = new TextButton("Start Game", skin);
     private float width = Gdx.graphics.getWidth();
     private float centre = width* 0.7f;
     
@@ -56,13 +57,21 @@ public class FireTruckSelectionScene {
 		table.add(new Image(new Texture("fireTruck4.png")));
 		
 		table.row();
-	    
+
+	    truck1.setAlignment(Align.center);
+		truck2.setAlignment(Align.center);
+		truck3.setAlignment(Align.center);
+		truck4.setAlignment(Align.center);
 		
 		// Buttons added to the screen
-		table.add(truckButton1).width(centre/3.0f);
-	    table.add(truckButton2).width(centre/3.0f);
-	    table.add(truckButton3).width(centre/3.0f);
-	    table.add(truckButton4).width(centre/3.0f);
+		table.add(truck1).width(centre/3.0f).pad(0,0,50,0);
+	    table.add(truck2).width(centre/3.0f).pad(0,0,50,0);
+	    table.add(truck3).width(centre/3.0f).pad(0,0,50,0);
+	    table.add(truck4).width(centre/3.0f).pad(0,0,50,0);
+
+	    table.row();
+
+	    table.add(startGameButton).width(centre/2.0f).colspan(4);
 	    
 		table.setFillParent(true);
 	    stage.addActor(table);
