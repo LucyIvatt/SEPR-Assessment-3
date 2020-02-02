@@ -29,6 +29,10 @@ public class HUD {
 	// FORTRESS_IMPROVE_2 - END OF MODIFICATION - NP STUDIOS
 	private Integer score = 0;
 
+	// SCREEN_COUNTDOWN_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+	// Added attribute for the timer that shows on screen - set to 15 minutes
+	private static float screenTimer = 900
+	// SCREEN_COUNTDOWN_1 - END OF MODIFICATION - NP STUDIOS
 	
 	private Label scoreLabel;
 	private Label timeLabel;
@@ -36,6 +40,7 @@ public class HUD {
 	private Label timerLabel;
 	private Label scoreCountLabel;
 	private Label trucksCountLabel;	//we could put mini images of the trucks instead of using an int for the lives
+
 	
 	
 	/**
@@ -49,9 +54,12 @@ public class HUD {
 		Table tableHUD = new Table();	//this allows to put widgets in the scene in a clean and ordered way
 		tableHUD.top();	// puts widgets from the top instead of from the centre
 		tableHUD.setFillParent(true);	//makes the table the same size of the stage
-		
-		timerLabel = new Label(String.format("%.0f", timer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		timeLabel = new Label("TIME:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+		// SCREEN_COUNTDOWN_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+		// Changed attribute being displayed in time label and changed the label text
+		timerLabel = new Label(String.format("%.0f", screenTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		timeLabel = new Label("TIME LEFT TILL FIRE STATION DESTROYED:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		// SCREEN_COUNTDOWN_2 - END OF MODIFICATION - NP STUDIOS
 		scoreCountLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		scoreLabel = new Label("SCORE:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		trucksLabel = new Label("TRUCKS:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -80,6 +88,10 @@ public class HUD {
 		timerLabel.setText(String.format("%.0f", timer));
 		scoreCountLabel.setText(String.format("%06d", score));
 
+		// SCREEN_COUNTDOWN_3 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+		// Decrementing the timer shown on screen
+		screenTimer -= 1
+		// SCREEN_COUNTDOWN_3 - END OF MODIFICATION - NP STUDIOS
 	}
 
 
