@@ -74,7 +74,11 @@ public class Fortress extends Entity {
 		displayable = true;
 		Kroy.mainGameScreen.removeFortress();
 		if (Kroy.mainGameScreen.fortressesLeft() == 0) {//If last fortress
+			// HIGHSCORE_5 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+			// Added a bonus to the score if the use finishes the game before the firestation is destroyed. Calculated
+			// using time remaining.
 			Kroy.mainGameScreen.getHud().updateScore((int) ((15 * 60) - Kroy.mainGameScreen.getHud().timer) * 10); //time remaining bonus
+			// HIGHSCORE_5 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 			Kroy.mainGameScreen.gameOver(true); 					//End game WIN
 		}
 	}
