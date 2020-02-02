@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.scenes.FireTruckSelectionScene;
+import com.dicycat.kroy.scenes.Minigame;
 import com.dicycat.kroy.scenes.OptionsWindow;
   
 /**
@@ -42,6 +43,7 @@ public class MenuScreen implements Screen{
   private Stage stage;
   
   private OptionsWindow optionsWindow;
+  private Minigame minigame;
   
   public static Music music = Gdx.audio.newMusic(Gdx.files.internal("gamemusic.mp3"));
   public static float musicVolume = 0.4f;
@@ -71,7 +73,8 @@ public class MenuScreen implements Screen{
   public static enum MenuScreenState {
 	  MAINMENU,
 	  TRUCKSELECT,
-	  OPTIONS
+	  OPTIONS,
+	  MINIG
   }
   
   public MenuScreenState state = MenuScreenState.MAINMENU;
@@ -104,7 +107,9 @@ public class MenuScreen implements Screen{
 	  
 	  optionsWindow = new OptionsWindow(game);
 	  optionsWindow.visibility(false);
-	  
+
+	  minigame = new Minigame(game);
+	  minigame.visibility(false);
   }
   
   @Override 
@@ -158,7 +163,8 @@ public class MenuScreen implements Screen{
 			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > minigameButtonY ) && (Kroy.height - Gdx.input.getY() < (minigameButtonY + buttonHeight)) ) ){
 				  game.batch.draw(minigameButtonActive, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  //what shall we put?
+					  minigame.visibility(true);
+					  setGameState(MenuScreenState.MINIG);
 						  }
 					  } else {
 						  game.batch.draw(minigameButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
@@ -190,6 +196,10 @@ public class MenuScreen implements Screen{
 			  optionsWindow.stage.draw();
 			  optionsWindow.clickCheck(true);
 			  break;
+		  case MINIG:
+		  	Gdx.input.setInputProcessor((minigame.stage));
+		  	minigame.stage.act();
+		  	minigame.stage.draw();
 		  }
   	}
   
