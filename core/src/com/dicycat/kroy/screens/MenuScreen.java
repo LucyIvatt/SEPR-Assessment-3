@@ -205,49 +205,33 @@ public class MenuScreen implements Screen{
 	 * and the number of the fireTruck type is passed to the new GameScreen
 	 */
 	public void clickCheck() {
-		//Truck 1 Selected
-		fireTruckSelector.truckButton1.addListener(new ClickListener() {
+		// TRUCK_SELECT_CHANGE_19 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		// Start Game Button click event
+		fireTruckSelector.startGameButton.addListener(new ClickListener() {
 			@Override
 	    	public void clicked(InputEvent event, float x, float y) {
-				startGame(0);//Game begun with 0 (Speed) as the truck selected
+				startGame();// Starts game
 	    	}
 	    });
-		//Truck 2 Selected
-		fireTruckSelector.truckButton2.addListener(new ClickListener() {
-	    	@Override
-	    	public void clicked(InputEvent event, float x, float y) {
-	    		startGame(1);//Game begun with 1 (Damage) as the truck selected
-	    	}
-	    });
-		//Truck 3 Selected
-		fireTruckSelector.truckButton3.addListener(new ClickListener() {
-	    	@Override
-	    	public void clicked(InputEvent event, float x, float y) {
-	    		startGame(2);//Game begun with 2 (Capacity) as the truck selected
-	    	}
-	    });
-		//Truck 4 Selected
-		fireTruckSelector.truckButton4.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				startGame(3);//Game begun with 3 (Range) as the truck selected
-				
-			}
-	    });
+
+		// Deleted click check events for the buttons which used to be used to select the firetruck you wanted.
+
+		// TRUCK_SELECT_CHANGE_19 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	}
 
 
 	/**
-	 * 
-	 * @param truckNum Type of truck selected
+	 *
  	 */
-	public void startGame(int truckNum) {
+	// TRUCK_SELECT_CHANGE_20 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// Removed unused parameters which were modified elsewhere
+	public void startGame() {
 		 if (!currentlyRunningGame) {	// Checks if a new GameScren is currently running and either makes one or ignores the commands
 			 currentlyRunningGame = true; // Makes sure that only one GameScreen is opened at once
-			 game.newGame(truckNum); // Calls the function in Kroy to start a new game
+			 game.newGame(); // Calls the function in Kroy to start a new game
 		 }
-	} 
-  
+	}
+	// TRUCK_SELECT_CHANGE_20 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
   
   /**
    * @param state

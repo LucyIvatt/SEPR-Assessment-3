@@ -30,6 +30,9 @@ public class FireTruck extends Entity{
 	private float flowRate;	//How fast the truck can dispense water
 	private float maxWater; //How much water the truck can hold
 	private float currentWater; //Current amount of water
+	// TRUCK_SELECT_CHANGE_5- START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	private boolean selected; // Added boolean to say whether or not the truck is selected
+	// TRUCK_SELECT_CHANGE_5- END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 	private Rectangle hitbox = new Rectangle(20, 45, 20, 20);
 
@@ -47,8 +50,8 @@ public class FireTruck extends Entity{
 	 * @param spawnPos
 	 * @param truckStats
 	 */
-	public FireTruck(Vector2 spawnPos, Float[] truckStats) {
-		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(), new Vector2(25,50), 100, 500);
+	public FireTruck(Vector2 spawnPos, Float[] truckStats, int truckNum) {
+		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(truckNum), new Vector2(25,50), 100, 500);
 
 		DIRECTIONS.put("n",0);			//North Facing Direction (up arrow)
 		DIRECTIONS.put("w",90);			//West Facing Direction (left arrow)
@@ -75,6 +78,9 @@ public class FireTruck extends Entity{
 
 		healthBar= new StatBar(Vector2.Zero, "Green.png", 3);
 		Kroy.mainGameScreen.addGameObject(healthBar);
+		// TRUCK_SELECT_CHANGE_6 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		selected = false; // initially sets the truck to false
+		// TRUCK_SELECT_CHANGE_6 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	}
 
 	/**
@@ -134,16 +140,40 @@ public class FireTruck extends Entity{
 	 *its hitbox and checking whether any entity is inside its range
 	 */
 	public void update(){
-		if (Gdx.input.isKeyPressed(ARROWKEYS[0]) ||
-				Gdx.input.isKeyPressed(ARROWKEYS[1]) ||
-				Gdx.input.isKeyPressed(ARROWKEYS[2]) ||
-				Gdx.input.isKeyPressed(ARROWKEYS[3])) { // Runs movement code if any arrow key pressed
+		// TRUCK_SELECT_CHANGE_7 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		// Only allows the truck to move, control the camera and attack if selected
+		if (selected) {
+			if (Gdx.input.isKeyPressed(ARROWKEYS[0]) ||
+					Gdx.input.isKeyPressed(ARROWKEYS[1]) ||
+					Gdx.input.isKeyPressed(ARROWKEYS[2]) ||
+					Gdx.input.isKeyPressed(ARROWKEYS[3])) { // Runs movement code if any arrow key pressed
 
-			direction = updateDirection(); // updates direction based on current keyboard input
-			moveInDirection(); // moves in the direction previously specified
+				direction = updateDirection(); // updates direction based on current keyboard input
+				moveInDirection(); // moves in the direction previously specified
+				Kroy.mainGameScreen.updateCamera(); // Updates the screen position to always have the truck roughly centre
+			}
+			Kroy.mainGameScreen.updateCamera(); // Updates the screen position to always have the truck roughly centre
+
+			//player firing
+			ArrayList<GameObject> inRange = entitiesInRange();		//find list of enemies in range
+
+			if(inRange.isEmpty() || (currentWater<=0)){				//Removes the water stream if nothing is in range
+				firing=false;
+				water.setRemove(true);
+			}else if(!firing){					//Adds the water stream if something comes into range
+				water= new WaterStream(Vector2.Zero);
+				firing=true;
+				Kroy.mainGameScreen.addGameObject(water);		//initialises water as a WaterStream
+			}
+
+			if (firing) {					//if the player is firing runs the PlayerFire method
+				playerFire(inRange);
+			}
 		}
-
-		Kroy.mainGameScreen.updateCamera(); // Updates the screen position to always have the truck roughly centre
+		else {
+			water.setRemove(true);
+		}
+		// TRUCK_SELECT_CHANGE_7 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		
 		//Move the hit box to it's new centred position according to the sprite's position.
         hitbox.setCenter(getCentre().x, getCentre().y);
@@ -161,21 +191,6 @@ public class FireTruck extends Entity{
 		healthBar.setPosition(getCentre().add(0,25));
 		healthBar.setBarDisplay((healthPoints*50)/maxHealthPoints);
 
-		//player firing
-		ArrayList<GameObject> inRange = entitiesInRange();		//find list of enemies in range
-
-		if(inRange.isEmpty() || (currentWater<=0)){				//Removes the water stream if nothing is in range
-			firing=false;
-			water.setRemove(true);
-		}else if(!firing){					//Adds the water stream if something comes into range
-			water= new WaterStream(Vector2.Zero);
-			firing=true;
-			Kroy.mainGameScreen.addGameObject(water);		//initialises water as a WaterStream
-		}
-
-		if (firing) {					//if the player is firing runs the PlayerFire method
-			playerFire(inRange);
-		}
 	}
 	
 
@@ -214,10 +229,13 @@ public class FireTruck extends Entity{
 		ArrayList<GameObject> outputArray = new ArrayList<GameObject>();	//create array list to output enemies in range
 
 		for (GameObject currentObject : Kroy.mainGameScreen.getGameObjects()) {		//iterates through all game objects
+			// PATROLS_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+			// Added a check for Aliens so that the player can also attack them.
 			if ((currentObject instanceof Fortress) && (objectInRange(currentObject))
 			|| (currentObject instanceof Alien) && (objectInRange(currentObject))){  	//checks if entity is in range and is an enemy
 				outputArray.add(currentObject);												//adds the current entity to the output array list
 			}
+			// PATROLS_2 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 		}
 
 		return (outputArray);
@@ -276,4 +294,11 @@ public class FireTruck extends Entity{
 		}
 		return false;
 	}
+
+	// TRUCK_SELECT_CHANGE_8 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// Added a setter for the selected boolean
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	// TRUCK_SELECT_CHANGE_8 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 }
