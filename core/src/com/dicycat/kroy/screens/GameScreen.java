@@ -98,7 +98,6 @@ public class GameScreen implements Screen{
 		game = _game;
 		gamecam = new OrthographicCamera();
 		gameport = new FitViewport(Kroy.width, Kroy.height, gamecam);	//Mic:could also use StretchViewPort to make the screen stretch instead of adapt
-		hud = new HUD(game.batch, this.game);
 		gameMap = new TiledGameMap();										//or FitPort to make it fit into a specific width/height ratio
 		pauseWindow = new PauseWindow(game);
 		pauseWindow.visibility(false);
@@ -107,7 +106,9 @@ public class GameScreen implements Screen{
 		textures = new GameTextures(); // removed truckNum from GameTextures constructor call
 		spawnPosition = new Vector2(3750, 4000);
 		gameTimer = 60 * 15; //Set timer to 15 minutes
+		hud = new HUD(game.batch, gameTimer);
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
+
 	}
 	// TRUCK_SELECT_CHANGE_12 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
@@ -521,6 +522,8 @@ public class GameScreen implements Screen{
 	public Vector2 getSpawnPosition() {
 		return spawnPosition;
 	}
+
+
 	// TRUCK_SELECT_CHANGE_18 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Sets the selected variable on each of the trucks to false and then sets the active trucks selected variable to true
 	public void selectTruck () {
@@ -530,5 +533,4 @@ public class GameScreen implements Screen{
 		players.get(activeTruck).setSelected(true);
 	}
 	// TRUCK_SELECT_CHANGE_18 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-
 }
