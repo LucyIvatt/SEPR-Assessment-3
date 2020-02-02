@@ -8,7 +8,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -22,11 +21,8 @@ import com.dicycat.kroy.debug.DebugCircle;
 import com.dicycat.kroy.debug.DebugDraw;
 import com.dicycat.kroy.debug.DebugLine;
 import com.dicycat.kroy.debug.DebugRect;
-import com.dicycat.kroy.entities.FireStation;
-import com.dicycat.kroy.entities.FireTruck;
-import com.dicycat.kroy.entities.Fortress;
+import com.dicycat.kroy.entities.*;
 import com.dicycat.kroy.gamemap.TiledGameMap;
-import com.dicycat.kroy.misc.WaterStream;
 import com.dicycat.kroy.scenes.HUD;
 import com.dicycat.kroy.scenes.OptionsWindow;
 import com.dicycat.kroy.scenes.PauseWindow;
@@ -116,12 +112,23 @@ public class GameScreen implements Screen{
 		gameObjects = new ArrayList<GameObject>();
 		deadObjects = new ArrayList<GameObject>();
 		debugObjects = new ArrayList<DebugDraw>();
-		player = new FireTruck(spawnPosition.cpy(),truckStats[truckNum]); // Initialises the FireTruck
 
+		player = new FireTruck(spawnPosition.cpy(),truckStats[truckNum]); // Initialises the FireTruck
 		gamecam.translate(new Vector2(player.getX(),player.getY())); // sets initial Camera position
+
 		gameObjects.add(player);	//Player
-		
 		gameObjects.add(new FireStation());
+
+		// PATROLS_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+		// Creates the aliens for the patrols and adds them to gameObjects so they can be updated each tick
+		int timeBetween = 50;
+		for (int patrolNum = 1; patrolNum <=4; patrolNum++)
+		for (int i = 0; i < 5; i++) {
+			gameObjects.add(new Alien(patrolNum, i * timeBetween, 300));
+		}
+		// PATROLS_4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+
+
 		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 		// Added health and damage values for each fortress instantiation
 		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
@@ -220,6 +227,7 @@ public class GameScreen implements Screen{
 		if (player.isRemove()) {	//If the player is set for removal, respawn
 			updateLives();
 		}
+
 	}
 
 	/**

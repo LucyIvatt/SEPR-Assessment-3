@@ -34,7 +34,7 @@ public class Fortress extends Entity {
 	// FORTRESS_HEALTH_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 	// Added health parameter to Fortress constructor and changed it in the call to super from "500" to "health"
 	public Fortress(Vector2 spawnPos, Texture fortressTexture, Texture deadTexture, Vector2 size, int health, int fortressDamage ) { ////
-		super(spawnPos, fortressTexture, size, health);
+		super(spawnPos, fortressTexture, size, health, 500);
 	// FORTRESS_HEALTH_2 - END OF MODIFICATION - NP STUDIOS
 		this.damage = fortressDamage;
 
