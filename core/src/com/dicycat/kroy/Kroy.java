@@ -1,6 +1,8 @@
 package com.dicycat.kroy;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dicycat.kroy.screens.GameScreen;
 import com.dicycat.kroy.screens.MenuScreen;
@@ -32,6 +34,11 @@ public class Kroy extends Game {
 
 	@Override
 	public void render () {
+		// WARPING - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
+		// Added in to prevent warping at the edge of the game map
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		// WARPING - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
+
 		super.render();
 	}
 	
@@ -40,10 +47,13 @@ public class Kroy extends Game {
 	
 	/**
 	 * Call to generate a brand new GameScreen which runs a new game
-	 * @param truckNum  Selected truck
 	 */
-	public void newGame(int truckNum) {
-		mainGameScreen = new GameScreen(this,truckNum);// Initialise new game
+	// TRUCK_SELECT_CHANGE_4- START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// Deleted truck num parameter as it is no longer needed because the user starts with 1 of each truck rather than
+	// choosing one and having multiple lives.
+	public void newGame() {
+		mainGameScreen = new GameScreen(this);// Initialise new game
+	// TRUCK_SELECT_CHANGE_4 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		setScreen(mainGameScreen);// Display new game
 	}
 
