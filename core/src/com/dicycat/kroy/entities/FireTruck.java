@@ -214,10 +214,13 @@ public class FireTruck extends Entity{
 		ArrayList<GameObject> outputArray = new ArrayList<GameObject>();	//create array list to output enemies in range
 
 		for (GameObject currentObject : Kroy.mainGameScreen.getGameObjects()) {		//iterates through all game objects
+			// PATROLS_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+			// Added a check for Aliens so that the player can also attack them.
 			if ((currentObject instanceof Fortress) && (objectInRange(currentObject))
 			|| (currentObject instanceof Alien) && (objectInRange(currentObject))){  	//checks if entity is in range and is an enemy
 				outputArray.add(currentObject);												//adds the current entity to the output array list
 			}
+			// PATROLS_2 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 		}
 
 		return (outputArray);

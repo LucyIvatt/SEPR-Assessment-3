@@ -119,11 +119,14 @@ public class GameScreen implements Screen{
 		gameObjects.add(player);	//Player
 		gameObjects.add(new FireStation());
 
+		// PATROLS_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+		// Creates the aliens for the patrols and adds them to gameObjects so they can be updated each tick
 		int timeBetween = 50;
 		for (int patrolNum = 1; patrolNum <=4; patrolNum++)
 		for (int i = 0; i < 5; i++) {
 			gameObjects.add(new Alien(patrolNum, i * timeBetween, 300));
 		}
+		// PATROLS_4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 
 
 		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
