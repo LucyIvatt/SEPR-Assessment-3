@@ -55,6 +55,9 @@ public class HUD {
 		tableHUD.top();	// puts widgets from the top instead of from the centre
 		tableHUD.setFillParent(true);	//makes the table the same size of the stage
 
+		timerLabel = new Label(String.format("%.0f", timer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		timeLabel = new Label("TIME:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
 		// SCREEN_COUNTDOWN_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
 		// Changed attribute being displayed in time label and changed the label text
 		timerLabel = new Label(String.format("%.0f", screenTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
