@@ -20,9 +20,7 @@ import com.dicycat.kroy.debug.DebugCircle;
 import com.dicycat.kroy.debug.DebugDraw;
 import com.dicycat.kroy.debug.DebugLine;
 import com.dicycat.kroy.debug.DebugRect;
-import com.dicycat.kroy.entities.FireStation;
-import com.dicycat.kroy.entities.FireTruck;
-import com.dicycat.kroy.entities.Fortress;
+import com.dicycat.kroy.entities.*;
 import com.dicycat.kroy.gamemap.TiledGameMap;
 import com.dicycat.kroy.scenes.HUD;
 import com.dicycat.kroy.scenes.OptionsWindow;
@@ -135,8 +133,19 @@ public class GameScreen implements Screen{
 		// Sets initial camera position to the active truck's position (set to arbitrary truck at the beginning of the game)
 		gamecam.translate(new Vector2(players.get(activeTruck).getX(),players.get(activeTruck).getY())); // sets initial Camera position
 		// TRUCK_SELECT_CHANGE_13 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-		
+
 		gameObjects.add(new FireStation());
+
+		// PATROLS_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+		// Creates the aliens for the patrols and adds them to gameObjects so they can be updated each tick
+		int timeBetween = 50;
+		for (int patrolNum = 1; patrolNum <=4; patrolNum++)
+		for (int i = 0; i < 5; i++) {
+			gameObjects.add(new Alien(patrolNum, i * timeBetween, 300));
+		}
+		// PATROLS_4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+
+
 		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 		// Added health and damage values for each fortress instantiation
 		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
@@ -257,6 +266,7 @@ public class GameScreen implements Screen{
 			updateLives();
 		}
 		// TRUCK_SELECT_CHANGE_15 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
 	}
 
 	/**

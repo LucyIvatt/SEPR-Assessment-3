@@ -13,8 +13,6 @@ import com.dicycat.kroy.gamemap.TiledGameMap;
  *
  */
 public abstract class Entity extends GameObject{
-//  Pikachu said Trans Rights.
-	// f in the chat
 	protected int healthPoints;
 	protected int radius;
 	protected int maxHealthPoints;
@@ -25,11 +23,14 @@ public abstract class Entity extends GameObject{
 	 * @param imSize Size of the entity. Can be used to resize large/small textures
 	 * @param health Hit points of the entity
 	 */
-	public Entity(Vector2 spawnPos, Texture img, Vector2 imSize,int health) {
+	// RANGE - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+	// Added radius to entity constructor to be able to change the value from the hardcoded 500.
+	public Entity(Vector2 spawnPos, Texture img, Vector2 imSize,int health, int radius) {
 		super(spawnPos, img, imSize);
 		healthPoints = health;
 		maxHealthPoints = health;
-		radius = 500;
+		this.radius = radius;
+		// RANGE - END OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 		changePosition(spawnPos);
 	}
 
