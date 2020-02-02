@@ -75,7 +75,7 @@ public class GameScreen implements Screen{
 	private int activeTruck; // Identifies the truck that is currently selected
 	// Deleted the variable player and replaced it with an ArrayList containing the 4 trucks and named it players
 	private ArrayList<FireTruck> players;
-	// TRUCK_SELECT_CHANGE_11 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// TRUCK_SELECT_CHANGE_11 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	private int lives = 4;
 	
 	private int fortressesCount;
@@ -256,7 +256,7 @@ public class GameScreen implements Screen{
 		if (players.get(activeTruck).isRemove()) {	//If the player is set for removal, respawn
 			updateLives();
 		}
-		// TRUCK_SELECT_CHANGE_15 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		// TRUCK_SELECT_CHANGE_15 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	}
 
 	/**
@@ -286,7 +286,7 @@ public class GameScreen implements Screen{
 	public FireTruck getPlayer() {
 		return players.get(activeTruck);
 	}
-	// TRUCK_SELECT_CHANGE_16 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// TRUCK_SELECT_CHANGE_16 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 	/**
 	 * Draws all debug objects for one frame

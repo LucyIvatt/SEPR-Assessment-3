@@ -16,10 +16,10 @@ import java.util.Arrays;
 public class GameTextures {
 	// TRUCK_SELECT_CHANGE_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Changed truck texture to truck0, truck1, truck2, truck3 as all the different textures will be used with our
-	// new selection method
+	// new selection method and defined the array list which will be used to store them
 	private Texture truck0, truck1, truck2, truck3, ufo, bullet, fireStation, fireStationDead;
-	// TRUCK_SELECT_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	private ArrayList<Texture> trucks;
+	// TRUCK_SELECT_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	private Texture[] livingFortresses = {new Texture("cliffords tower.png"), new Texture("york minster.png"), new Texture("york museum.png")};
 	private Texture[] deadFortresses = {new Texture("cliffords tower dead.png"), new Texture("york minster dead.png"), new Texture("york museum dead.png")};
 	private String[] truckAddress = {"fireTruck1.png", "fireTruck2.png", "fireTruck3.png", "fireTruck4.png"};
@@ -45,7 +45,7 @@ public class GameTextures {
 	// TRUCK_SELECT_CHANGE_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Slightly edited the getter for the truck texture as it needs to access the arraylist trucks with the index
 	// of which truck was needed, whereas previously it would only access the texture of the truck the user selected
-	// before the game began. 
+	// before the game began.
 	public Texture getTruck(int truckNum) {
 		return trucks.get(truckNum);
 	}
