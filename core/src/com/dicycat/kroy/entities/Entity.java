@@ -1,5 +1,5 @@
 package com.dicycat.kroy.entities;
-
+// JS test for using git with eclipse
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.GameObject;
@@ -14,6 +14,7 @@ import com.dicycat.kroy.gamemap.TiledGameMap;
  */
 public abstract class Entity extends GameObject{
 //  Pikachu said Trans Rights.
+	// f in the chat
 	protected int healthPoints;
 	protected int radius;
 	protected int maxHealthPoints;

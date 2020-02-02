@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.dicycat.kroy"},{"l":"com.dicycat.kroy.bullets"},{"l":"com.dicycat.kroy.debug"},{"l":"com.dicycat.kroy.entities"},{"l":"com.dicycat.kroy.gamemap"},{"l":"com.dicycat.kroy.misc"},{"l":"com.dicycat.kroy.scenes"},{"l":"com.dicycat.kroy.screens"}]

@@ -122,12 +122,22 @@ public class GameScreen implements Screen{
 		gameObjects.add(player);	//Player
 		
 		gameObjects.add(new FireStation());
-		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0), new Vector2(256, 218)));
-		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1), new Vector2(256, 320)));
-		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2), new Vector2(400, 240)));
-		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3), new Vector2(400, 400)));
-		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4), new Vector2(400, 400))); //382, 319
-		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5), new Vector2(300, 270))); //45, 166
+
+		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+		// Added health and damage values for each fortress instantiation
+		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+				new Vector2(256, 218), 400, 10));
+		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+				new Vector2(256, 320), 500, 20));
+		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+				new Vector2(400, 240), 600, 30));
+		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
+				new Vector2(400, 400), 700, 40));
+		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
+				new Vector2(400, 400), 800, 50)); //382, 319
+		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
+				new Vector2(300, 270), 900, 60)); //45, 166
+		// FORTRESS_HEALTH_1 - END OF MODIFICATION - NP STUDIOS
 
 	}
 
@@ -209,6 +219,7 @@ public class GameScreen implements Screen{
 		for (GameObject aObject : objectsToAdd) {		//Add game objects to be added
 			gameObjects.add(aObject);
 		}
+
 		objectsToAdd.clear();	// Clears list as not to add new objects twice
 
 		for (GameObject dObject : deadObjects) { // loops through the destroyed but displayed items (such as destroyed bases)
@@ -263,7 +274,13 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawLine(Vector2 start, Vector2 end, int lineWidth, Color colour) {
+		// MEMORY LEAK FIX 2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
+		// code causes a memory leak and possibly crashes the game overtime.
+		if (showDebug) {
 		debugObjects.add(new DebugLine(start, end, lineWidth, colour));
+		}
+		// END OF MODIFICATION - NP STUDIOS -----------------------------------------
 	}
 
 	/**
@@ -274,7 +291,13 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawCircle(Vector2 position, float radius, int lineWidth, Color colour) {
-		debugObjects.add(new DebugCircle(position, radius, lineWidth, colour));
+		// MEMORY LEAK FIX 3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
+		// code causes a memory leak and possibly crashes the game overtime.
+		if (showDebug) {
+			debugObjects.add(new DebugCircle(position, radius, lineWidth, colour));
+		}
+		// END OF MODIFICATION - NP STUDIOS -----------------------------------------
 	}
 
 	/**
@@ -285,7 +308,13 @@ public class GameScreen implements Screen{
 	 * @param colour Colour of the line
 	 */
 	public void DrawRect(Vector2 bottomLeft, Vector2 dimensions, int lineWidth, Color colour) {
-		debugObjects.add(new DebugRect(bottomLeft, dimensions, lineWidth, colour));
+		// MEMORY LEAK FIX 4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Added an if statement to fully ensure debugging view is requested as we noticed the original teams debug
+		// code causes a memory leak and possibly crashes the game overtime.
+		if (showDebug) {
+			debugObjects.add(new DebugRect(bottomLeft, dimensions, lineWidth, colour));
+		}
+		// END OF MODIFICATION - NP STUDIOS -----------------------------------------
 	}
 
 	/**
