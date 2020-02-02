@@ -63,10 +63,10 @@ public class GameScreen implements Screen{
 	// TRUCK_SELECT_CHANGE_11 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Slightly edited trucks statistics to make the game more balanced.
 	private Float[][] truckStats = {	//Each list is a configuration of a specific truck. {speed, flowRate, capacity, range}
-			{450f, 0.1f, 100f, 300f},		//Speed
-			{300f, 0.3f, 100f, 300f},	        //Flow rate
-			{300f, 0.1f, 250f, 300f},		//Capacity
-			{300f, 0.1f, 100f, 450f}		//Range
+			{450f, 1f, 400f, 300f},		//Speed
+			{300f, 2f, 400f, 300f},	//Flow rate
+			{300f, 1f, 500f, 300f},		//Capacity
+			{300f, 1f, 400f, 450f}		//Range
 		};
 
 	// Changes variable of truckNum to activeTruck
@@ -92,6 +92,9 @@ public class GameScreen implements Screen{
 	// TRUCK_SELECT_CHANGE_12 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Removed truckNum from constructor parameters
 	public GameScreen(Kroy _game) {
+		// END_GAME_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		fortressesCount = 3; // Initialize fortress count to 3
+		// END_GAME_FIX_1 - END OF MODIFICATION - NP STUDIOS
 		game = _game;
 		gamecam = new OrthographicCamera();
 		gameport = new FitViewport(Kroy.width, Kroy.height, gamecam);	//Mic:could also use StretchViewPort to make the screen stretch instead of adapt

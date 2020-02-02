@@ -27,6 +27,7 @@ public class HUD {
 	//  Deleted world timer attribute and changed to timer
 	public static float timer = 0;
 	// FORTRESS_IMPROVE_2 - END OF MODIFICATION - NP STUDIOS
+
 	private Integer score = 0;
 
 	
