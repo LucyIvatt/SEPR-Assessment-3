@@ -95,7 +95,6 @@ public class GameScreen implements Screen{
 		game = _game;
 		gamecam = new OrthographicCamera();
 		gameport = new FitViewport(Kroy.width, Kroy.height, gamecam);	//Mic:could also use StretchViewPort to make the screen stretch instead of adapt
-		hud = new HUD(game.batch, this.game);
 		gameMap = new TiledGameMap();										//or FitPort to make it fit into a specific width/height ratio
 		pauseWindow = new PauseWindow(game);
 		pauseWindow.visibility(false);
@@ -104,6 +103,7 @@ public class GameScreen implements Screen{
 		textures = new GameTextures(truckNum);
 		spawnPosition = new Vector2(3750, 4000);
 		gameTimer = 60 * 15; //Set timer to 15 minutes
+		hud = new HUD(game.batch, gameTimer);
 		this.truckNum = truckNum;
 	}
 
@@ -438,5 +438,9 @@ public class GameScreen implements Screen{
 
 	public Vector2 getSpawnPosition() {
 		return spawnPosition;
+	}
+
+	public float getGameTimer() {
+		return gameTimer;
 	}
 }
