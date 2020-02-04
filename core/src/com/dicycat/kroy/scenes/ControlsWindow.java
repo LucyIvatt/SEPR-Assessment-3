@@ -20,7 +20,7 @@ import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.screens.MenuScreen;
 
 /**
- * Controls window
+ * Scene which shows the controls to the user to allow them to play the game easily.
  * 
  * @author Jordan Spooner (NP Studios)
  *
@@ -37,7 +37,7 @@ public class ControlsWindow {
 	private TextButton back = new TextButton("BACK", skin); // back button texture
 	
 
-	// all of the control labels, specifies what each of the keys do
+	// Control Labels
 	private Label pause = new Label("Pauses game", skin, "default-font", "white");
 	private Label up = new Label("Drive up", skin, "default-font", "white");
 	private Label left = new Label("Drive left", skin, "default-font", "white");
@@ -69,9 +69,7 @@ public class ControlsWindow {
 	}
 	
 	/**
-	 * 
-	 *  Check for whether the back button is pressed and goes back to the menu if pressed
-	 * 
+	 *  Check for whether the back button is pressed and goes back to the menu if so
 	 */
 	public void clickCheck() {
 		//back button
@@ -85,8 +83,10 @@ public class ControlsWindow {
 	    });
 		
 	}
-	
-	// formats the screen
+
+	/**
+	 *  Sets the layout for the controls screen
+	 */
 	private void formatControlsScreen() {
 		table.setBackground(background);
 		table.add(new Image(new Texture("pkey.png")));
