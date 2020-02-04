@@ -20,6 +20,9 @@ public class Fortress extends Entity {
 	private BulletDispenser dispenser;
 	private Texture deadTexture;
 	private StatBar healthBar;
+	private int damage; 	// FORTRESS_DAMAGE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+							// Added a new attribute 'damage'
+							// FORTRESS_DAMAGE_1 - END OF MODIFICATION - NP STUDIOS
 
 	/**
 	 * @param spawnPos
@@ -27,18 +30,34 @@ public class Fortress extends Entity {
 	 * @param deadTexture
 	 * @param size
 	 */
-	public Fortress(Vector2 spawnPos, Texture fortressTexture, Texture deadTexture, Vector2 size) {
-		super(spawnPos, fortressTexture, size, 500);
+
+	// FORTRESS_HEALTH_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+	// Added health parameter to Fortress constructor and changed it in the call to super from "500" to "health"
+	public Fortress(Vector2 spawnPos, Texture fortressTexture, Texture deadTexture, Vector2 size, int health, int fortressDamage ) { ////
+		super(spawnPos, fortressTexture, size, health, 500);
+	// FORTRESS_HEALTH_2 - END OF MODIFICATION - NP STUDIOS
+		this.damage = fortressDamage;
+
+		// FORTRESS_DAMAGE_3 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+		// Added fortressDamage as a parameter to the constructor above
+		// Passed the damage to the Pattern constructors
+
 		dispenser = new BulletDispenser(this);
-		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20, 1, 0.5f));
-		dispenser.addPattern(new Pattern(100, 500, 0.5f, 8, 5, 0.5f));
-		dispenser.addPattern(new Pattern(0, 50, 800, 2f, 3, 36, 4));
-		dispenser.addPattern(new Pattern(200, 600, 0.3f, 12, 2, 0.3f));
-		dispenser.addPattern(new Pattern(false, 0, 3, 100, 900, 0.02f, 1, 0.2f));
-		dispenser.addPattern(new Pattern(true, 0, 1, 100, 900, 0.02f, 1, 1.2f));
+		dispenser.addPattern(new Pattern(180, 300, 800, 0.1f, 20, 1, 0.5f, this.getDamage()));
+		dispenser.addPattern(new Pattern(100, 500, 0.5f, 8, 5, 0.5f, this.getDamage()));
+		dispenser.addPattern(new Pattern(0, 50, 800, 2f, 3, 36, 4, this.getDamage()));
+		dispenser.addPattern(new Pattern(200, 600, 0.3f, 12, 2, 0.3f, this.getDamage()));
+		dispenser.addPattern(new Pattern(false, 0, 3, 100, 900, 0.02f, 1, 0.2f, this.getDamage()));
+		dispenser.addPattern(new Pattern(true, 0, 1, 100, 900, 0.02f, 1, 1.2f,this.getDamage()));
+
+		// FORTRESS_HEALTH_3 - END OF MODIFICATION - NP STUDIOS
 
 		this.deadTexture = deadTexture;
-		Kroy.mainGameScreen.addFortress();
+
+		// END_GAME_FIX_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Deleted addFortress call
+		// END_GAME_FIX_2 - END OF MODIFICATION - NP STUDIOS
+
 		healthBar = new StatBar(new Vector2(getCentre().x, getCentre().y + 100), "Red.png", 10);
 		Kroy.mainGameScreen.addGameObject(healthBar);
 	}
@@ -54,7 +73,12 @@ public class Fortress extends Entity {
 		healthBar.setRemove(true);
 		displayable = true;
 		Kroy.mainGameScreen.removeFortress();
-		if (Kroy.mainGameScreen.fortressesLeft() == 0) {	//If last fortress
+		if (Kroy.mainGameScreen.fortressesLeft() == 0) {//If last fortress
+			// HIGHSCORE_5 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+			// Added a bonus to the score if the use finishes the game before the firestation is destroyed. Calculated
+			// using time remaining.
+			Kroy.mainGameScreen.getHud().updateScore((int) ((15 * 60) - Kroy.mainGameScreen.getHud().timer) * 10); //time remaining bonus
+			// HIGHSCORE_5 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 			Kroy.mainGameScreen.gameOver(true); 					//End game WIN
 		}
 	}
@@ -86,5 +110,9 @@ public class Fortress extends Entity {
 		}
 
 	}
+
+	public int getDamage(){				// FORTRESS_DAMAGE_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+		return this.damage;				// Implemented a getter for damage
+	}									// FORTRESS_DAMAGE_2 - END OF MODIFICATION - NP STUDIOS
 
 }
