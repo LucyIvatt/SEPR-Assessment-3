@@ -161,7 +161,7 @@ public class GameOverScreen implements Screen{
 			  game.batch.draw(menuButtonActive, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 			  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 				  dispose();
-				  game.backToMenu();
+				  System.exit(0);
 			  }
 		  } else {
 			  game.batch.draw(menuButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
