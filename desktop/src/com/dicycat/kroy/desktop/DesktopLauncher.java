@@ -11,9 +11,9 @@ public class DesktopLauncher {
 		config.addIcon("DicyCatSmol.png", Files.FileType.Internal);
 		config.width = Kroy.width;
 		config.height = Kroy.height;
-		config.resizable = false;	
+		config.resizable = false;
 		config.foregroundFPS = 60;
-		//config.fullscreen = true;
+		config.fullscreen = false;
 		
 		new LwjglApplication(new Kroy(), config);
 	}

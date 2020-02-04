@@ -147,7 +147,7 @@ public class GameOverScreen implements Screen{
 			  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 				  this.dispose();
 				  game.batch.end();
-				  game.newGame(truckNum);
+				  game.newGame();
 				  return;
 			  }
 		  } else {
