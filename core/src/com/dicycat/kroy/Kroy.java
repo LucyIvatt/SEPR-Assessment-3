@@ -16,8 +16,12 @@ import com.dicycat.kroy.screens.MenuScreen;
  */
 
 public class Kroy extends Game {
+
+	// GAME_SIZE - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
+	// Made the game window larger
 	public static final int width = 1820;
 	public static final int height = 980;
+	// GAME_SIZE - END OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 	
 	public static GameScreen mainGameScreen;
 	public static MenuScreen mainMenuScreen;
