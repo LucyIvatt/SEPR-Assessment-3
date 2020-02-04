@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class GameTextures {
 	private Texture truck, ufo, bullet, fireStation, fireStationDead;
-
+	// Added new textures add for new fortresses
 	private Texture[] livingFortresses = {new Texture("cliffords tower.png"), new Texture("york minster.png"),
 			new Texture("york museum.png"), new Texture ("YorkRailStationWithEvilAliens.png"),
 			new Texture ("YorkHospital.png"), new Texture ("CentralHall.png")};
