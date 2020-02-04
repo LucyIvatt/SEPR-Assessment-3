@@ -89,7 +89,7 @@ public class MenuScreen implements Screen{
 	  playButtonActive = new Texture("newActive.png");
 	  minigameButton = new Texture("minigame.png");
 	  minigameButtonActive = new Texture("minigameActive.png");
-	  background = new Texture ("fireforce.png");
+	  background = new Texture ("fireforce.jpg");
 	  
 	  gamecam = new OrthographicCamera();    //m
 	  gameport = new FitViewport(Kroy.width, Kroy.height, gamecam);
