@@ -10,11 +10,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
+import com.dicycat.kroy.scenes.ControlsWindow;
 import com.dicycat.kroy.scenes.FireTruckSelectionScene;
 import com.dicycat.kroy.scenes.OptionsWindow;
   
@@ -37,11 +40,14 @@ public class MenuScreen implements Screen{
   	exitButtonActive, 
   	minigameButton, 
   	minigameButtonActive, 
-  	background;
+  	background,
+  	controlsButton, 
+  	controlsButtonActive;
   
   private Stage stage;
   
   private OptionsWindow optionsWindow;
+  private ControlsWindow controlsWindow; // +++
   
   public static Music music = Gdx.audio.newMusic(Gdx.files.internal("gamemusic.mp3"));
   public static float musicVolume = 0.4f;
@@ -53,7 +59,8 @@ public class MenuScreen implements Screen{
   private int playButtonY = (Kroy.height/2)+75;
   private int optionsButtonY = (Kroy.height/2);
   private int minigameButtonY = (Kroy.height/2)-75;
-  private int exitButtonY = (Kroy.height/2)-150;
+  private int controlsButtonY = (Kroy.height/2)-150; // +++
+  private int exitButtonY = (Kroy.height/2)-225;
   
   private Pixmap pm = new Pixmap(Gdx.files.internal("handHD2.png")); //cursor
   private int xHotSpot = pm.getWidth() / 3;	//where the cursor's aim is 
@@ -71,7 +78,8 @@ public class MenuScreen implements Screen{
   public static enum MenuScreenState {
 	  MAINMENU,
 	  TRUCKSELECT,
-	  OPTIONS
+	  OPTIONS,
+	  CONTROLS // +++
   }
   
   public MenuScreenState state = MenuScreenState.MAINMENU;
@@ -89,6 +97,8 @@ public class MenuScreen implements Screen{
 	  playButtonActive = new Texture("newActive.png");
 	  minigameButton = new Texture("minigame.png");
 	  minigameButtonActive = new Texture("minigameActive.png");
+	  controlsButton = new Texture("controls.png"); // +++
+	  controlsButtonActive = new Texture("controls_ACTIVE.png"); // +++
 	  background = new Texture ("fireforce.png");
 	  
 	  gamecam = new OrthographicCamera();    //m
@@ -104,6 +114,9 @@ public class MenuScreen implements Screen{
 	  
 	  optionsWindow = new OptionsWindow(game);
 	  optionsWindow.visibility(false);
+	  
+	  controlsWindow = new ControlsWindow(game);
+	  controlsWindow.visibility(false);
 	  
   }
   
@@ -175,6 +188,33 @@ public class MenuScreen implements Screen{
 			  } else {
 				  game.batch.draw(optionsButton, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
 			  }
+			  
+			  /**
+			  // this +++ start vvv
+			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > optionsButtonY ) && (Kroy.height - Gdx.input.getY() < (optionsButtonY + buttonHeight)) ) ){
+				  game.batch.draw(optionsButtonActive, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
+				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+					  //game.batch.end();
+					  optionsWindow.visibility(true);
+					  setGameState(MenuScreenState.OPTIONS);
+				  }
+			  } else {
+				  game.batch.draw(optionsButton, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
+			  } // end of this +++ ^^^
+			  */
+			  
+			//for exit button (exit_2) stuff, temp for controls as no artwork for it,
+			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > controlsButtonY ) && (Kroy.height - Gdx.input.getY() < (controlsButtonY + buttonHeight)) ) ){
+				  game.batch.draw(controlsButtonActive, xAxisCentred, controlsButtonY, buttonWidth, buttonHeight);
+				  
+				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+					  controlsWindow.visibility(true);
+					  setGameState(MenuScreenState.CONTROLS);
+				  }
+			  } else {
+				  game.batch.draw(controlsButton, xAxisCentred, controlsButtonY, buttonWidth, buttonHeight);
+			  }
+			  
 			  game.batch.end();
 				  
 			  break;
@@ -190,6 +230,12 @@ public class MenuScreen implements Screen{
 			  optionsWindow.stage.draw();
 			  optionsWindow.clickCheck(true);
 			  break;
+		  case CONTROLS: // +++ and vvv
+		  	  Gdx.input.setInputProcessor(controlsWindow.stage);
+		  	  controlsWindow.stage.act();
+		  	  controlsWindow.stage.draw();
+		  	  controlsWindow.clickCheck();
+		  	  break; // +++ and ^^^
 		  }
   	}
   
