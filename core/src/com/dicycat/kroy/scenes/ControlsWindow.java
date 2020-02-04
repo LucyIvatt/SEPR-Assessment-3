@@ -22,7 +22,7 @@ import com.dicycat.kroy.screens.MenuScreen;
 /**
  * Controls window
  * 
- * @author Jordan Spooner
+ * @author Jordan Spooner (NP Studios)
  *
  */
 public class ControlsWindow {
@@ -33,9 +33,10 @@ public class ControlsWindow {
 	private NinePatch patch = new NinePatch(new Texture("loool.jpg"), 3, 3, 3, 3);   // splits texture into nine 'patches' and gives a border of 3 pixels wide/tall on (texture,left,right,top,bottom)
 	private NinePatchDrawable background = new NinePatchDrawable(patch);
 	
-	private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-	private TextButton back = new TextButton("BACK", skin);
+	private Skin skin = new Skin(Gdx.files.internal("uiskin.json")); 
+	private TextButton back = new TextButton("BACK", skin); // back button texture
 	
+	// all of the control labels, specifies what each of the keys do
 	private Label pause = new Label("Pauses game", skin);
 	private Label up = new Label("Drive up", skin);
 	private Label left = new Label("Drive left", skin);

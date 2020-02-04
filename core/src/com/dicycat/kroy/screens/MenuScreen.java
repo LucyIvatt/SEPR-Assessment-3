@@ -10,14 +10,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
+// START OF MODIFICATION - NP STUDIOS ------------------------------------------------------------------
 import com.dicycat.kroy.scenes.ControlsWindow;
+// END OF MODIFICATION - NP STUDIOS --------------------------------------------------------------------
 import com.dicycat.kroy.scenes.FireTruckSelectionScene;
 import com.dicycat.kroy.scenes.OptionsWindow;
   
@@ -41,13 +41,17 @@ public class MenuScreen implements Screen{
   	minigameButton, 
   	minigameButtonActive, 
   	background,
+// START OF MODIFICATION - NP STUDIOS ------------------------------------------------------------------
   	controlsButton, 
   	controlsButtonActive;
+// END OF MODIFICATION - NP STUDIOS --------------------------------------------------------------------
   
   private Stage stage;
   
   private OptionsWindow optionsWindow;
-  private ControlsWindow controlsWindow; // +++
+// START OF MODIFICATION - NP STUDIOS ------------------------------------------------------------------
+  private ControlsWindow controlsWindow; 
+// END OF MODIFICATION - NP STUDIOS --------------------------------------------------------------------
   
   public static Music music = Gdx.audio.newMusic(Gdx.files.internal("gamemusic.mp3"));
   public static float musicVolume = 0.4f;
@@ -59,7 +63,9 @@ public class MenuScreen implements Screen{
   private int playButtonY = (Kroy.height/2)+75;
   private int optionsButtonY = (Kroy.height/2);
   private int minigameButtonY = (Kroy.height/2)-75;
-  private int controlsButtonY = (Kroy.height/2)-150; // +++
+// START OF MODIFICATION - NP STUDIOS ------------------------------------------------------------------
+  private int controlsButtonY = (Kroy.height/2)-150; 
+// END OF MODIFICATION - NP STUDIOS --------------------------------------------------------------------
   private int exitButtonY = (Kroy.height/2)-225;
   
   private Pixmap pm = new Pixmap(Gdx.files.internal("handHD2.png")); //cursor
@@ -79,7 +85,9 @@ public class MenuScreen implements Screen{
 	  MAINMENU,
 	  TRUCKSELECT,
 	  OPTIONS,
-	  CONTROLS // +++
+// START OF MODIFICATION - NP STUDIOS ------------------------------------------------------------------
+	  CONTROLS // adding a new window state, the controls window
+// END OF MODIFICATION - NP STUDIOS --------------------------------------------------------------------
   }
   
   public MenuScreenState state = MenuScreenState.MAINMENU;
@@ -97,8 +105,10 @@ public class MenuScreen implements Screen{
 	  playButtonActive = new Texture("newActive.png");
 	  minigameButton = new Texture("minigame.png");
 	  minigameButtonActive = new Texture("minigameActive.png");
-	  controlsButton = new Texture("controls.png"); // +++
-	  controlsButtonActive = new Texture("controls_ACTIVE.png"); // +++
+// START OF MODIFICATION - NP STUDIOS ------------------------------------------------------------------
+	  controlsButton = new Texture("controls.png"); // control button texture
+	  controlsButtonActive = new Texture("controls_ACTIVE.png"); // control button texture when the mouse is hovering over the button
+// END OF MODIFICATION - NP STUDIOS --------------------------------------------------------------------
 	  background = new Texture ("fireforce.png");
 	  
 	  gamecam = new OrthographicCamera();    //m
@@ -189,31 +199,24 @@ public class MenuScreen implements Screen{
 				  game.batch.draw(optionsButton, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
 			  }
 			  
-			  /**
-			  // this +++ start vvv
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > optionsButtonY ) && (Kroy.height - Gdx.input.getY() < (optionsButtonY + buttonHeight)) ) ){
-				  game.batch.draw(optionsButtonActive, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  //game.batch.end();
-					  optionsWindow.visibility(true);
-					  setGameState(MenuScreenState.OPTIONS);
-				  }
-			  } else {
-				  game.batch.draw(optionsButton, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
-			  } // end of this +++ ^^^
-			  */
+// START OF MODIFICATION - NP STUDIOS ------------------------------------------------------------------
+			//for controls button
 			  
-			//for exit button (exit_2) stuff, temp for controls as no artwork for it,
+			  //if the mouse is on the button ...
 			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > controlsButtonY ) && (Kroy.height - Gdx.input.getY() < (controlsButtonY + buttonHeight)) ) ){
+				  // ... then display the 'controlsButtonActice' texture ...
 				  game.batch.draw(controlsButtonActive, xAxisCentred, controlsButtonY, buttonWidth, buttonHeight);
 				  
+				  // if the controls button is pressed, show the visibility of the controls window to true and set the game state to CONTROLS
 				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 					  controlsWindow.visibility(true);
 					  setGameState(MenuScreenState.CONTROLS);
 				  }
 			  } else {
+				  // ... otherwise, display the 'controlsButton' texture
 				  game.batch.draw(controlsButton, xAxisCentred, controlsButtonY, buttonWidth, buttonHeight);
 			  }
+// END OF MODIFICATION - NP STUDIOS --------------------------------------------------------------------
 			  
 			  game.batch.end();
 				  
@@ -230,12 +233,15 @@ public class MenuScreen implements Screen{
 			  optionsWindow.stage.draw();
 			  optionsWindow.clickCheck(true);
 			  break;
-		  case CONTROLS: // +++ and vvv
-		  	  Gdx.input.setInputProcessor(controlsWindow.stage);
+			  
+// START OF MODIFICATION - NP STUDIOS ------------------------------------------------------------------
+		  case CONTROLS: 
+		  	  Gdx.input.setInputProcessor(controlsWindow.stage); // set inputs from the user only valid to the controlsWindow
 		  	  controlsWindow.stage.act();
-		  	  controlsWindow.stage.draw();
-		  	  controlsWindow.clickCheck();
-		  	  break; // +++ and ^^^
+		  	  controlsWindow.stage.draw(); // draw the window
+		  	  controlsWindow.clickCheck(); // constantly check for user inputs from the mouse
+		  	  break; 
+// END OF MODIFICATION - NP STUDIOS --------------------------------------------------------------------
 		  }
   	}
   
