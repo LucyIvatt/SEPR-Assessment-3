@@ -36,13 +36,13 @@ public class ControlsWindow {
 	private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 	private TextButton back = new TextButton("BACK", skin);
 	
-	private Label pause = new Label("Pauses game", skin);
-	private Label up = new Label("Drive up", skin);
-	private Label left = new Label("Drive left", skin);
-	private Label down = new Label("Drive down", skin);
-	private Label right = new Label("Drive right", skin);
-	private Label select = new Label("Select fire truck", skin);
+	private Label pause = new Label("Pauses game", skin, "default-font", "white");
+	private Label up = new Label("Drive up", skin, "default-font", "white");
+	private Label left = new Label("Drive left", skin, "default-font", "white");
+	private Label down = new Label("Drive down", skin, "default-font", "white");
+	private Label right = new Label("Drive right", skin, "default-font", "white");
 	private Label blank = new Label(" ", skin);
+	private Label select = new Label("Select fire truck", skin, "default-font", "white");
 	
 	private float width = Gdx.graphics.getWidth();
 	private float centre = width* 0.7f;
