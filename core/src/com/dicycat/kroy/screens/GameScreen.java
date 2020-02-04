@@ -93,7 +93,7 @@ public class GameScreen implements Screen{
 	// Removed truckNum from constructor parameters
 	public GameScreen(Kroy _game) {
 		// END_GAME_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
-		fortressesCount = 3; // Initialize fortress count to 3
+		fortressesCount = 6; // Initialize fortress count to 6
 		// END_GAME_FIX_1 - END OF MODIFICATION - NP STUDIOS
 		game = _game;
 		gamecam = new OrthographicCamera();
