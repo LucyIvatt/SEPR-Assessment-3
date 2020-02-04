@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class GameTextures {
 	private Texture truck, ufo, bullet, fireStation, fireStationDead;
-	// NEW_FORTRESSES - START OF MODIFICATION - NP STUDIOS - Alasdair Pilmore-Bedford ---------------------------
+	// NEW_FORTRESSES_1 - START OF MODIFICATION - NP STUDIOS - Alasdair Pilmore-Bedford ---------------------------
 	// Added new textures add for new fortresses
 	private Texture[] livingFortresses = {new Texture("cliffords tower.png"), new Texture("york minster.png"),
 			new Texture("york museum.png"), new Texture ("YorkRailStationWithEvilAliens.png"),
@@ -22,7 +22,7 @@ public class GameTextures {
 			new Texture("york museum dead.png"), new Texture ("YorkRailStationDestoryed.png"),
 			new Texture ("YorkHospitalDeaded.png"), new Texture ("CentralHallDeaded.png")};
 
-	// NEW_FORTRESSES - END OF MODIFICATION - NP STUDIOS - Alasdair Pilmore-Bedford ---------------------------
+	// NEW_FORTRESSES_1 - END OF MODIFICATION - NP STUDIOS - Alasdair Pilmore-Bedford ---------------------------
 	private String[] truckAddress = {"fireTruck1.png", "fireTruck2.png", "fireTruck3.png", "fireTruck4.png"};
 	
 	

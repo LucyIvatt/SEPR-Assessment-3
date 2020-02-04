@@ -123,7 +123,7 @@ public class GameScreen implements Screen{
 		
 		gameObjects.add(new FireStation());
 
-		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
 		// Added health and damage values for each fortress instantiation
 		// Added new fortresses and set position in accordance with collisions on tiled map
 		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
@@ -138,8 +138,7 @@ public class GameScreen implements Screen{
 				new Vector2(400, 400), 800, 50)); //382, 319
 		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
 				new Vector2(300, 270), 900, 60)); //45, 166
-		// FORTRESS_HEALTH_1 - END OF MODIFICATION - NP STUDIOS
-
+		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
 	}
 
 	/**
