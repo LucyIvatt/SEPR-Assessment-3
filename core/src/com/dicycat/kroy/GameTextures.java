@@ -20,8 +20,17 @@ public class GameTextures {
 	private Texture truck0, truck1, truck2, truck3, ufo, bullet, fireStation, fireStationDead;
 	private ArrayList<Texture> trucks;
 	// TRUCK_SELECT_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-	private Texture[] livingFortresses = {new Texture("cliffords tower.png"), new Texture("york minster.png"), new Texture("york museum.png")};
-	private Texture[] deadFortresses = {new Texture("cliffords tower dead.png"), new Texture("york minster dead.png"), new Texture("york museum dead.png")};
+	// NEW_FORTRESSES_1 - START OF MODIFICATION - NP STUDIOS - Alasdair Pilmore-Bedford ---------------------------
+	// Added new textures add for new fortresses
+	private Texture[] livingFortresses = {new Texture("cliffords tower.png"), new Texture("york minster.png"),
+			new Texture("york museum.png"), new Texture ("YorkRailStationWithEvilAliens.png"),
+			new Texture ("YorkHospital.png"), new Texture ("CentralHall.png")};
+
+	private Texture[] deadFortresses = {new Texture("cliffords tower dead.png"), new Texture("york minster dead.png"),
+			new Texture("york museum dead.png"), new Texture ("YorkRailStationDestoryed.png"),
+			new Texture ("YorkHospitalDeaded.png"), new Texture ("CentralHallDeaded.png")};
+	// NEW_FORTRESSES_1 - END OF MODIFICATION - NP STUDIOS - Alasdair Pilmore-Bedford ---------------------------
+
 	private String[] truckAddress = {"fireTruck1.png", "fireTruck2.png", "fireTruck3.png", "fireTruck4.png"};
 	
 	
