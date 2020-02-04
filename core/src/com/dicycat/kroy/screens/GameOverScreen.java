@@ -35,8 +35,8 @@ public class GameOverScreen implements Screen{
 	  private Texture youLostImage= new Texture("youlost.png");
 	  private Texture playButton= new Texture("newgame.png");
 	  private Texture playButtonActive= new Texture("newActive.png");
-	  private Texture menuButton = new Texture("menu.png");
-	  private Texture menuButtonActive = new Texture("menuActive.png");
+	  private Texture menuButton = new Texture("EXIT.png");
+	  private Texture menuButtonActive = new Texture("exitActive.png");
 	  
 	  private Integer score;
 	  private Integer highScore; 
