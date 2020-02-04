@@ -41,6 +41,7 @@ public class ControlsWindow {
 	private Label left = new Label("Drive left", skin);
 	private Label down = new Label("Drive down", skin);
 	private Label right = new Label("Drive right", skin);
+	private Label select = new Label("Select fire truck", skin);
 	private Label blank = new Label(" ", skin);
 	
 	private float width = Gdx.graphics.getWidth();
@@ -115,6 +116,12 @@ public class ControlsWindow {
 		table.add(blank);
 		table.add(blank);
 		table.add(right);
+		table.row();
+		table.add(new Image(new Texture("1key.png")));
+		table.add(new Image(new Texture("2key.png")));
+		table.add(new Image(new Texture("3key.png")));
+		table.add(new Image(new Texture("4key.png")));
+		table.add(select);
 		table.row();
 		table.add(blank);
 		table.row();
