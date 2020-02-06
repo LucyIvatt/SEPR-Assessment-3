@@ -53,7 +53,60 @@ public class GameObjectTest {
         assertEquals(new Vector2(0, 0), gameObjectTestZeros.getCentre());
     }
 
+    //Testing that .setPosition() accepts standard values and changes accordingly
+    @Test
+    public void setPositionShouldChangeGameObjectsPositionStandard() {
+        //Setting gameObjectTest to a new position at (500,500)
+        gameObjectTest.setPosition(new Vector2(500, 500));
 
+        assertEquals(new Vector2(500, 500), gameObjectTest.getPosition());
+    }
+
+    //Testing that .setPosition() accepts negative values and changes accordingly
+    @Test
+    public void setPositionShouldSetToNegativePosition() {
+        //Setting gameObjectTest to new position at (-10, -10)
+        gameObjectTest.setPosition(new Vector2(-10, -10));
+
+        assertEquals(new Vector2(-10, -10), gameObjectTest.getPosition());
+    }
+
+    //Testing that .changePosition() changes correctly with standard values (.changePosition changes current position by
+    // vector v)
+    @Test
+    public void changePositionShouldShiftStandardVector() {
+        //Setting position to better location than (0,0)
+        gameObjectTest.setPosition(new Vector2(50, 50));
+
+        //The changing factor that the position should shift by
+        gameObjectTest.changePosition(new Vector2(100, 100));
+
+        assertEquals(new Vector2(150, 150), gameObjectTest.getPosition());
+    }
+
+    //Testing that .changePosition() changes correctly with an all negative vector input
+    @Test
+    public void changePositionShouldShiftWithNegativeVector() {
+        //Setting position to better location than (0,0)
+        gameObjectTest.setPosition(new Vector2(50, 50));
+
+        //The changing factor that the position should shift by
+        gameObjectTest.changePosition(new Vector2(-25, -25));
+
+        assertEquals(new Vector2(25, 25), gameObjectTest.getPosition());
+    }
+
+    //Testing that .changePosition() changes correctly with one part of the vector being negative
+    @Test
+    public void changePositionShouldShiftWithOneNegativeNumberVector() {
+        //Setting position to better location than (0,0)
+        gameObjectTest.setPosition(new Vector2(50, 50));
+
+        //The changing factor that the position should shift by
+        gameObjectTest.changePosition(new Vector2(25, -25));
+
+        assertEquals(new Vector2(75, 25), gameObjectTest.getPosition());
+    }
 
 }
 
