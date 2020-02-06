@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+
+//Mostly covered ~ calculate coverage (did not do all getters and setters since most are standard)
 @RunWith(GdxTestRunner.class)
 public class GameObjectTest {
 
@@ -28,7 +30,7 @@ public class GameObjectTest {
 
     //Testing that the GameObject Constructor is working as intended with a standard input
     @Test
-    public void initShouldInstantiateCorrectly() {
+    public void initGameObjectShouldInstantiateCorrectly() {
         assertFalse(gameObjectTest.isRemove());
     }
 
