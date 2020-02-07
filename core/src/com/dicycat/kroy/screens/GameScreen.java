@@ -104,7 +104,10 @@ public class GameScreen implements Screen{
 		optionsWindow = new OptionsWindow(game);
 		optionsWindow.visibility(false);
 		textures = new GameTextures(); // removed truckNum from GameTextures constructor call
-		spawnPosition = new Vector2(3750, 4000);
+		// FIRESTATION_RANGE_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Edited coordinate so firestation is in the middle of the square
+		spawnPosition = new Vector2(234 * 16, 3900);
+		// FIRESTATION_RANGE_FIX_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		gameTimer = 60 * 15; //Set timer to 15 minutes
 		hud = new HUD(game.batch, gameTimer);
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
@@ -160,9 +163,9 @@ public class GameScreen implements Screen{
 		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
 				new Vector2(400, 240), 600, 30));
 		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
-				new Vector2(400, 400), 700, 40));
+				new Vector2(345, 213), 700, 40));
 		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
-				new Vector2(400, 400), 800, 50)); //382, 319
+				new Vector2(300, 240), 800, 50)); //382, 319
 		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
 				new Vector2(300, 270), 900, 60)); //45, 166
 		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
