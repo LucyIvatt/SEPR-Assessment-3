@@ -73,7 +73,7 @@ public class Fortress extends Entity {
 		healthBar.setRemove(true);
 		displayable = true;
 		Kroy.mainGameScreen.removeFortress();
-		if (Kroy.mainGameScreen.fortressesLeft() == 0) {//If last fortress
+		if (Kroy.mainGameScreen.getFortressesCount() == 0) {//If last fortress
 			// HIGHSCORE_5 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 			// Added a bonus to the score if the use finishes the game before the firestation is destroyed. Calculated
 			// using time remaining.
