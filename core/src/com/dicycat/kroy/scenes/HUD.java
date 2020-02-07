@@ -74,8 +74,10 @@ public class HUD {
 		tableHUD.add(timerLabel).expandX().padTop(10);
 		tableHUD.add(scoreLabel).expandX().padTop(10);			// expandX so that all elements take up the same amount of space
 		tableHUD.add(scoreCountLabel).expandX().padTop(10);
+		// FORTRESS_COUNT_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		tableHUD.add(fortressLabel).expandX().padTop(10);
 		tableHUD.add(fortressCountLabel).expandX().padTop(10);
+		// FORTRESS_COUNT_2 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		
 		stage.addActor(tableHUD);
 		
@@ -98,10 +100,10 @@ public class HUD {
 
 		scoreCountLabel.setText(String.format("%06d", score));
 
-		// FORTRESS_COUNT_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// FORTRESS_COUNT_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		// Updates the count depending on the amount of fortresses still alive
 		fortressCountLabel.setText(String.format("%01d", Kroy.mainGameScreen.getFortressesCount()));
-		// FORTRESS_COUNT_2 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// FORTRESS_COUNT_3 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 	}
 
 
