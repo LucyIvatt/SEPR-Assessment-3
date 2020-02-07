@@ -63,10 +63,11 @@ public class HUD {
 		// SCREEN_COUNTDOWN_2 - END OF MODIFICATION - NP STUDIOS
 		scoreCountLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		scoreLabel = new Label("SCORE:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		// FORTRESS_COUNT - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// FORTRESS_COUNT_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Sets start value of fortress count to 6
 		fortressLabel = new Label("FORTRESSES REMAINING:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		fortressCountLabel = new Label(String.format("%01d", 6), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		// FORTRESS_COUNT - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// FORTRESS_COUNT_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		
 
 		tableHUD.add(timeLabel).expandX().padTop(10);
@@ -96,7 +97,11 @@ public class HUD {
 		// SCREEN_COUNTDOWN_3 - END OF MODIFICATION - NP STUDIOS
 
 		scoreCountLabel.setText(String.format("%06d", score));
+
+		// FORTRESS_COUNT_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Updates the count depending on the amount of fortresses still alive
 		fortressCountLabel.setText(String.format("%01d", Kroy.mainGameScreen.getFortressesCount()));
+		// FORTRESS_COUNT_2 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 	}
 
 

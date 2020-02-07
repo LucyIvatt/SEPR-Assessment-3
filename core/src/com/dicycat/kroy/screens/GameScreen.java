@@ -476,9 +476,12 @@ public class GameScreen implements Screen{
 	 * How many fortresses are left?
 	 * @return Number of fortresses remaining
 	 */
+	// FORTRESS_COUNT_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+	// Edited the name of the getter to improve consistency
 	public int getFortressesCount() {
 		return fortressesCount;
 	}
+	// FORTRESS_COUNT_3 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 
 	/**
 	 * Switch to the game over screen
