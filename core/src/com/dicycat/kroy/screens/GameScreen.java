@@ -160,9 +160,9 @@ public class GameScreen implements Screen{
 		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
 				new Vector2(400, 240), 600, 30));
 		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
-				new Vector2(400, 400), 700, 40));
+				new Vector2(345, 213), 700, 40));
 		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
-				new Vector2(400, 400), 800, 50)); //382, 319
+				new Vector2(300, 240), 800, 50)); //382, 319
 		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
 				new Vector2(300, 270), 900, 60)); //45, 166
 		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
