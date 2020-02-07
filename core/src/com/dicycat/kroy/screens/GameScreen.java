@@ -104,7 +104,10 @@ public class GameScreen implements Screen{
 		optionsWindow = new OptionsWindow(game);
 		optionsWindow.visibility(false);
 		textures = new GameTextures(); // removed truckNum from GameTextures constructor call
+		// FIRESTATION_RANGE_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Edited coordinate so firestation is in the middle of the square
 		spawnPosition = new Vector2(234 * 16, 3900);
+		// FIRESTATION_RANGE_FIX_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		gameTimer = 60 * 15; //Set timer to 15 minutes
 		hud = new HUD(game.batch, gameTimer);
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
