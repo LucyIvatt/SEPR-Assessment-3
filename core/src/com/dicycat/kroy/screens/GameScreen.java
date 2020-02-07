@@ -104,7 +104,7 @@ public class GameScreen implements Screen{
 		optionsWindow = new OptionsWindow(game);
 		optionsWindow.visibility(false);
 		textures = new GameTextures(); // removed truckNum from GameTextures constructor call
-		spawnPosition = new Vector2(3750, 4000);
+		spawnPosition = new Vector2(234 * 16, 3900);
 		gameTimer = 60 * 15; //Set timer to 15 minutes
 		hud = new HUD(game.batch, gameTimer);
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
