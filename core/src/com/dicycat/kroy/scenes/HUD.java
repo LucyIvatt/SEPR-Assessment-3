@@ -38,16 +38,14 @@ public class HUD {
 	
 	private Label scoreLabel;
 	private Label timeLabel;
-	private Label trucksLabel;
+	private Label fortressLabel;
 	private Label timerLabel;
 	private Label scoreCountLabel;
-	private Label trucksCountLabel;	//we could put mini images of the trucks instead of using an int for the lives
+	private Label fortressCountLabel;
 
 	
 	
 	/**
-	 * @param sb	SpriteBatch
-	 * @param game	Kroy instance
 	 */
 	public HUD(SpriteBatch sb, float timeLimit) {
 		screenTimer = timeLimit;
@@ -65,16 +63,18 @@ public class HUD {
 		// SCREEN_COUNTDOWN_2 - END OF MODIFICATION - NP STUDIOS
 		scoreCountLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		scoreLabel = new Label("SCORE:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		trucksLabel = new Label("TRUCKS:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		trucksCountLabel = new Label(String.format("%01d", trucks), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		// FORTRESS_COUNT - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		fortressLabel = new Label("FORTRESSES REMAINING:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		fortressCountLabel = new Label(String.format("%01d", 6), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		// FORTRESS_COUNT - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		
 
 		tableHUD.add(timeLabel).expandX().padTop(10);
 		tableHUD.add(timerLabel).expandX().padTop(10);
 		tableHUD.add(scoreLabel).expandX().padTop(10);			// expandX so that all elements take up the same amount of space
 		tableHUD.add(scoreCountLabel).expandX().padTop(10);
-		tableHUD.add(trucksLabel).expandX().padTop(10);
-		tableHUD.add(trucksCountLabel).expandX().padTop(10);
+		tableHUD.add(fortressLabel).expandX().padTop(10);
+		tableHUD.add(fortressCountLabel).expandX().padTop(10);
 		
 		stage.addActor(tableHUD);
 		
@@ -96,6 +96,7 @@ public class HUD {
 		// SCREEN_COUNTDOWN_3 - END OF MODIFICATION - NP STUDIOS
 
 		scoreCountLabel.setText(String.format("%06d", score));
+		fortressCountLabel.setText(String.format("%01d", Kroy.mainGameScreen.getFortressesCount()));
 	}
 
 

@@ -466,13 +466,6 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Add one fortress to the count
-	 */
-	public void addFortress() {
-		fortressesCount++;
-	}
-
-	/**
 	 * Remove one fortress to the count
 	 */
 	public void removeFortress() {
@@ -483,7 +476,7 @@ public class GameScreen implements Screen{
 	 * How many fortresses are left?
 	 * @return Number of fortresses remaining
 	 */
-	public int fortressesLeft() {
+	public int getFortressesCount() {
 		return fortressesCount;
 	}
 
