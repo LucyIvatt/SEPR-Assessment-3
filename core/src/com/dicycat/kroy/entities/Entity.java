@@ -35,7 +35,7 @@ public abstract class Entity extends GameObject{
 	}
 
 	/**
-	 * Method is called every frame (If added to the gameobjects list in GameScreen)
+	 * Method is called every frame (If added to the GameObjects list in GameScreen)
 	 */
 	@Override
 	public void update() {}	//Called every frame
@@ -52,7 +52,10 @@ public abstract class Entity extends GameObject{
 	 * Apply x amount of damage to the entity
 	 * @param damage Amount of damage to inflict on the Entity
 	 */
-	public void applyDamage(float damage) {	
+	public void applyDamage(float damage) {
+		if (damage < 0){
+			throw new IllegalArgumentException("applyDamage(float damage) cannot be passed a negative float");
+		}
 		healthPoints -= damage;
 		if (healthPoints <= 0) {
 			die();
@@ -72,7 +75,7 @@ public abstract class Entity extends GameObject{
 		}
 	}
 	
-	public Integer getHealthPoints(){
+	public int getHealthPoints(){
 		return healthPoints;
 	}
 }
