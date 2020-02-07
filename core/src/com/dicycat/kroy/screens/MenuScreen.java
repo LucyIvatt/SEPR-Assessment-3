@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.scenes.FireTruckSelectionScene;
-import com.dicycat.kroy.scenes.Minigame;
+import com.dicycat.kroy.minigame.Minigame;
 import com.dicycat.kroy.scenes.OptionsWindow;
   
 /**
@@ -197,9 +197,11 @@ public class MenuScreen implements Screen{
 			  optionsWindow.clickCheck(true);
 			  break;
 		  case MINIG:
-		  	Gdx.input.setInputProcessor((minigame.stage));
-		  	minigame.stage.act();
-		  	minigame.stage.draw();
+		  	  Gdx.input.setInputProcessor(minigame.stage);
+		  	  minigame.stage.act();
+		  	  minigame.stage.draw();
+		  	  minigame.clickCheck();
+		  	  break;
 		  }
   	}
   

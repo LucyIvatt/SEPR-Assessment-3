@@ -26,6 +26,7 @@ import com.dicycat.kroy.entities.FireStation;
 import com.dicycat.kroy.entities.FireTruck;
 import com.dicycat.kroy.entities.Fortress;
 import com.dicycat.kroy.gamemap.TiledGameMap;
+import com.dicycat.kroy.minigame.Minigame;
 import com.dicycat.kroy.misc.WaterStream;
 import com.dicycat.kroy.scenes.HUD;
 import com.dicycat.kroy.scenes.OptionsWindow;
@@ -45,7 +46,8 @@ public class GameScreen implements Screen{
 		PAUSE,
 		RUN,
 		RESUME,
-		OPTIONS
+		OPTIONS,
+		MINIG
 	}
 	
 	public Kroy game;
@@ -64,6 +66,7 @@ public class GameScreen implements Screen{
 	private HUD hud;
 	private PauseWindow pauseWindow;
 	private OptionsWindow optionsWindow;
+	private Minigame minigame;
 
 	private Float[][] truckStats = {	//Each list is a configuration of a specific truck. {speed, flowRate, capacity, range}
 			{450f, 1f, 400f, 300f},		//Speed
@@ -101,6 +104,8 @@ public class GameScreen implements Screen{
 		pauseWindow.visibility(false);
 		optionsWindow = new OptionsWindow(game);
 		optionsWindow.visibility(false);
+		minigame = new Minigame(game);
+		minigame.visibility(false);
 		textures = new GameTextures(truckNum);
 		spawnPosition = new Vector2(3750, 4000);
 		gameTimer = 60 * 15; //Set timer to 15 minutes
@@ -179,6 +184,13 @@ public class GameScreen implements Screen{
 			case RESUME:
 				pauseWindow.visibility(false);
 				setGameState(GameScreenState.RUN);
+				break;
+			case MINIG:
+				Gdx.input.setInputProcessor(minigame.stage);
+				minigame.visibility(true);
+				minigame.stage.draw();
+				minigame.stage.act();
+				minigame.clickCheck();
 				break;
 			default:
 				break;

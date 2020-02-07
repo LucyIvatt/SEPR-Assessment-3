@@ -222,6 +222,14 @@ public class FireTruck extends Entity{
 		return (outputArray);
 	}
 
+	public boolean isFull(){
+		if (this.maxWater == this.currentWater){
+			return true;
+		}else {
+			return false;
+		}
+	}
+
 	/**
 	 * Check if a game object is in range of the fire truck
 	 * @param object Object to check
@@ -253,14 +261,11 @@ public class FireTruck extends Entity{
 	/**
 	 * Replenishes health and water
 	 */
+	// REPLENISH: OVER TIME -> INSTANT  - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------------------------------
 	public void replenish(){
-		if(!(currentWater >= maxWater)){
-			currentWater += 2;
-		}
-		if(!(healthPoints >= maxHealthPoints)){
-			healthPoints += 2;
-		}
+		this.currentWater = this.maxWater;
 	}
+	// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
 	/**
 	 * @param pos
