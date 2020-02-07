@@ -104,8 +104,8 @@ public class GameScreen implements Screen{
 		pauseWindow.visibility(false);
 		optionsWindow = new OptionsWindow(game);
 		optionsWindow.visibility(false);
-		minigame = new Minigame(game);
-		minigame.visibility(false);
+//		minigame = new Minigame(game);
+//		minigame.visibility(false);
 		textures = new GameTextures(truckNum);
 		spawnPosition = new Vector2(3750, 4000);
 		gameTimer = 60 * 15; //Set timer to 15 minutes
@@ -195,6 +195,10 @@ public class GameScreen implements Screen{
 			default:
 				break;
 		}
+	}
+
+	public void newMinigame(){
+		minigame = new Minigame(game);
 	}
 
 	/**

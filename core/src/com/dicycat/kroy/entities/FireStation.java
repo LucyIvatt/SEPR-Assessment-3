@@ -41,6 +41,7 @@ public class FireStation extends Entity {
 		if(playerInRadius()){
 			if (!Kroy.mainGameScreen.getPlayer().isFull()) {
 				Kroy.mainGameScreen.getPlayer().replenish();
+				Kroy.mainGameScreen.newMinigame();
 				Kroy.mainGameScreen.setGameState(GameScreen.GameScreenState.MINIG);
 			}
 		}

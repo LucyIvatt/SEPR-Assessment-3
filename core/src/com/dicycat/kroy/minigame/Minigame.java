@@ -31,11 +31,12 @@ public class Minigame {
     private Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
     private ArrayList<Pipe> pipes = new ArrayList<>();
-    private ImageButton check = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("check.png"))));
+    private ImageButton check = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(
+            "check.png"))));
 
     private TextButton back = new TextButton("RETURN", skin);
 
-    public static Minigame.State state = State.GAME1;
+    private static Minigame.State state;
 
     /**
      *	Allows to have multiple 'pages' of the Option window without
@@ -48,6 +49,7 @@ public class Minigame {
     }
 
     public Minigame(Kroy game){
+        state = State.GAME1;
         sb = game.batch;
         Viewport viewport = new ScreenViewport(new OrthographicCamera());
         stage = new Stage(viewport, sb);
@@ -150,6 +152,9 @@ public class Minigame {
                 table.add(new Image(new Texture("minigamewin.png")));
                 table.row();
                 table.add(back).width(Kroy.width/3);
+
+                table.setFillParent(true);
+                stage.addActor(table);
                 break;
             case TEST:
                 table.row();
