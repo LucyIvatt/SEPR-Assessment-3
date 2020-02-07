@@ -104,7 +104,10 @@ public class GameScreen implements Screen{
 		optionsWindow = new OptionsWindow(game);
 		optionsWindow.visibility(false);
 		textures = new GameTextures(); // removed truckNum from GameTextures constructor call
-		spawnPosition = new Vector2(3750, 4000);
+		// FIRESTATION_RANGE_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Edited coordinate so firestation is in the middle of the square
+		spawnPosition = new Vector2(234 * 16, 3900);
+		// FIRESTATION_RANGE_FIX_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		gameTimer = 60 * 15; //Set timer to 15 minutes
 		hud = new HUD(game.batch, gameTimer);
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
@@ -466,13 +469,6 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Add one fortress to the count
-	 */
-	public void addFortress() {
-		fortressesCount++;
-	}
-
-	/**
 	 * Remove one fortress to the count
 	 */
 	public void removeFortress() {
@@ -483,9 +479,12 @@ public class GameScreen implements Screen{
 	 * How many fortresses are left?
 	 * @return Number of fortresses remaining
 	 */
-	public int fortressesLeft() {
+	// FORTRESS_COUNT_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+	// Edited the name of the getter to improve consistency
+	public int getFortressesCount() {
 		return fortressesCount;
 	}
+	// FORTRESS_COUNT_3 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 
 	/**
 	 * Switch to the game over screen
