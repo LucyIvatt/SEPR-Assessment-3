@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
+import com.dicycat.kroy.misc.Button;
 import com.dicycat.kroy.scenes.ControlsWindow;
 import com.dicycat.kroy.scenes.FireTruckSelectionScene;
 import com.dicycat.kroy.scenes.OptionsWindow;
@@ -155,69 +156,53 @@ public class MenuScreen implements Screen{
 			  game.batch.draw(minigameButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 			
 			
+			  // REFACTOR_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
+			  
 			  //for play button: checks if the position of the cursor is inside the coordinates of the button
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > playButtonY ) && (Kroy.height - Gdx.input.getY() < (playButtonY + buttonHeight)) ) ){
-				  game.batch.draw(playButtonActive, xAxisCentred, playButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  this.dispose();
-					  game.batch.end();
-					  fireTruckSelector.visibility(true);// display the truck selection window
-					  setGameState(MenuScreenState.TRUCKSELECT);// set the game state to run and run the selection screen code
-					  return;
-				  }
-			  } else {
-				  game.batch.draw(playButton, xAxisCentred, playButtonY, buttonWidth, buttonHeight);
+			  Button test_playButton = new Button(playButtonY, playButton, playButtonActive, this);
+			  if (test_playButton.buttonAction()) {
+				  this.dispose();
+				  game.batch.end();
+				  fireTruckSelector.visibility(true);// display the truck selection window
+				  setGameState(MenuScreenState.TRUCKSELECT);// set the game state to run and run the selection screen code
+				  return;
 			  }
 			  
-			//for exit button
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > exitButtonY ) && (Kroy.height - Gdx.input.getY() < (exitButtonY + buttonHeight)) ) ){
-				  game.batch.draw(exitButtonActive, xAxisCentred, exitButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  Gdx.app.exit();
-				  }
-			  } else {
-				  game.batch.draw(exitButton, xAxisCentred, exitButtonY, buttonWidth, buttonHeight);
+			  
+			  //for exit button
+			  Button test_exitButton = new Button(exitButtonY, exitButton, exitButtonActive, this);
+			  if (test_exitButton.buttonAction()) {
+				  Gdx.app.exit();
 			  }
 				
+			  
 			  //for minigame button
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > minigameButtonY ) && (Kroy.height - Gdx.input.getY() < (minigameButtonY + buttonHeight)) ) ){
-				  game.batch.draw(minigameButtonActive, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  //what shall we put?
-						  }
-					  } else {
-						  game.batch.draw(minigameButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
-					  }
-	
-						  //for options button
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > optionsButtonY ) && (Kroy.height - Gdx.input.getY() < (optionsButtonY + buttonHeight)) ) ){
-				  game.batch.draw(optionsButtonActive, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  //game.batch.end();
-					  optionsWindow.visibility(true);
-					  setGameState(MenuScreenState.OPTIONS);
-				  }
-			  } else {
-				  game.batch.draw(optionsButton, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
+			  Button test_minigameButton = new Button(minigameButtonY, minigameButton, minigameButtonActive, this);
+			  if (test_minigameButton.buttonAction()) {
+				  // add minigame actions
 			  }
+	
+			  
+			  //for options button
+			  Button test_optionsButton = new Button(optionsButtonY, optionsButton, optionsButtonActive, this);
+			  if (test_optionsButton.buttonAction()) {
+				//game.batch.end();
+				  optionsWindow.visibility(true);
+				  setGameState(MenuScreenState.OPTIONS);
+			  }
+			  
+			  // REFACTOR_CHANGE_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
+			 
 			  
 			  // CONTROL_SCREEN_6 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 			  // for controls button
 			  
-			  //if the mouse is on the button ...
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > controlsButtonY ) && (Kroy.height - Gdx.input.getY() < (controlsButtonY + buttonHeight)) ) ){
-				  // ... then display the 'controlsButtonActice' texture ...
-				  game.batch.draw(controlsButtonActive, xAxisCentred, controlsButtonY, buttonWidth, buttonHeight);
-				  
-				  // if the controls button is pressed, show the visibility of the controls window to true and set the game state to CONTROLS
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  controlsWindow.visibility(true);
-					  setGameState(MenuScreenState.CONTROLS);
-				  }
-			  } else {
-				  // ... otherwise, display the 'controlsButton' texture
-				  game.batch.draw(controlsButton, xAxisCentred, controlsButtonY, buttonWidth, buttonHeight);
+			  Button test_controlsButton = new Button(controlsButtonY, controlsButton, controlsButtonActive, this);
+			  if (test_controlsButton.buttonAction()) {
+				  controlsWindow.visibility(true);
+				  setGameState(MenuScreenState.CONTROLS);
 			  }
+			 
 			  // CONTROL_SCREEN_6 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 			  
 			  game.batch.end();
@@ -314,5 +299,14 @@ public class MenuScreen implements Screen{
   
   @Override 
   public void dispose() {}
+  
+  // REFACTOR_CHANGE_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
+  public int getXAxisCentred() { return xAxisCentred; }
+  public int getButtonWidth() { return buttonWidth; }
+  public int getButtonHeight() { return buttonHeight; }
+  public Kroy getGame() { return game; }
+  // REFACTOR_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
  }
+
+
 
