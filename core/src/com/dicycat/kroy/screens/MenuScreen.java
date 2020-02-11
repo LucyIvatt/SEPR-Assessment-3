@@ -31,20 +31,22 @@ public class MenuScreen implements Screen{
   private Kroy game; 
   private OrthographicCamera gamecam;	//m
   private Viewport gameport; 	//m
-  private Texture playButton, 
-  	playButtonActive, 
-  	optionsButton, 
-  	optionsButtonActive, 
-  	exitButton, 
-  	exitButtonActive, 
-  	minigameButton, 
-  	minigameButtonActive, 
-  	background,
+  private Texture background,
+// REFACTOR_CHANGE_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+    playButtonTexture, 
+  	playButtonActiveTexture, 
+  	optionsButtonTexture, 
+  	optionsButtonActiveTexture, 
+  	exitButtonTexture, 
+  	exitButtonActiveTexture, 
+  	minigameButtonTexture, 
+  	minigameButtonActiveTexture, 
+// REFACTOR_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 
-	// CONTROL_SCREEN_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-  	controlsButton, 
-  	controlsButtonActive;
-	// CONTROL_SCREEN_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
+	// CONTROL_SCREEN_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+  	controlsButtonTexture, 
+  	controlsButtonActiveTexture;
+	// CONTROL_SCREEN_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
   
   private Stage stage;
   
@@ -98,18 +100,18 @@ public class MenuScreen implements Screen{
    */
   public MenuScreen(Kroy game) { 
 	  this.game = game; 
-	  exitButton = new Texture("EXIT.png"); 	//in later stages we could also have buttonActive and buttonInactive
-	  exitButtonActive = new Texture("exitActive.png");
-	  optionsButton = new Texture("options.png");
-	  optionsButtonActive = new Texture("optionsActive.png");
-	  playButton = new Texture("newgame.png");
-	  playButtonActive = new Texture("newActive.png");
-	  minigameButton = new Texture("minigame.png");
-	  minigameButtonActive = new Texture("minigameActive.png");
+	  exitButtonTexture = new Texture("EXIT.png"); 	//in later stages we could also have buttonActive and buttonInactive
+	  exitButtonActiveTexture = new Texture("exitActive.png");
+	  optionsButtonTexture = new Texture("options.png");
+	  optionsButtonActiveTexture = new Texture("optionsActive.png");
+	  playButtonTexture = new Texture("newgame.png");
+	  playButtonActiveTexture = new Texture("newActive.png");
+	  minigameButtonTexture = new Texture("minigame.png");
+	  minigameButtonActiveTexture = new Texture("minigameActive.png");
 
 	// CONTROL_SCREEN_5 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-	  controlsButton = new Texture("controls.png"); // control button texture
-	  controlsButtonActive = new Texture("controls_ACTIVE.png"); // control button texture when the mouse is hovering over the button
+	  controlsButtonTexture = new Texture("controls.png"); // control button texture
+	  controlsButtonActiveTexture = new Texture("controls_ACTIVE.png"); // control button texture when the mouse is hovering over the button
 	// CONTROL_SCREEN_5 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 
 	  background = new Texture ("fireforce.jpg");
@@ -153,14 +155,14 @@ public class MenuScreen implements Screen{
 			  Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, xHotSpot, yHotSpot));
 			  game.batch.draw(background, 0, 0);
 			 
-			  game.batch.draw(minigameButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
+			  game.batch.draw(minigameButtonTexture, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 			
 			
-			  // REFACTOR_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
+			  // REFACTOR_CHANGE_3 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
 			  
 			  //for play button: checks if the position of the cursor is inside the coordinates of the button
-			  Button test_playButton = new Button(playButtonY, playButton, playButtonActive, this);
-			  if (test_playButton.buttonAction()) {
+			  Button playButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, this);
+			  if (playButton.buttonAction()) {
 				  this.dispose();
 				  game.batch.end();
 				  fireTruckSelector.visibility(true);// display the truck selection window
@@ -170,35 +172,37 @@ public class MenuScreen implements Screen{
 			  
 			  
 			  //for exit button
-			  Button test_exitButton = new Button(exitButtonY, exitButton, exitButtonActive, this);
+			  		// button created
+			  Button test_exitButton = new Button(exitButtonY, exitButtonTexture, exitButtonActiveTexture, this);
+			  		// if the button is pressed, execute the command inside the if statement
 			  if (test_exitButton.buttonAction()) {
 				  Gdx.app.exit();
 			  }
 				
 			  
 			  //for minigame button
-			  Button test_minigameButton = new Button(minigameButtonY, minigameButton, minigameButtonActive, this);
-			  if (test_minigameButton.buttonAction()) {
+			  Button minigameButton = new Button(minigameButtonY, minigameButtonTexture, minigameButtonActiveTexture, this);
+			  if (minigameButton.buttonAction()) {
 				  // add minigame actions
 			  }
 	
 			  
 			  //for options button
-			  Button test_optionsButton = new Button(optionsButtonY, optionsButton, optionsButtonActive, this);
-			  if (test_optionsButton.buttonAction()) {
+			  Button optionsButton = new Button(optionsButtonY, optionsButtonTexture, optionsButtonActiveTexture, this);
+			  if (optionsButton.buttonAction()) {
 				//game.batch.end();
 				  optionsWindow.visibility(true);
 				  setGameState(MenuScreenState.OPTIONS);
 			  }
 			  
-			  // REFACTOR_CHANGE_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
+			  // REFACTOR_CHANGE_3 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
 			 
 			  
 			  // CONTROL_SCREEN_6 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 			  // for controls button
 			  
-			  Button test_controlsButton = new Button(controlsButtonY, controlsButton, controlsButtonActive, this);
-			  if (test_controlsButton.buttonAction()) {
+			  Button controlsButton = new Button(controlsButtonY, controlsButtonTexture, controlsButtonActiveTexture, this);
+			  if (controlsButton.buttonAction()) {
 				  controlsWindow.visibility(true);
 				  setGameState(MenuScreenState.CONTROLS);
 			  }
@@ -300,12 +304,12 @@ public class MenuScreen implements Screen{
   @Override 
   public void dispose() {}
   
-  // REFACTOR_CHANGE_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
+  // REFACTOR_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
   public int getXAxisCentred() { return xAxisCentred; }
   public int getButtonWidth() { return buttonWidth; }
   public int getButtonHeight() { return buttonHeight; }
   public Kroy getGame() { return game; }
-  // REFACTOR_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
+  // REFACTOR_CHANGE_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
  }
 
 
