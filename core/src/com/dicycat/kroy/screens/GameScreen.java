@@ -2,13 +2,11 @@ package com.dicycat.kroy.screens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -22,12 +20,9 @@ import com.dicycat.kroy.debug.DebugCircle;
 import com.dicycat.kroy.debug.DebugDraw;
 import com.dicycat.kroy.debug.DebugLine;
 import com.dicycat.kroy.debug.DebugRect;
-import com.dicycat.kroy.entities.FireStation;
-import com.dicycat.kroy.entities.FireTruck;
-import com.dicycat.kroy.entities.Fortress;
+import com.dicycat.kroy.entities.*;
 import com.dicycat.kroy.gamemap.TiledGameMap;
 import com.dicycat.kroy.minigame.Minigame;
-import com.dicycat.kroy.misc.WaterStream;
 import com.dicycat.kroy.scenes.HUD;
 import com.dicycat.kroy.scenes.OptionsWindow;
 import com.dicycat.kroy.scenes.PauseWindow;
@@ -68,16 +63,20 @@ public class GameScreen implements Screen{
 	private OptionsWindow optionsWindow;
 	private Minigame minigame;
 
+	// TRUCK_SELECT_CHANGE_11 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// Slightly edited trucks statistics to make the game more balanced.
 	private Float[][] truckStats = {	//Each list is a configuration of a specific truck. {speed, flowRate, capacity, range}
 			{450f, 1f, 400f, 300f},		//Speed
-			{300f, 1.5f, 400f, 300f},	//Flow rate
+			{300f, 2f, 400f, 300f},	//Flow rate
 			{300f, 1f, 500f, 300f},		//Capacity
 			{300f, 1f, 400f, 450f}		//Range
 		};
-	
-	
-	private int truckNum; // Identifies the truck thats selected in the menu screen
-	private FireTruck player; //Reference to the player
+
+	// Changes variable of truckNum to activeTruck
+	private int activeTruck; // Identifies the truck that is currently selected
+	// Deleted the variable player and replaced it with an ArrayList containing the 4 trucks and named it players
+	private ArrayList<FireTruck> players;
+	// TRUCK_SELECT_CHANGE_11 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	private int lives = 4;
 	
 	private int fortressesCount;
@@ -92,13 +91,16 @@ public class GameScreen implements Screen{
 
 	/**
 	 * @param _game
-	 * @param truckNum
 	 */
-	public GameScreen(Kroy _game, int truckNum) {
+	// TRUCK_SELECT_CHANGE_12 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// Removed truckNum from constructor parameters
+	public GameScreen(Kroy _game) {
+		// END_GAME_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		fortressesCount = 6; // Initialize fortress count to 6
+		// END_GAME_FIX_1 - END OF MODIFICATION - NP STUDIOS
 		game = _game;
 		gamecam = new OrthographicCamera();
 		gameport = new FitViewport(Kroy.width, Kroy.height, gamecam);	//Mic:could also use StretchViewPort to make the screen stretch instead of adapt
-		hud = new HUD(game.batch, this.game);
 		gameMap = new TiledGameMap();										//or FitPort to make it fit into a specific width/height ratio
 		pauseWindow = new PauseWindow(game);
 		pauseWindow.visibility(false);
@@ -106,11 +108,17 @@ public class GameScreen implements Screen{
 		optionsWindow.visibility(false);
 //		minigame = new Minigame(game);
 //		minigame.visibility(false);
-		textures = new GameTextures(truckNum);
-		spawnPosition = new Vector2(3750, 4000);
+		textures = new GameTextures(); // removed truckNum from GameTextures constructor call
+		// FIRESTATION_RANGE_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Edited coordinate so firestation is in the middle of the square
+		spawnPosition = new Vector2(234 * 16, 3900);
+		// FIRESTATION_RANGE_FIX_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		gameTimer = 60 * 15; //Set timer to 15 minutes
-		this.truckNum = truckNum;
+		hud = new HUD(game.batch, gameTimer);
+		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
+
 	}
+	// TRUCK_SELECT_CHANGE_12 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 	/**
 	 * Screen first shown
@@ -121,21 +129,51 @@ public class GameScreen implements Screen{
 		gameObjects = new ArrayList<GameObject>();
 		deadObjects = new ArrayList<GameObject>();
 		debugObjects = new ArrayList<DebugDraw>();
-		player = new FireTruck(spawnPosition.cpy(),truckStats[truckNum]); // Initialises the FireTruck
 
-		gamecam.translate(new Vector2(player.getX(),player.getY())); // sets initial Camera position
-		gameObjects.add(player);	//Player
-		
+		// TRUCK_SELECT_CHANGE_13 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		// Adds all the different firetruck types to the players ArrayList
+		players.add(new FireTruck(new Vector2(spawnPosition.x + 50, spawnPosition.y), truckStats[0], 0));
+		players.add(new FireTruck(new Vector2(spawnPosition.x - 50, spawnPosition.y), truckStats[1], 1));
+		players.add(new FireTruck(new Vector2(spawnPosition.x, spawnPosition.y), truckStats[2], 2));
+		players.add(new FireTruck(new Vector2(spawnPosition.x, spawnPosition.y - 50), truckStats[3], 3));
+
+		// Iterates through the players array lists and adds them to gameObjects.
+		for (FireTruck truck : players) {
+			gameObjects.add(truck);	//Player
+		}
+
+		// Sets initial camera position to the active truck's position (set to arbitrary truck at the beginning of the game)
+		gamecam.translate(new Vector2(players.get(activeTruck).getX(),players.get(activeTruck).getY())); // sets initial Camera position
+		// TRUCK_SELECT_CHANGE_13 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
 		gameObjects.add(new FireStation());
+
+		// PATROLS_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+		// Creates the aliens for the patrols and adds them to gameObjects so they can be updated each tick
+		int timeBetween = 50;
+		for (int patrolNum = 1; patrolNum <=4; patrolNum++)
+		for (int i = 0; i < 5; i++) {
+			gameObjects.add(new Alien(patrolNum, i * timeBetween, 300));
+		}
+		// PATROLS_4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+
+
 		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 		// Added health and damage values for each fortress instantiation
+		// Added new fortresses and set position in accordance with collisions on tiled map
 		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
-				new Vector2(256, 218), 400, 10));
+				new Vector2(256, 218), 400, 5));
 		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
-				new Vector2(256, 320), 500, 20));
+				new Vector2(256, 320), 500, 10));
 		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
-				new Vector2(400, 240), 600, 30));
-		// FORTRESS_HEALTH_1 - END OF MODIFICATION - NP STUDIOS
+				new Vector2(400, 240), 600, 15));
+		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
+				new Vector2(400, 400), 700, 20));
+		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
+				new Vector2(400, 400), 800, 25)); //382, 319
+		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
+				new Vector2(300, 270), 900, 30)); //45, 166
+		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
 	}
 
 	/**
@@ -151,6 +189,25 @@ public class GameScreen implements Screen{
 					pauseWindow.visibility(true);
 					pause();
 				}
+				// TRUCK_SELECT_CHANGE_14 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+				// Sets active truck depending on which number key is pressed
+				if (Gdx.input.isKeyPressed(Keys.NUM_1) && !players.get(0).isRemove()) {
+					activeTruck = 0;
+				}
+				else if (Gdx.input.isKeyPressed(Keys.NUM_2) && !players.get(1).isRemove()) {
+					activeTruck = 1;
+				}
+				else if (Gdx.input.isKeyPressed(Keys.NUM_3) && !players.get(2).isRemove()) {
+					activeTruck = 2;
+				}
+				else if (Gdx.input.isKeyPressed(Keys.NUM_4) && !players.get(3).isRemove()) {
+					activeTruck = 3;
+				}
+
+				selectTruck();
+
+				// TRUCK_SELECT_CHANGE_14 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
 				gameTimer -= delta;		//Decrement timer
 
 				updateLoop(); //Update all game objects positions but does not render them as to be able to render everything as quickly as possible
@@ -233,9 +290,13 @@ public class GameScreen implements Screen{
 		for (GameObject dObject : deadObjects) { // loops through the destroyed but displayed items (such as destroyed bases)
 			objectsToRender.add(dObject);
 		}
-		if (player.isRemove()) {	//If the player is set for removal, respawn
+		// TRUCK_SELECT_CHANGE_15 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		// Changed to check if the active truck is destroyed and then updates lives if so
+		if (players.get(activeTruck).isRemove()) {	//If the player is set for removal, respawn
 			updateLives();
 		}
+		// TRUCK_SELECT_CHANGE_15 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
 	}
 
 	/**
@@ -260,9 +321,12 @@ public class GameScreen implements Screen{
 	 * Allows external classes to access the player
 	 * @return player
 	 */
+	// TRUCK_SELECT_CHANGE_16 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// Updated to return the active truck
 	public FireTruck getPlayer() {
-		return player;
+		return players.get(activeTruck);
 	}
+	// TRUCK_SELECT_CHANGE_16 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 	/**
 	 * Draws all debug objects for one frame
@@ -329,7 +393,10 @@ public class GameScreen implements Screen{
 	 * Updates the position of the camera to have the truck centre
 	 */
 	public void updateCamera() {
-		gamecam.position.lerp(new Vector3(player.getX(),player.getY(),gamecam.position.z),0.1f);// sets the new camera position based on the current position of the FireTruck
+		// TRUCK_SELECT_CHANGE_16 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		// sets the new camera position based on the current position of the active truck
+		gamecam.position.lerp(new Vector3(players.get(activeTruck).getX(),players.get(activeTruck).getY(),gamecam.position.z),0.1f);// sets the new camera position based on the current position of the FireTruck
+		// TRUCK_SELECT_CHANGE_16 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		gamecam.update();
 	}
 
@@ -418,13 +485,6 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Add one fortress to the count
-	 */
-	public void addFortress() {
-		fortressesCount++;
-	}
-
-	/**
 	 * Remove one fortress to the count
 	 */
 	public void removeFortress() {
@@ -435,16 +495,19 @@ public class GameScreen implements Screen{
 	 * How many fortresses are left?
 	 * @return Number of fortresses remaining
 	 */
-	public int fortressesLeft() {
+	// FORTRESS_COUNT_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+	// Edited the name of the getter to improve consistency
+	public int getFortressesCount() {
 		return fortressesCount;
 	}
+	// FORTRESS_COUNT_3 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 
 	/**
 	 * Switch to the game over screen
 	 * @param won Did the player reach the win state?
 	 */
 	public void gameOver(boolean won) {
-		game.setScreen(new GameOverScreen(game, truckNum, won));
+		game.setScreen(new GameOverScreen(game, activeTruck, won));
 	}
 
 	/**
@@ -457,16 +520,23 @@ public class GameScreen implements Screen{
 		} else {
 			gameOver(false);
 		}
+
 	}
 	
 	/**
 	 * Respawns the player at the spawn position and updates the HUD
 	 */
-	public void respawn() { 
-		player = new FireTruck(spawnPosition.cpy(),truckStats[truckNum]);
-		gameObjects.add(player);
+	public void respawn() {
+		// TRUCK_SELECT_CHANGE_17 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		// Picks first alive truck and sets this to the new active one when the current active one is killed
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).isRemove() == false) {
+				activeTruck = i;
+				break;
+			}
+		}
+		// TRUCK_SELECT_CHANGE_17 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	}
-	
 	public HUD getHud(){
 		return hud;
 	}
@@ -474,4 +544,15 @@ public class GameScreen implements Screen{
 	public Vector2 getSpawnPosition() {
 		return spawnPosition;
 	}
+
+
+	// TRUCK_SELECT_CHANGE_18 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	// Sets the selected variable on each of the trucks to false and then sets the active trucks selected variable to true
+	public void selectTruck () {
+		for (FireTruck truck : players) {
+			truck.setSelected(false);
+		}
+		players.get(activeTruck).setSelected(true);
+	}
+	// TRUCK_SELECT_CHANGE_18 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 }

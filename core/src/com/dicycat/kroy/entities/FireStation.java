@@ -21,7 +21,8 @@ public class FireStation extends Entity {
 	 * 
 	 */
 	public FireStation() {
-		super(new Vector2(Kroy.mainGameScreen.getSpawnPosition().add(-(textureLiving.getWidth()/2), 100)), textureLiving, new Vector2(textureLiving.getWidth(),textureLiving.getHeight()), 100);
+		super(new Vector2(Kroy.mainGameScreen.getSpawnPosition().add(-(textureLiving.getWidth()/2), 100)),
+				textureLiving, new Vector2(textureLiving.getWidth(),textureLiving.getHeight()), 100, 300);
 	}
 
 	/**
