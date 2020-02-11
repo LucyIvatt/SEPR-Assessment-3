@@ -108,7 +108,7 @@ public class MenuScreen implements Screen{
 	  optionsWindow = new OptionsWindow(game);
 	  optionsWindow.visibility(false);
 
-	  minigame = new Minigame(game);
+	  minigame = new Minigame(game, false);
 	  minigame.visibility(false);
   }
   

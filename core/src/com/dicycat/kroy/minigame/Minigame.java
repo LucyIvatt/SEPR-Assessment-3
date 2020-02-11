@@ -35,6 +35,7 @@ public class Minigame {
             "check.png"))));
 
     private TextButton back = new TextButton("RETURN", skin);
+    private boolean inGame;
 
     private static Minigame.State state;
 
@@ -48,9 +49,10 @@ public class Minigame {
         TEST
     }
 
-    public Minigame(Kroy game){
+    public Minigame(Kroy game, boolean inGame){
         state = State.GAME1;
         sb = game.batch;
+        inGame = this.inGame;
         Viewport viewport = new ScreenViewport(new OrthographicCamera());
         stage = new Stage(viewport, sb);
         table.reset();
@@ -102,7 +104,12 @@ public class Minigame {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 visibility(false);
-                    Kroy.mainGameScreen.setGameState(GameScreen.GameScreenState.RUN);
+                    if (inGame) {
+                        Kroy.mainMenuScreen.state = MenuScreen.MenuScreenState.MAINMENU;
+                    }
+                    else {
+                        Kroy.mainGameScreen.setGameState(GameScreen.GameScreenState.RUN);
+                    }
                     return;
             }
         });

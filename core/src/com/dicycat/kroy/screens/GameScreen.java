@@ -198,7 +198,7 @@ public class GameScreen implements Screen{
 	}
 
 	public void newMinigame(){
-		minigame = new Minigame(game);
+		minigame = new Minigame(game, true);
 	}
 
 	/**
