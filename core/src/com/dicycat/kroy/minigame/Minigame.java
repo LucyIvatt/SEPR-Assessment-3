@@ -46,7 +46,6 @@ public class Minigame {
     public static enum State{
         GAME1,
         WON,
-        TEST
     }
 
     public Minigame(Kroy game, boolean inGame){
@@ -92,10 +91,6 @@ public class Minigame {
                 if (flag == true){
                     table.reset();
                     state = State.WON;
-                    updateDraw();
-                }else{
-                    table.reset();
-                    state = State.TEST;
                     updateDraw();
                 }
             }
@@ -162,9 +157,6 @@ public class Minigame {
 
                 table.setFillParent(true);
                 stage.addActor(table);
-                break;
-            case TEST:
-                table.row();
                 break;
         }
     }
