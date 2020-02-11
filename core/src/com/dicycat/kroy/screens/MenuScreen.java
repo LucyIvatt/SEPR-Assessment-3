@@ -161,7 +161,7 @@ public class MenuScreen implements Screen{
 			  // REFACTOR_CHANGE_3 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
 			  
 			  //for play button: checks if the position of the cursor is inside the coordinates of the button
-			  Button playButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, this);
+			  Button playButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, game);
 			  if (playButton.buttonAction()) {
 				  this.dispose();
 				  game.batch.end();
@@ -173,7 +173,7 @@ public class MenuScreen implements Screen{
 			  
 			  //for exit button
 			  		// button created
-			  Button test_exitButton = new Button(exitButtonY, exitButtonTexture, exitButtonActiveTexture, this);
+			  Button test_exitButton = new Button(exitButtonY, exitButtonTexture, exitButtonActiveTexture, game);
 			  		// if the button is pressed, execute the command inside the if statement
 			  if (test_exitButton.buttonAction()) {
 				  Gdx.app.exit();
@@ -181,14 +181,14 @@ public class MenuScreen implements Screen{
 				
 			  
 			  //for minigame button
-			  Button minigameButton = new Button(minigameButtonY, minigameButtonTexture, minigameButtonActiveTexture, this);
+			  Button minigameButton = new Button(minigameButtonY, minigameButtonTexture, minigameButtonActiveTexture, game);
 			  if (minigameButton.buttonAction()) {
 				  // add minigame actions
 			  }
 	
 			  
 			  //for options button
-			  Button optionsButton = new Button(optionsButtonY, optionsButtonTexture, optionsButtonActiveTexture, this);
+			  Button optionsButton = new Button(optionsButtonY, optionsButtonTexture, optionsButtonActiveTexture, game);
 			  if (optionsButton.buttonAction()) {
 				//game.batch.end();
 				  optionsWindow.visibility(true);
@@ -201,7 +201,7 @@ public class MenuScreen implements Screen{
 			  // CONTROL_SCREEN_6 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 			  // for controls button
 			  
-			  Button controlsButton = new Button(controlsButtonY, controlsButtonTexture, controlsButtonActiveTexture, this);
+			  Button controlsButton = new Button(controlsButtonY, controlsButtonTexture, controlsButtonActiveTexture, game);
 			  if (controlsButton.buttonAction()) {
 				  controlsWindow.visibility(true);
 				  setGameState(MenuScreenState.CONTROLS);

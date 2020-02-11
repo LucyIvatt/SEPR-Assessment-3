@@ -2,7 +2,9 @@ package com.dicycat.kroy.misc;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.dicycat.kroy.Kroy;
+import com.dicycat.kroy.screens.GameOverScreen;
 import com.dicycat.kroy.screens.MenuScreen;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -10,23 +12,30 @@ public class Button {
 
 	private int buttonY;
 	private Texture buttonActive;
-	private MenuScreen menu;
+	//private MenuScreen menu;
 	private Texture button;
+	private Kroy game;
+	
+	private int buttonWidth = 250;
+	private int buttonHeight = 50;
+	private int xAxisCentred = (Kroy.width/2) - (buttonWidth/2);
 	
 	
-	public Button(int buttonY, Texture button, Texture buttonActive, MenuScreen menu) {
+	public Button(int buttonY, Texture button, Texture buttonActive, Kroy game) {
 		this.buttonY = buttonY;
 		this.button = button;
 		this.buttonActive = buttonActive;
-		this.menu = menu;
+		this.game = game;
+		
+		
 	}
 	
 	public boolean buttonAction() {
 		
 		//if the mouse is on the button ...
-		if(( (Gdx.input.getX() < (menu.getXAxisCentred() + menu.getButtonWidth())) && (Gdx.input.getX() > menu.getXAxisCentred()) ) && ( (Kroy.height - Gdx.input.getY() > buttonY ) && (Kroy.height - Gdx.input.getY() < (buttonY + menu.getButtonHeight())) ) ){
+		if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > buttonY ) && (Kroy.height - Gdx.input.getY() < (buttonY + buttonHeight)) ) ){
 			// ... then display the 'controlsButtonActice' texture ...
-			menu.getGame().batch.draw(buttonActive, menu.getXAxisCentred(), buttonY, menu.getButtonWidth(), menu.getButtonHeight());
+			game.batch.draw(buttonActive, xAxisCentred, buttonY, buttonWidth, buttonHeight);
 			
 			  // if the controls button is pressed, show the visibility of the controls window to true and set the game state to CONTROLS
 			  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -35,7 +44,7 @@ public class Button {
 			  }
 		  } else {
 			// ... otherwise, display the 'controlsButton' texture (as the mouse is neither clicking nor on the button, so display the default texture)
-			  menu.getGame().batch.draw(button, menu.getXAxisCentred(), buttonY, menu.getButtonWidth(), menu.getButtonHeight());
+			  game.batch.draw(button, xAxisCentred, buttonY, buttonWidth, buttonHeight);
 		  }
 		
 		// nothing is happening with the button so just return false, no actions are being performed on it

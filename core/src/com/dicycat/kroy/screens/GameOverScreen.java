@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
+import com.dicycat.kroy.misc.Button;
+import com.dicycat.kroy.screens.MenuScreen.MenuScreenState;
 
 /**
 * 
@@ -30,13 +32,13 @@ public class GameOverScreen implements Screen{
 	  
 	  public boolean result; //to change based on whether game is won or lost
 	  
-	  private Texture gameOverImage= new Texture("gameover.png");
-	  private Texture youWonImage= new Texture("youwon.png");
-	  private Texture youLostImage= new Texture("youlost.png");
-	  private Texture playButton= new Texture("newgame.png");
-	  private Texture playButtonActive= new Texture("newActive.png");
-	  private Texture menuButton = new Texture("EXIT.png");
-	  private Texture menuButtonActive = new Texture("exitActive.png");
+	  private Texture gameOverImage = new Texture("gameover.png");
+	  private Texture youWonImage = new Texture("youwon.png");
+	  private Texture youLostImage = new Texture("youlost.png");
+	  private Texture playButtonTexture = new Texture("newgame.png");
+	  private Texture playButtonActiveTexture = new Texture("newActive.png");
+	  private Texture menuButtonTexture = new Texture("EXIT.png");
+	  private Texture menuButtonActiveTexture = new Texture("exitActive.png");
 	  
 	  private Integer score;
 	  private Integer highScore; 
@@ -63,8 +65,11 @@ public class GameOverScreen implements Screen{
 	  private int buttonWidth = 250;
 	  private int buttonHeight = 50;
 	  private int xAxisCentred = (Kroy.width/2) - (buttonWidth/2);
-	  private int playButtonX = ((Kroy.height/2)-150);
-	  private int minigameButtonY = (Kroy.height/2)-225;
+	  
+	  // REFACTOR_CHANGE_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+	  private int playButtonY = ((Kroy.height/2)-150); // renamed by Jordan
+	  private int menuButtonY = (Kroy.height/2)-225; // rename dby Jordan
+	  // REFACTOR_CHANGE_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 	  
 	  private Pixmap pm = new Pixmap(Gdx.files.internal("handHD2.png")); //cursor
 	  private int xHotSpot = pm.getWidth() / 3;	//where the cursor's aim is 
@@ -140,34 +145,29 @@ public class GameOverScreen implements Screen{
 			  game.batch.draw(youLostImage, resultImageXAxisCentred, resultImageY, resultingImageWidth, resultingImgaeHeight);
 		  }
 		  
+		  
+		  // REFACTOR_CHANGE_5 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
 
 		  //for play button: checks if the position of the cursor is inside the coordinates of the button
-		  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > playButtonX ) && (Kroy.height - Gdx.input.getY() < (playButtonX + buttonHeight)) ) ){
-			  game.batch.draw(playButtonActive, xAxisCentred, playButtonX, buttonWidth, buttonHeight);
-			  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-				  this.dispose();
-				  game.batch.end();
-				  game.newGame();
-				  return;
-			  }
-		  } else {
-			  game.batch.draw(playButton, xAxisCentred, playButtonX, buttonWidth, buttonHeight);
+		  Button newGameButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, game);
+		  if (newGameButton.buttonAction()) {
+			  this.dispose();
+			  game.batch.end();
+			  game.newGame();
+			  return;
 		  }
-		  
 		
 			
 		  //for minigame button
-		  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > minigameButtonY ) && (Kroy.height - Gdx.input.getY() < (minigameButtonY + buttonHeight)) ) ){
-			  game.batch.draw(menuButtonActive, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
-			  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-				  dispose();
-				  System.exit(0);
-			  }
-		  } else {
-			  game.batch.draw(menuButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
+		  Button menuButton = new Button(menuButtonY, menuButtonTexture, menuButtonActiveTexture, game);
+		  if (menuButton.buttonAction()) {
+			  dispose();
+			  System.exit(0);
 		  }
-		  game.batch.end();
 		  
+		// REFACTOR_CHANGE_5 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
+		  
+		  game.batch.end();
 		  stage.draw();
 
 		  
@@ -192,6 +192,11 @@ public class GameOverScreen implements Screen{
 	  
 	  @Override 
 	  public void dispose() {}
+	  
+	  public int getXAxisCentred() { return xAxisCentred; }
+	  public int getButtonWidth() { return buttonWidth; }
+	  public int getButtonHeight() { return buttonHeight; }
+	  public Kroy getGame() { return game; }
 	  
 }
 	 
