@@ -52,7 +52,7 @@ public class Minigame {
     public Minigame(Kroy game, boolean inGame){
         state = State.GAME1;
         sb = game.batch;
-        inGame = this.inGame;
+        this.inGame = inGame;
         Viewport viewport = new ScreenViewport(new OrthographicCamera());
         stage = new Stage(viewport, sb);
         table.reset();
@@ -104,7 +104,7 @@ public class Minigame {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 visibility(false);
-                    if (inGame) {
+                    if (!inGame) {
                         Kroy.mainMenuScreen.state = MenuScreen.MenuScreenState.MAINMENU;
                     }
                     else {
