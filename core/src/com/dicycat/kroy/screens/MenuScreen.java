@@ -187,18 +187,19 @@ public class MenuScreen implements Screen{
 			  } else {
 				  game.batch.draw(exitButton, xAxisCentred, exitButtonY, buttonWidth, buttonHeight);
 			  }
-				
+			  // MINIGAME_IMPLEMENTATION_1 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
 			  //for minigame button
 			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > minigameButtonY ) && (Kroy.height - Gdx.input.getY() < (minigameButtonY + buttonHeight)) ) ){
 				  game.batch.draw(minigameButtonActive, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+				  	  minigame = new Minigame(game, false);
 					  minigame.visibility(true);
 					  setGameState(MenuScreenState.MINIGAME);
 						  }
 					  } else {
 						  game.batch.draw(minigameButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 					  }
-	
+			  // MINIGAME_IMPLEMENTATION_1 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
 						  //for options button
 			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > optionsButtonY ) && (Kroy.height - Gdx.input.getY() < (optionsButtonY + buttonHeight)) ) ){
 				  game.batch.draw(optionsButtonActive, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
@@ -245,14 +246,15 @@ public class MenuScreen implements Screen{
 			  optionsWindow.stage.draw();
 			  optionsWindow.clickCheck(true);
 			  break;
-
+		  // MINIGAME_IMPLEMENTATION_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
 		  case MINIGAME:
 		  	  Gdx.input.setInputProcessor(minigame.stage);
 		  	  minigame.stage.act();
 		  	  minigame.stage.draw();
 		  	  minigame.clickCheck();
 		  	  break;
-
+		  // MINIGAME_IMPLEMENTATION_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
+		  
 		  // CONTROL_SCREEN_7 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
 		  // Modification name: control_screen8
 		  case CONTROLS: 
