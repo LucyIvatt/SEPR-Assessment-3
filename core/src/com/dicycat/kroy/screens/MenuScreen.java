@@ -33,6 +33,8 @@ public class MenuScreen implements Screen{
   private Viewport gameport; 	//m
   private Texture background,
 // REFACTOR_CHANGE_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+  // renamed these variables to have a 'Texture' suffix as it is more conventional as these variables are no button objects
+  // later on in this class, 'playButton' button instance can be seen for example and deserves this name more
     playButtonTexture, 
   	playButtonActiveTexture, 
   	optionsButtonTexture, 
@@ -44,6 +46,7 @@ public class MenuScreen implements Screen{
 // REFACTOR_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 
 	// CONTROL_SCREEN_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+  		// added the controls screen and need the button textures to be stored in these variables
   	controlsButtonTexture, 
   	controlsButtonActiveTexture;
 	// CONTROL_SCREEN_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
@@ -52,6 +55,7 @@ public class MenuScreen implements Screen{
   
   private OptionsWindow optionsWindow;
   // CONTROL_SCREEN_ 2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
+  	// creating an instance of the ControlsWindow class
   private ControlsWindow controlsWindow; 
   // CONTROL_SCREEN_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
   
@@ -67,6 +71,7 @@ public class MenuScreen implements Screen{
   private int minigameButtonY = (Kroy.height/2)-75;
 
   // CONTROL_SCREEN_3 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
+  	// assigning this variable the y coordinate for where the controlsButton button instance will be placed on the main menu
   private int controlsButtonY = (Kroy.height/2)-150;
   // CONTROL_SCREEN_3 END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
   private int exitButtonY = (Kroy.height/2)-225;
@@ -89,7 +94,7 @@ public class MenuScreen implements Screen{
 	  TRUCKSELECT,
 	  OPTIONS,
 	  // CONTROL_SCREEN_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-	  CONTROLS // adding a new window state, the controls window
+	  CONTROLS // adding a new window state, the controls window, has the code that calls the creation and setup of the controls window
 	  // CONTROL_SCREEN_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
   }
   
@@ -158,7 +163,15 @@ public class MenuScreen implements Screen{
 			  game.batch.draw(minigameButtonTexture, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 			
 			
-			  // REFACTOR_CHANGE_3 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
+			  // REFACTOR_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
+			  
+			  		// in this refactor, I am changing the format of the buttons to be more readable and easier to use.
+			  		// the MAINMENU switch statement is more readable now
+			  		// now, all you have to do is create an instance of a button that has it;s y coordinate, its image,
+			  		// 		another image of the button to be displayed when the mouse is in contact with it and the game instance
+			  		//      that the button exists in.
+			        // the simple if statement checks if a click has been performed on the button and if it has, true is returned and the code
+			  		// inside the if statement is executed.
 			  
 			  //for play button: checks if the position of the cursor is inside the coordinates of the button
 			  Button playButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, game);
@@ -195,11 +208,13 @@ public class MenuScreen implements Screen{
 				  setGameState(MenuScreenState.OPTIONS);
 			  }
 			  
-			  // REFACTOR_CHANGE_3 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
+			  // REFACTOR_CHANGE_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
 			 
 			  
 			  // CONTROL_SCREEN_6 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 			  // for controls button
+			  
+			  // added a button to click, to direct the user to the controls window if clicked
 			  
 			  Button controlsButton = new Button(controlsButtonY, controlsButtonTexture, controlsButtonActiveTexture, game);
 			  if (controlsButton.buttonAction()) {
@@ -226,7 +241,7 @@ public class MenuScreen implements Screen{
 			  break;
 
 		  // CONTROL_SCREEN_7 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
-		  // Modification name: control_screen8
+			  // CONTROLS switch statement added to set up the controls window
 		  case CONTROLS: 
 		  	  Gdx.input.setInputProcessor(controlsWindow.stage); // set inputs from the user only valid to the controlsWindow
 		  	  controlsWindow.stage.act();
@@ -304,12 +319,6 @@ public class MenuScreen implements Screen{
   @Override 
   public void dispose() {}
   
-  // REFACTOR_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
-  public int getXAxisCentred() { return xAxisCentred; }
-  public int getButtonWidth() { return buttonWidth; }
-  public int getButtonHeight() { return buttonHeight; }
-  public Kroy getGame() { return game; }
-  // REFACTOR_CHANGE_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
  }
 
 

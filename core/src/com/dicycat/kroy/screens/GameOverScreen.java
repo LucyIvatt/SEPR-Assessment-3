@@ -35,12 +35,13 @@ public class GameOverScreen implements Screen{
 	  private Texture youWonImage = new Texture("youwon.png");
 	  private Texture youLostImage = new Texture("youlost.png");
 	  
-	  // REFACTOR_CHANGE_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+	  // REFACTOR_CHANGE_3 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+	      // again renaming the texture variables to have a 'Texture' suffix
 	  private Texture playButtonTexture = new Texture("newgame.png");
 	  private Texture playButtonActiveTexture = new Texture("newActive.png");
-	  private Texture menuButtonTexture = new Texture("EXIT.png");
-	  private Texture menuButtonActiveTexture = new Texture("exitActive.png");
-	  // REFACTOR_CHANGE_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
+	  private Texture exitButtonTexture = new Texture("EXIT.png");
+	  private Texture exitButtonActiveTexture = new Texture("exitActive.png"); // also changed names to exitButtonTexture and exitButtonActiveTexture to refer more closely to their button image
+	  // REFACTOR_CHANGE_3 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 	  
 	  private Integer score;
 	  private Integer highScore; 
@@ -68,10 +69,10 @@ public class GameOverScreen implements Screen{
 	  private int buttonHeight = 50;
 	  private int xAxisCentred = (Kroy.width/2) - (buttonWidth/2);
 	  
-	  // REFACTOR_CHANGE_5 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
-	  private int playButtonY = ((Kroy.height/2)-150); // renamed by Jordan
-	  private int menuButtonY = (Kroy.height/2)-225; // rename dby Jordan
-	  // REFACTOR_CHANGE_5 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
+	  // REFACTOR_CHANGE_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+	  private int playButtonY = ((Kroy.height/2)-150); // renamed by Jordan from playButtonX to playbuttonY, as this is used for y coordinate of the playbutton
+	  private int exitButtonY = (Kroy.height/2)-225; // renamed by Jordan to exitButtonY.
+	  // REFACTOR_CHANGE_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 	  
 	  private Pixmap pm = new Pixmap(Gdx.files.internal("handHD2.png")); //cursor
 	  private int xHotSpot = pm.getWidth() / 3;	//where the cursor's aim is 
@@ -148,8 +149,12 @@ public class GameOverScreen implements Screen{
 		  }
 		  
 		  
-		  // REFACTOR_CHANGE_6 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+		  // REFACTOR_CHANGE_5 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
 
+		  		// same with the buttons in the MenuScreen class, changing the format and setting up a 'Button' class to instantiate
+		  		// the Button class contains the same code of DicyCats previous button, but the idea is to add a level of abstraction
+		  		// that makes the code more readable in the main classes.
+		  
 		  //for play button: checks if the position of the cursor is inside the coordinates of the button
 		  Button newGameButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, game);
 		  if (newGameButton.buttonAction()) {
@@ -161,13 +166,13 @@ public class GameOverScreen implements Screen{
 		
 			
 		  //for minigame button
-		  Button menuButton = new Button(menuButtonY, menuButtonTexture, menuButtonActiveTexture, game);
+		  Button menuButton = new Button(exitButtonY, exitButtonTexture, exitButtonActiveTexture, game);
 		  if (menuButton.buttonAction()) {
 			  dispose();
 			  System.exit(0);
 		  }
 		  
-		// REFACTOR_CHANGE_6 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
+		// REFACTOR_CHANGE_5 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 		  
 		  game.batch.end();
 		  stage.draw();
