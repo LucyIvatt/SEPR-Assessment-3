@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -49,6 +50,8 @@ public class GameScreen implements Screen{
 	public GameTextures textures;
 	public static Boolean showDebug = false;
 	public float gameTimer; //Timer to destroy station
+
+	private Texture minimap = new Texture("YorkMap.png");
 	
 	
 	public GameScreenState state = GameScreenState.RUN;
@@ -227,6 +230,13 @@ public class GameScreen implements Screen{
 				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
 
 				hud.stage.draw();
+
+				game.batch.begin();
+				game.batch.draw(minimap, 0, 0);
+				for (FireTruck truck : players) {
+					game.batch.draw(truck.getTexture(), truck.getX() / 31, truck.getY() / 31, 10, 10);
+				}
+				game.batch.end();
 				pauseWindow.stage.draw();
 
 				if (showDebug) {
