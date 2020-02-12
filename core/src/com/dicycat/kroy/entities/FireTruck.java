@@ -281,11 +281,17 @@ public class FireTruck extends Entity{
 	 * Replenishes health and water
 	 */
 	// REPLENISH: OVER TIME -> INSTANT  - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------------------------------
-	public void replenish(){
+	public void refillWater(){
+		this.currentWater = this.maxWater;
 		this.currentWater = this.maxWater;
 	}
 	// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
+	public void fixTruck() {
+		if(!(healthPoints >= maxHealthPoints)){
+			healthPoints += 2;
+		}
+	}
 	/**
 	 * @param pos
 	 * @return
