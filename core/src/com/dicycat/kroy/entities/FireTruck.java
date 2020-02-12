@@ -280,18 +280,22 @@ public class FireTruck extends Entity{
 	/**
 	 * Replenishes health and water
 	 */
-	// REPLENISH: OVER TIME -> INSTANT  - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------------------------------
+	// REPLENISH_1: OVER TIME -> INSTANT  - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------------------------------
 	public void refillWater(){
 		this.currentWater = this.maxWater;
 		this.currentWater = this.maxWater;
 	}
 	// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
+	// REPLENISH_2: OVER TIME -> INSTANT  - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
+	// Separated refilling water and fixing truck into 2 seperate methods as refilling the truck is now linked to the minigame
 	public void fixTruck() {
 		if(!(healthPoints >= maxHealthPoints)){
 			healthPoints += 2;
 		}
 	}
+	// REPLENISH_2: OVER TIME -> INSTANT  - END OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
+
 	/**
 	 * @param pos
 	 * @return
