@@ -87,11 +87,6 @@ public class GameScreen implements Screen{
 	private List<GameObject> objectsToAdd;
 	private List<DebugDraw> debugObjects; //List of debug items
 
-
-
-	/**
-	 * @param _game
-	 */
 	// TRUCK_SELECT_CHANGE_12 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Removed truckNum from constructor parameters
 	public GameScreen(Kroy _game) {
@@ -121,7 +116,7 @@ public class GameScreen implements Screen{
 	// TRUCK_SELECT_CHANGE_12 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 	/**
-	 * Screen first shown
+	 * Initializes the screen which is first shown
 	 */
 	@Override
 	public void show() {
@@ -177,7 +172,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Called every frame
+	 * Called every frame and calls the methods to update and render the game objects, as well as handling input.
 	 */
 	public void render(float delta) {
 		Gdx.input.setInputProcessor(pauseWindow.stage);  //Set input processor
@@ -423,28 +418,10 @@ public class GameScreen implements Screen{
 		Kroy.mainGameScreen = null;
 	}
 
-	/**
-	 * @param s
-	 */
 	public void setGameState(GameScreenState s){
 	    state = s;
 	}
 
-	/**
-	 * @param index
-	 * @return
-	 */
-	public GameObject getGameObject(int index) {
-		if (index <= (gameObjects.size()-1)) {
-			return gameObjects.get(index);
-		}else {
-			return null;
-		}
-	}
-
-	/**
-	 * @return
-	 */
 	public List<GameObject> getGameObjects(){
 		return gameObjects;
 	}
@@ -454,7 +431,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Checks the pause buttons
+	 * Checks the pause buttons for input
 	 */
 	private void clickCheck() {
 		//resume button
@@ -485,7 +462,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Remove one fortress to the count
+	 * Remove one fortress to the fortressCount
 	 */
 	public void removeFortress() {
 		fortressesCount--;
@@ -511,7 +488,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * 
+	 * Calls game over if lives == 0, otherwise removes 1 from life counter
 	 */
 	public void updateLives() {
 		if (lives>1) {
@@ -548,7 +525,7 @@ public class GameScreen implements Screen{
 
 	// TRUCK_SELECT_CHANGE_18 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Sets the selected variable on each of the trucks to false and then sets the active trucks selected variable to true
-	public void selectTruck () {
+	public void selectTruck() {
 		for (FireTruck truck : players) {
 			truck.setSelected(false);
 		}

@@ -10,12 +10,14 @@ import com.dicycat.kroy.entities.FireTruck;
 import com.dicycat.kroy.scenes.HUD;
 
 /**
- * Projectile fired by hostile entities
+ * Projectile fired by hostile entities such as alien patrols or fortresses
  * 
  * @author Riju De
  *
+ * Edited by Lucy Ivatt - NP STUDIOS
  */
 public class Bullet extends GameObject {
+
 	private int speed;			//Speed of the bullet
 	private Vector2 velocity;	//Direction and amount to travel
 	private float maxDist;		//Max distance to travel
@@ -24,11 +26,12 @@ public class Bullet extends GameObject {
 	private int bulletDamage;
 
 
-	/**
+	/** Initialises Bullet Object
 	 * @param spawnPos Position to spawn the bullet
 	 * @param direction direction the bullet will travel in
 	 * @param speed speed the bullet should travel at
 	 * @param range distance the bullet should travel before it is removed
+	 * Edited by Lucy Ivatt - NP STUDIOS
 	 */
 	public Bullet(Vector2 spawnPos, Vector2 direction, int speed, float range, int patternDamage) {	//Constructor
 		super(spawnPos, Kroy.mainGameScreen.textures.getBullet(), new Vector2(20,20));
@@ -44,7 +47,7 @@ public class Bullet extends GameObject {
 	}
 
 	/**
-	 * Reactivate the bullet and reset position
+	 * Reactivates the bullet and reset the position
 	 * @param initial position to set at
 	 */
 	public void fire(Vector2 initial) {
@@ -63,6 +66,11 @@ public class Bullet extends GameObject {
 	}
 
 	/**
+	 * Calculates the distance the bullet and its hit box needs to move and removes them once they hit their maximum distance.
+	 * Also checks for collisions between the truck and the bullet and applies the correct damage needed and then sets
+	 * the bullet to be removed next frame.
+	 *
+	 * JavaDoc added by Lucy Ivatt - NP STUDIOS
 	 *
 	 */
 	@Override
@@ -99,8 +107,7 @@ public class Bullet extends GameObject {
 		}
 
 	}
-
-	public Circle GetHitbox(){
-		return this.hitbox;
-	}
+	// CODE_REFACTOR_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+	// Deleted unused getter
+	// CODE_REFACTOR_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 }

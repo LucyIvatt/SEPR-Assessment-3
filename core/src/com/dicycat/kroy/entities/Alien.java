@@ -13,14 +13,12 @@ import java.util.Random;
  * the player if the player is within range.
  * 
  * @author Lucy Ivatt
- *
  */
 public class Alien extends Entity {
 
 	BulletDispenser dispenser;
 	int speed;
 
-	// PATROLS - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 	private Vector2[] waypoints; // The waypoints that the alien will follow
 	private int currentWaypoint; // The waypoint index the alien is currently at
 	private float movementCountdown; // Delays first movement of the alien, stops them from overlapping at beginning.
@@ -134,5 +132,4 @@ public class Alien extends Entity {
 			}
 		}
 	}
-	// PATROLS - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 }

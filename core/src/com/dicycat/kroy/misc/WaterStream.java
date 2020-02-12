@@ -27,9 +27,9 @@ public class WaterStream extends GameObject{
 		sprite.setScale(x,2);
 	}
 
-	/**
-	 *
-	 */
+	// CODE_REFACTOR_4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+	// Added override tag
 	@Override
 	public void update() {}
+	// CODE_REFACTOR_4 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 }

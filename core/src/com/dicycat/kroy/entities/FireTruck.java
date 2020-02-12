@@ -19,8 +19,8 @@ import com.dicycat.kroy.misc.WaterStream;
 import com.dicycat.kroy.screens.GameScreen;
 
 /**
- * Controlled by the player.
- * Automatically fires at hostile enemies when they're within range.
+ * GameObject controlled controlled by the player which automatically fires
+ * at hostile enemies when they're within range.
  * 
  * @author Riju De
  *
@@ -46,10 +46,6 @@ public class FireTruck extends Entity{
 	private boolean firing;
 	private float range;
 
-	/**
-	 * @param spawnPos
-	 * @param truckStats
-	 */
 	public FireTruck(Vector2 spawnPos, Float[] truckStats, int truckNum) {
 		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(truckNum), new Vector2(25,50), 100, 500);
 
@@ -78,13 +74,14 @@ public class FireTruck extends Entity{
 
 		healthBar= new StatBar(Vector2.Zero, "Green.png", 3);
 		Kroy.mainGameScreen.addGameObject(healthBar);
+
 		// TRUCK_SELECT_CHANGE_6 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		selected = false; // initially sets the truck to false
 		// TRUCK_SELECT_CHANGE_6 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	}
 
 	/**
-	 * When called, this method moves the truck by 1 unit of movement in the direction calculated in "updateDirection()"
+	 * This method moves the truck in the direction calculated in updateDirection()
 	 */
 	public void moveInDirection() {
 
@@ -111,8 +108,8 @@ public class FireTruck extends Entity{
 	}
 
 	/**
-	 * Method checks any arrow keys currently pressed and then converts them into a integer direction
-	 * @return Direction to go
+	 * Method checks if any arrow keys currently pressed and then converts them into a integer direction
+	 * @return Direction to follow
 	 */
 	public Integer updateDirection() { 
 			String directionKey = ""; 
@@ -135,9 +132,8 @@ public class FireTruck extends Entity{
 	}
 
 	/**
-	 *main function of the firetruck: updates the direction in which 
-	 *the firetruck is moving in as well as rendering its asset, moving 
-	 *its hitbox and checking whether any entity is inside its range
+	 * Updates the direction in which the firetruck is moving in as well as rendering it, moves it and
+	 * its hitbox and checks if any entity is inside its range.
 	 */
 	public void update(){
 		// TRUCK_SELECT_CHANGE_7 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
@@ -179,10 +175,8 @@ public class FireTruck extends Entity{
         hitbox.setCenter(getCentre().x, getCentre().y);
 
         // MEMORY LEAK FIX 1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
-
 		// Deleted debug hitbox being drawn to the screen even if drawDebug in GameScreen == false.
-
-		// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
+		// MEMORY LEAK FIX 1 - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
 		//water bar update
 		tank.setPosition(getCentre().add(0,20));
@@ -195,11 +189,11 @@ public class FireTruck extends Entity{
 	
 
 	/**
-	 * @param targets
-	 * find and aim at the nearest target from an ArrayList of Gameobjects
+	 * Find and aim at the nearest target from an ArrayList of GameObjects
+	 * @param targets the list of targets within the firetrucks ranged
 	 */
 	private void playerFire(ArrayList<GameObject> targets) {		//Method to find and aim at the nearest target from an ArrayList of Gameobjects
-		GameObject currentGameObject=targets.get(0);
+		GameObject currentGameObject;
 		GameObject nearestEnemy=targets.get(0);				//set nearest enemy to the first gameobject
 
 		for (int i=1;i<targets.size();i=i+1) {									//iterates through inRange to find the closest gameobject
@@ -241,6 +235,10 @@ public class FireTruck extends Entity{
 		return (outputArray);
 	}
 
+	/**
+	 * Checks if the firetrucks tank is full of water.
+	 * @return true if full, false if not
+	 */
 	public boolean isFull(){
 		if (this.maxWater == this.currentWater){
 			return true;
@@ -259,7 +257,9 @@ public class FireTruck extends Entity{
 	}
 
 	/**
-	 *remove the FireTruck and Statbars
+	 * Remove the FireTruck and stat bars when they are destroyed
+	 *
+	 * Edited by Lucy Ivatt - NP STUDIOS
 	 */
 	@Override
 	public void die() {
@@ -273,23 +273,26 @@ public class FireTruck extends Entity{
 		return this.hitbox;
 	}
 
-	public Integer getDirection() {
-		return direction;
-	}
-
 	/**
-	 * Replenishes health and water
+	 * Sets the currentWater to maxWater (the maximum tank value)
+	 *
+	 * Added by Lucy Ivatt - NP STUDIOS
 	 */
 	// REPLENISH_1: OVER TIME -> INSTANT  - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------------------------------
 	public void refillWater(){
-		this.currentWater = this.maxWater;
 		this.currentWater = this.maxWater;
 	}
 	// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
 	// REPLENISH_2: OVER TIME -> INSTANT  - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
+
+	/**
+	 * Repairs the truck overtime by adding 2 to the healthPoints each game tick until it has reached maxHealth
+	 *
+	 * Added by Lucy Ivatt - NP STUDIOS
+	 */
 	// Separated refilling water and fixing truck into 2 seperate methods as refilling the truck is now linked to the minigame
-	public void fixTruck() {
+	public void repairTruck() {
 		if(!(healthPoints >= maxHealthPoints)){
 			healthPoints += 2;
 		}
@@ -297,8 +300,11 @@ public class FireTruck extends Entity{
 	// REPLENISH_2: OVER TIME -> INSTANT  - END OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 
 	/**
-	 * @param pos
-	 * @return
+	 * Checks finds the tile that the coordinate is a part of and checks if that tile is solid
+	 * @param pos the coordinate on the game map
+	 * @return true if solid tile, otherwise false
+	 *
+	 * Added by Lucy Ivatt - NP STUDIOS
 	 */
 	public boolean isOnCollidableTile(Vector2 pos) {
 		if(GameScreen.gameMap.getTileTypeByLocation(0, pos.x, pos.y).isCollidable()

@@ -17,8 +17,6 @@ public class Pattern {
 	private int xtra;
 	private int patternDamage;
 
-
-	
 	/**
 	 * Create a static directional pattern, fires in a single defined direction
 	 * @param degree Direction to shoot
@@ -39,7 +37,10 @@ public class Pattern {
 		xtra = (1-(multi % 2)) * 5;
 		degree = 90 - degree;	//Convert normal bearings (0 is up, clockwise) to LIBGDX Vector2 degrees (0 is right, anti-clockwise)
 
-		Vector2 direction = Vector2.Zero;
+		// CODE_REFACTOR_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Deleted redundant code initializing this vector to 0 rather than just defining the variable.
+		Vector2 direction;
+		// CODE_REFACTOR_2 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		for (int i = 0; i < patternLength; i++) {
 			for (int j = 0; j < multi; j++) {
 				direction = new Vector2(1, 1);
@@ -129,6 +130,7 @@ public class Pattern {
 	}
 
 	/**
+	 * Sets the direction of the bullets in the aimedSet
 	 * @param set The set of bullets to fire
 	 * @param aimDir The direction the bullets should fire
 	 * @return Set of aimed bullets to fire
@@ -143,7 +145,6 @@ public class Pattern {
 		return bullets[set];
 	}
 
-	//Getters
 	public Boolean getAim() { return aim; }	
 	public Bullet[][] getBullets(){return bullets;}
 	public float getWaitTime(){return waitTime;}

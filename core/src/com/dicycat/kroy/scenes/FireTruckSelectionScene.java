@@ -40,11 +40,7 @@ public class FireTruckSelectionScene {
 	// TRUCK_SELECT_CHANGE_9 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
     private float width = Gdx.graphics.getWidth();
     private float centre = width* 0.7f;
-    
-    
-	/**
-	 * @param game		Kroy instance
-	 */
+
 	public FireTruckSelectionScene(Kroy game) {
 		sb = game.batch;
 		Viewport viewport = new ScreenViewport(new OrthographicCamera());
@@ -85,8 +81,8 @@ public class FireTruckSelectionScene {
 	    
 	}
 	
-	/**
-	 * @param state		Makes the window visible or hidden
+	/** Allows the window to be visible or hidden
+	 * @param state true if visible, false if hidden
 	 */
 	public void visibility(boolean state){
 		this.table.setVisible(state);

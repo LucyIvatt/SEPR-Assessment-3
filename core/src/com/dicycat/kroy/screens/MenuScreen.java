@@ -82,9 +82,7 @@ public class MenuScreen implements Screen{
 
   /**
    *  Used to define the current state of the screen, 
-   *  MAINMENU is used mostly but then TRUCKSELECT used when the "NewGame" button has been pressed  
-   * 
-   *
+   *  MAINMENU is used mostly but then TRUCKSELECT used when the "NewGame" button has been pressed
    */
   public static enum MenuScreenState {
 	  MAINMENU,
@@ -97,10 +95,7 @@ public class MenuScreen implements Screen{
   }
   
   public MenuScreenState state = MenuScreenState.MAINMENU;
-  
-  /**
-   * @param game
-   */
+
   public MenuScreen(Kroy game) { 
 	  this.game = game; 
 	  exitButton = new Texture("EXIT.png"); 	//in later stages we could also have buttonActive and buttonInactive
@@ -254,7 +249,7 @@ public class MenuScreen implements Screen{
 		  	  minigame.clickCheck();
 		  	  break;
 		  // MINIGAME_IMPLEMENTATION_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
-		  
+
 		  // CONTROL_SCREEN_7 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
 		  // Modification name: control_screen8
 		  case CONTROLS: 
@@ -266,10 +261,7 @@ public class MenuScreen implements Screen{
 		  // CONTROL_SCREEN_7 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
 		  }
   	}
-  
-	/**
-	 * @param state
-	 */
+
 	public void setGameState(MenuScreenState state){
 	    this.state = state;
 	}
@@ -295,7 +287,7 @@ public class MenuScreen implements Screen{
 
 
 	/**
-	 *
+	 * If the game isn't currently running, creates a new game
  	 */
 	// TRUCK_SELECT_CHANGE_20 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Removed unused parameters which were modified elsewhere
@@ -306,17 +298,11 @@ public class MenuScreen implements Screen{
 		 }
 	}
 	// TRUCK_SELECT_CHANGE_20 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-  
-  /**
-   * @param state
-   */
+
   public void setCurrentlyRunningGame(boolean state) {
 	  currentlyRunningGame = state;
   }
-  
-  /**
-   *
-   */
+
   @Override 
   public void resize(int width, int height) {
 	  gameport.update(width, height);

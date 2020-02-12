@@ -32,11 +32,7 @@ public class PauseWindow {
     public TextButton resume = new TextButton("RESUME", skin);
     public TextButton exit = new TextButton("EXIT", skin);
     public TextButton menu = new TextButton("MENU", skin);
-    
-    
-	/**
-	 * @param game
-	 */
+
 	public PauseWindow(Kroy game) {
 		sb = game.batch;
 		Viewport viewport = new ScreenViewport(new OrthographicCamera());
@@ -53,9 +49,9 @@ public class PauseWindow {
 		table.setFillParent(true);
 	    stage.addActor(table);
 	}
-	
-	/**
-	 * @param state	Allows the window to be visible or hidden
+
+	/** Allows the window to be visible or hidden
+	 * @param state	true means visible, false means hidden
 	 */
 	public void visibility(boolean state){
 		this.table.setVisible(state);
