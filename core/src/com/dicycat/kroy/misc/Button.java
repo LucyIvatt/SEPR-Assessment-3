@@ -2,17 +2,19 @@ package com.dicycat.kroy.misc;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.dicycat.kroy.Kroy;
-import com.dicycat.kroy.screens.GameOverScreen;
-import com.dicycat.kroy.screens.MenuScreen;
 import com.badlogic.gdx.graphics.Texture;
+
+/**
+* 
+* @author Jordan Spooner - NP STUDIOS
+*
+*/
 
 public class Button {
 
 	private int buttonY;
 	private Texture buttonActive;
-	//private MenuScreen menu;
 	private Texture button;
 	private Kroy game;
 	
@@ -21,6 +23,12 @@ public class Button {
 	private int xAxisCentred = (Kroy.width/2) - (buttonWidth/2);
 	
 	
+	/**
+	 * @param buttonY
+	 * @param button
+	 * @param buttonActive
+	 * @param game
+	 */
 	public Button(int buttonY, Texture button, Texture buttonActive, Kroy game) {
 		this.buttonY = buttonY;
 		this.button = button;
@@ -30,6 +38,10 @@ public class Button {
 		
 	}
 	
+	/**
+	 * Button code, returns true if the button is clicked and false otherwise
+	 * Also, if the mouse is on the button, the button changes to a different image of the button.
+	 */
 	public boolean buttonAction() {
 		
 		//if the mouse is on the button ...

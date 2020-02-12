@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.misc.Button;
-import com.dicycat.kroy.screens.MenuScreen.MenuScreenState;
 
 /**
 * 
@@ -35,10 +34,13 @@ public class GameOverScreen implements Screen{
 	  private Texture gameOverImage = new Texture("gameover.png");
 	  private Texture youWonImage = new Texture("youwon.png");
 	  private Texture youLostImage = new Texture("youlost.png");
+	  
+	  // REFACTOR_CHANGE_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
 	  private Texture playButtonTexture = new Texture("newgame.png");
 	  private Texture playButtonActiveTexture = new Texture("newActive.png");
 	  private Texture menuButtonTexture = new Texture("EXIT.png");
 	  private Texture menuButtonActiveTexture = new Texture("exitActive.png");
+	  // REFACTOR_CHANGE_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 	  
 	  private Integer score;
 	  private Integer highScore; 
@@ -66,10 +68,10 @@ public class GameOverScreen implements Screen{
 	  private int buttonHeight = 50;
 	  private int xAxisCentred = (Kroy.width/2) - (buttonWidth/2);
 	  
-	  // REFACTOR_CHANGE_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+	  // REFACTOR_CHANGE_5 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
 	  private int playButtonY = ((Kroy.height/2)-150); // renamed by Jordan
 	  private int menuButtonY = (Kroy.height/2)-225; // rename dby Jordan
-	  // REFACTOR_CHANGE_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
+	  // REFACTOR_CHANGE_5 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 	  
 	  private Pixmap pm = new Pixmap(Gdx.files.internal("handHD2.png")); //cursor
 	  private int xHotSpot = pm.getWidth() / 3;	//where the cursor's aim is 
@@ -146,7 +148,7 @@ public class GameOverScreen implements Screen{
 		  }
 		  
 		  
-		  // REFACTOR_CHANGE_5 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+		  // REFACTOR_CHANGE_6 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
 
 		  //for play button: checks if the position of the cursor is inside the coordinates of the button
 		  Button newGameButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, game);
@@ -165,7 +167,7 @@ public class GameOverScreen implements Screen{
 			  System.exit(0);
 		  }
 		  
-		// REFACTOR_CHANGE_5 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
+		// REFACTOR_CHANGE_6 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 		  
 		  game.batch.end();
 		  stage.draw();
@@ -192,11 +194,6 @@ public class GameOverScreen implements Screen{
 	  
 	  @Override 
 	  public void dispose() {}
-	  
-	  public int getXAxisCentred() { return xAxisCentred; }
-	  public int getButtonWidth() { return buttonWidth; }
-	  public int getButtonHeight() { return buttonHeight; }
-	  public Kroy getGame() { return game; }
 	  
 }
 	 
