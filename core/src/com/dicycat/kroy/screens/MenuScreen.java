@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
+import com.dicycat.kroy.misc.Button;
 import com.dicycat.kroy.scenes.ControlsWindow;
 import com.dicycat.kroy.scenes.FireTruckSelectionScene;
 import com.dicycat.kroy.minigame.Minigame;
@@ -31,20 +32,25 @@ public class MenuScreen implements Screen{
   private Kroy game; 
   private OrthographicCamera gamecam;	//m
   private Viewport gameport; 	//m
-  private Texture playButton, 
-  	playButtonActive, 
-  	optionsButton, 
-  	optionsButtonActive, 
-  	exitButton, 
-  	exitButtonActive, 
-  	minigameButton, 
-  	minigameButtonActive, 
-  	background,
+  private Texture background,
+// REFACTOR_CHANGE_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+  // renamed these variables to have a 'Texture' suffix as it is more conventional as these variables are no button objects
+  // later on in this class, 'playButton' button instance can be seen for example and deserves this name more
+    playButtonTexture, 
+  	playButtonActiveTexture, 
+  	optionsButtonTexture, 
+  	optionsButtonActiveTexture, 
+  	exitButtonTexture, 
+  	exitButtonActiveTexture, 
+  	minigameButtonTexture, 
+  	minigameButtonActiveTexture, 
+// REFACTOR_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 
-	// CONTROL_SCREEN_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-  	controlsButton, 
-  	controlsButtonActive;
-	// CONTROL_SCREEN_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
+	// CONTROL_SCREEN_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
+  		// added the controls screen and need the button textures to be stored in these variables
+  	controlsButtonTexture, 
+  	controlsButtonActiveTexture;
+	// CONTROL_SCREEN_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
   
   private Stage stage;
   
@@ -53,6 +59,7 @@ public class MenuScreen implements Screen{
   private Minigame minigame;
 
   // CONTROL_SCREEN_ 2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
+  	// creating an instance of the ControlsWindow class
   private ControlsWindow controlsWindow; 
   // CONTROL_SCREEN_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 
@@ -69,6 +76,7 @@ public class MenuScreen implements Screen{
   private int minigameButtonY = (Kroy.height/2)-75;
 
   // CONTROL_SCREEN_3 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
+  	// assigning this variable the y coordinate for where the controlsButton button instance will be placed on the main menu
   private int controlsButtonY = (Kroy.height/2)-150;
   // CONTROL_SCREEN_3 END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
   private int exitButtonY = (Kroy.height/2)-225;
@@ -92,7 +100,7 @@ public class MenuScreen implements Screen{
 	  OPTIONS,
 	  MINIGAME,
 	  // CONTROL_SCREEN_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-	  CONTROLS // adding a new window state, the controls window
+	  CONTROLS // adding a new window state, the controls window, has the code that calls the creation and setup of the controls window
 	  // CONTROL_SCREEN_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
   }
   
@@ -103,18 +111,18 @@ public class MenuScreen implements Screen{
    */
   public MenuScreen(Kroy game) { 
 	  this.game = game; 
-	  exitButton = new Texture("EXIT.png"); 	//in later stages we could also have buttonActive and buttonInactive
-	  exitButtonActive = new Texture("exitActive.png");
-	  optionsButton = new Texture("options.png");
-	  optionsButtonActive = new Texture("optionsActive.png");
-	  playButton = new Texture("newgame.png");
-	  playButtonActive = new Texture("newActive.png");
-	  minigameButton = new Texture("minigame.png");
-	  minigameButtonActive = new Texture("minigameActive.png");
+	  exitButtonTexture = new Texture("EXIT.png"); 	//in later stages we could also have buttonActive and buttonInactive
+	  exitButtonActiveTexture = new Texture("exitActive.png");
+	  optionsButtonTexture = new Texture("options.png");
+	  optionsButtonActiveTexture = new Texture("optionsActive.png");
+	  playButtonTexture = new Texture("newgame.png");
+	  playButtonActiveTexture = new Texture("newActive.png");
+	  minigameButtonTexture = new Texture("minigame.png");
+	  minigameButtonActiveTexture = new Texture("minigameActive.png");
 
 	// CONTROL_SCREEN_5 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-	  controlsButton = new Texture("controls.png"); // control button texture
-	  controlsButtonActive = new Texture("controls_ACTIVE.png"); // control button texture when the mouse is hovering over the button
+	  controlsButtonTexture = new Texture("controls.png"); // control button texture
+	  controlsButtonActiveTexture = new Texture("controls_ACTIVE.png"); // control button texture when the mouse is hovering over the button
 	// CONTROL_SCREEN_5 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 
 	  background = new Texture ("fireforce.jpg");
@@ -161,73 +169,65 @@ public class MenuScreen implements Screen{
 			  Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, xHotSpot, yHotSpot));
 			  game.batch.draw(background, 0, 0);
 			 
-			  game.batch.draw(minigameButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
+			  game.batch.draw(minigameButtonTexture, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 			
 			
+			  // REFACTOR_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
+			  
+				// In this refactor, the format of the buttons has been changed to be more readable and easier to use.
+				// To create a button you create a Button object and pass the constructor its y coordinate, image,
+				// an on-hover image and the game instance that the button exists in.
+				// The following if statements check if the button has been clicked and execute the necessary code if so
+			  
 			  //for play button: checks if the position of the cursor is inside the coordinates of the button
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > playButtonY ) && (Kroy.height - Gdx.input.getY() < (playButtonY + buttonHeight)) ) ){
-				  game.batch.draw(playButtonActive, xAxisCentred, playButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  this.dispose();
-					  game.batch.end();
-					  fireTruckSelector.visibility(true);// display the truck selection window
-					  setGameState(MenuScreenState.TRUCKSELECT);// set the game state to run and run the selection screen code
-					  return;
-				  }
-			  } else {
-				  game.batch.draw(playButton, xAxisCentred, playButtonY, buttonWidth, buttonHeight);
+			  Button playButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, game);
+			  if (playButton.buttonAction()) {
+				  this.dispose();
+				  game.batch.end();
+				  fireTruckSelector.visibility(true);// display the truck selection window
+				  setGameState(MenuScreenState.TRUCKSELECT);// set the game state to run and run the selection screen code
+				  return;
 			  }
 			  
-			//for exit button
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > exitButtonY ) && (Kroy.height - Gdx.input.getY() < (exitButtonY + buttonHeight)) ) ){
-				  game.batch.draw(exitButtonActive, xAxisCentred, exitButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  Gdx.app.exit();
-				  }
-			  } else {
-				  game.batch.draw(exitButton, xAxisCentred, exitButtonY, buttonWidth, buttonHeight);
+			  
+			  //for exit button
+			  		// button created
+			  Button test_exitButton = new Button(exitButtonY, exitButtonTexture, exitButtonActiveTexture, game);
+			  		// if the button is pressed, execute the command inside the if statement
+			  if (test_exitButton.buttonAction()) {
+				  Gdx.app.exit();
 			  }
 				
+			  
 			  //for minigame button
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > minigameButtonY ) && (Kroy.height - Gdx.input.getY() < (minigameButtonY + buttonHeight)) ) ){
-				  game.batch.draw(minigameButtonActive, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  minigame.visibility(true);
-					  setGameState(MenuScreenState.MINIGAME);
-						  }
-					  } else {
-						  game.batch.draw(minigameButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
-					  }
-	
-						  //for options button
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > optionsButtonY ) && (Kroy.height - Gdx.input.getY() < (optionsButtonY + buttonHeight)) ) ){
-				  game.batch.draw(optionsButtonActive, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  //game.batch.end();
-					  optionsWindow.visibility(true);
-					  setGameState(MenuScreenState.OPTIONS);
-				  }
-			  } else {
-				  game.batch.draw(optionsButton, xAxisCentred, optionsButtonY, buttonWidth, buttonHeight);
+			  Button minigameButton = new Button(minigameButtonY, minigameButtonTexture, minigameButtonActiveTexture, game);
+			  if (minigameButton.buttonAction()) {
+				  minigame.visibility(true);
+				  setGameState(MenuScreenState.MINIGAME);
 			  }
+			  
+			  //for options button
+			  Button optionsButton = new Button(optionsButtonY, optionsButtonTexture, optionsButtonActiveTexture, game);
+			  if (optionsButton.buttonAction()) {
+				//game.batch.end();
+				  optionsWindow.visibility(true);
+				  setGameState(MenuScreenState.OPTIONS);
+			  }
+			  
+			  // REFACTOR_CHANGE_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER --------------------------------------------------------------------
+			 
 			  
 			  // CONTROL_SCREEN_6 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 			  // for controls button
 			  
-			  //if the mouse is on the button ...
-			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > controlsButtonY ) && (Kroy.height - Gdx.input.getY() < (controlsButtonY + buttonHeight)) ) ){
-				  // ... then display the 'controlsButtonActice' texture ...
-				  game.batch.draw(controlsButtonActive, xAxisCentred, controlsButtonY, buttonWidth, buttonHeight);
-				  
-				  // if the controls button is pressed, show the visibility of the controls window to true and set the game state to CONTROLS
-				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  controlsWindow.visibility(true);
-					  setGameState(MenuScreenState.CONTROLS);
-				  }
-			  } else {
-				  // ... otherwise, display the 'controlsButton' texture
-				  game.batch.draw(controlsButton, xAxisCentred, controlsButtonY, buttonWidth, buttonHeight);
+			  // added a button to click, to direct the user to the controls window if clicked
+			  
+			  Button controlsButton = new Button(controlsButtonY, controlsButtonTexture, controlsButtonActiveTexture, game);
+			  if (controlsButton.buttonAction()) {
+				  controlsWindow.visibility(true);
+				  setGameState(MenuScreenState.CONTROLS);
 			  }
+			 
 			  // CONTROL_SCREEN_6 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 			  
 			  game.batch.end();
@@ -254,7 +254,7 @@ public class MenuScreen implements Screen{
 		  	  break;
 
 		  // CONTROL_SCREEN_7 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
-		  // Modification name: control_screen8
+			  // CONTROLS switch statement added to set up the controls window
 		  case CONTROLS: 
 		  	  Gdx.input.setInputProcessor(controlsWindow.stage); // set inputs from the user only valid to the controlsWindow
 		  	  controlsWindow.stage.act();
@@ -331,5 +331,8 @@ public class MenuScreen implements Screen{
   
   @Override 
   public void dispose() {}
+  
  }
+
+
 
