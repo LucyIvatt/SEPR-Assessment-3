@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -48,8 +49,10 @@ public class GameScreen implements Screen{
 	public Kroy game;
 	public GameTextures textures;
 	public static Boolean showDebug = false;
-	public float gameTimer; //Timer to destroy station
-	
+	public float gameTimer; //Timer to destroy station.
+	// MINIMAP_1 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
+	private Texture minimap = new Texture("YorkMap.png"); // A .png version of the tilemap background to use as the background texture for the minimap.
+	// MINIMAP_1 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
 	
 	public GameScreenState state = GameScreenState.RUN;
 	
@@ -163,9 +166,9 @@ public class GameScreen implements Screen{
 		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
 				new Vector2(400, 240), 600, 15));
 		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
-				new Vector2(400, 400), 700, 20));
+				new Vector2(345, 213), 700, 20));
 		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
-				new Vector2(400, 400), 800, 25)); //382, 319
+				new Vector2(300, 240), 800, 25)); //382, 319
 		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
 				new Vector2(300, 270), 900, 30)); //45, 166
 		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
@@ -222,6 +225,22 @@ public class GameScreen implements Screen{
 				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
 
 				hud.stage.draw();
+				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE-----------------
+				game.batch.begin();
+				game.batch.draw(minimap, 0, 0, 394, 350);
+
+				for (GameObject object : gameObjects){
+					game.batch.draw(object.getTexture(), object.getX()/19, object.getY()/19, object.getWidth()/10,
+							object.getHeight()/10);
+				} // Draws the fortresses and patrols to a minimap scaled down to the in the bottom left corner.
+				for (FireTruck truck : players) {
+					if (truck.getHealthPoints() > 0) {
+						game.batch.draw(truck.getTexture(), truck.getX() / 19, truck.getY() / 19, 20, 25);
+					}
+					//Draws the firetrucks on their relative position on the minimap. size is not to make their position obvious and clear.
+				}
+				game.batch.end();
+				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE--------------
 				pauseWindow.stage.draw();
 
 				if (showDebug) {
