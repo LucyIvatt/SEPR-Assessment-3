@@ -11,6 +11,7 @@ import com.dicycat.kroy.GameObject;
 *
 */
 public class StatBar extends GameObject{
+
 	private int height;	//Height of the bar
 	
 	/**
@@ -33,4 +34,8 @@ public class StatBar extends GameObject{
 	}
 
 	public void update() {}
+
+	public int getStatBarHeight() {
+		return height;
+	}
 }

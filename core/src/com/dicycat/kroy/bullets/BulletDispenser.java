@@ -68,7 +68,9 @@ public class BulletDispenser {
 				bulletTimer = 0;
 				Bullet[] toFire;	//Stores bullets to be fired
 				if (firingPattern.getAim()) {
-					Vector2 targetDirection = new Vector2(Kroy.mainGameScreen.getPlayer().getCentre().x - owner.getCentre().x, Kroy.mainGameScreen.getPlayer().getCentre().y - owner.getCentre().y); //Aim from entity to player
+					Vector2 targetDirection = new Vector2(Kroy.mainGameScreen.getPlayer().getCentre().x -
+							owner.getCentre().x, Kroy.mainGameScreen.getPlayer().getCentre().y -
+							owner.getCentre().y); //Aim from entity to player
 					
 					toFire = firingPattern.aimedSet(currentBullet, targetDirection);
 				}else {
@@ -91,5 +93,18 @@ public class BulletDispenser {
 		
 		return null;	//Not firing/no bullets
 	}
+
+
+	public Pattern getFiringPattern() {
+		return firingPattern;
+	}
+
+
+	public float getPatternTime() {
+		return patternTime;
+	}
+
+
+
 }
 
