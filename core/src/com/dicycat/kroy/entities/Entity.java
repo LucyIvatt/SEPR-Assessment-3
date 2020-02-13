@@ -1,5 +1,4 @@
 package com.dicycat.kroy.entities;
-// JS test for using git with eclipse
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.GameObject;
@@ -71,6 +70,10 @@ public abstract class Entity extends GameObject{
 		else {
 			return false; // returns false otherwise
 		}
+	}
+
+	public int getHealthPoints() {
+		return healthPoints;
 	}
 
 	// CODE_REFACTOR_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
