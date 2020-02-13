@@ -3,6 +3,7 @@ package com.dicycat.kroy.entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.Kroy;
+import com.dicycat.kroy.screens.GameScreen;
 
 /**
  * Static friendly Entity.
@@ -21,7 +22,7 @@ public class FireStation extends Entity {
 	 */
 	public FireStation() {
 		super(new Vector2(Kroy.mainGameScreen.getSpawnPosition().add(-(textureLiving.getWidth()/2), 100)),
-				textureLiving, new Vector2(textureLiving.getWidth(),textureLiving.getHeight()), 100, 500);
+				textureLiving, new Vector2(textureLiving.getWidth(),textureLiving.getHeight()), 100, 300);
 	}
 
 	/**
@@ -39,7 +40,11 @@ public class FireStation extends Entity {
 	 */
 	public void update(){
 		if(playerInRadius()){
-			Kroy.mainGameScreen.getPlayer().replenish();
+			if (!Kroy.mainGameScreen.getPlayer().isFull()) {
+				Kroy.mainGameScreen.getPlayer().replenish();
+				Kroy.mainGameScreen.newMinigame();
+				Kroy.mainGameScreen.setGameState(GameScreen.GameScreenState.MINIG);
+			}
 		}
 		if (Kroy.mainGameScreen.gameTimer <= 0) {		//Once timer is over
 			applyDamage(100);	//Destroy fire station

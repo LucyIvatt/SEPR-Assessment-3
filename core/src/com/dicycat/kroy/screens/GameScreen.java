@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -22,6 +23,7 @@ import com.dicycat.kroy.debug.DebugLine;
 import com.dicycat.kroy.debug.DebugRect;
 import com.dicycat.kroy.entities.*;
 import com.dicycat.kroy.gamemap.TiledGameMap;
+import com.dicycat.kroy.minigame.Minigame;
 import com.dicycat.kroy.scenes.HUD;
 import com.dicycat.kroy.scenes.OptionsWindow;
 import com.dicycat.kroy.scenes.PauseWindow;
@@ -40,14 +42,17 @@ public class GameScreen implements Screen{
 		PAUSE,
 		RUN,
 		RESUME,
-		OPTIONS
+		OPTIONS,
+		MINIG
 	}
 	
 	public Kroy game;
 	public GameTextures textures;
 	public static Boolean showDebug = false;
-	public float gameTimer; //Timer to destroy station
-	
+	public float gameTimer; //Timer to destroy station.
+	// MINIMAP_1 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
+	private Texture minimap = new Texture("YorkMap.png"); // A .png version of the tilemap background to use as the background texture for the minimap.
+	// MINIMAP_1 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
 	
 	public GameScreenState state = GameScreenState.RUN;
 	
@@ -59,6 +64,7 @@ public class GameScreen implements Screen{
 	private HUD hud;
 	private PauseWindow pauseWindow;
 	private OptionsWindow optionsWindow;
+	private Minigame minigame;
 
 	// TRUCK_SELECT_CHANGE_11 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Slightly edited trucks statistics to make the game more balanced.
@@ -103,8 +109,13 @@ public class GameScreen implements Screen{
 		pauseWindow.visibility(false);
 		optionsWindow = new OptionsWindow(game);
 		optionsWindow.visibility(false);
+//		minigame = new Minigame(game);
+//		minigame.visibility(false);
 		textures = new GameTextures(); // removed truckNum from GameTextures constructor call
-		spawnPosition = new Vector2(3750, 4000);
+		// FIRESTATION_RANGE_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+		// Edited coordinate so firestation is in the middle of the square
+		spawnPosition = new Vector2(234 * 16, 3900);
+		// FIRESTATION_RANGE_FIX_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		gameTimer = 60 * 15; //Set timer to 15 minutes
 		hud = new HUD(game.batch, gameTimer);
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
@@ -154,17 +165,17 @@ public class GameScreen implements Screen{
 		// Added health and damage values for each fortress instantiation
 		// Added new fortresses and set position in accordance with collisions on tiled map
 		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
-				new Vector2(256, 218), 400, 10));
+				new Vector2(256, 218), 400, 5));
 		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
-				new Vector2(256, 320), 500, 20));
+				new Vector2(256, 320), 500, 10));
 		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
-				new Vector2(400, 240), 600, 30));
+				new Vector2(400, 240), 600, 15));
 		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
-				new Vector2(400, 400), 700, 40));
+				new Vector2(345, 213), 700, 20));
 		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
-				new Vector2(400, 400), 800, 50)); //382, 319
+				new Vector2(300, 240), 800, 25)); //382, 319
 		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
-				new Vector2(300, 270), 900, 60)); //45, 166
+				new Vector2(300, 270), 900, 30)); //45, 166
 		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
 	}
 
@@ -219,6 +230,22 @@ public class GameScreen implements Screen{
 				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
 
 				hud.stage.draw();
+				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE-----------------
+				game.batch.begin();
+				game.batch.draw(minimap, 0, 0, 394, 350);
+
+				for (GameObject object : gameObjects){
+					game.batch.draw(object.getTexture(), object.getX()/19, object.getY()/19, object.getWidth()/10,
+							object.getHeight()/10);
+				} // Draws the fortresses and patrols to a minimap scaled down to the in the bottom left corner.
+				for (FireTruck truck : players) {
+					if (truck.getHealthPoints() > 0) {
+						game.batch.draw(truck.getTexture(), truck.getX() / 19, truck.getY() / 19, 20, 25);
+					}
+					//Draws the firetrucks on their relative position on the minimap. size is not to make their position obvious and clear.
+				}
+				game.batch.end();
+				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE--------------
 				pauseWindow.stage.draw();
 
 				if (showDebug) {
@@ -234,9 +261,20 @@ public class GameScreen implements Screen{
 				pauseWindow.visibility(false);
 				setGameState(GameScreenState.RUN);
 				break;
+			case MINIG:
+				Gdx.input.setInputProcessor(minigame.stage);
+				minigame.visibility(true);
+				minigame.stage.draw();
+				minigame.stage.act();
+				minigame.clickCheck();
+				break;
 			default:
 				break;
 		}
+	}
+
+	public void newMinigame(){
+		minigame = new Minigame(game, true);
 	}
 
 	/**
