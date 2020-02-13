@@ -6,7 +6,8 @@ import com.dicycat.kroy.Kroy;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
-* 
+* Class which handles the buttons used on the main menu. Contains the two textures need for active and incactive states
+ * as well as the y coordinate. X coordinate is not needed as menu buttons are centered to the screen.
 * @author Jordan Spooner - NP STUDIOS
 *
 */

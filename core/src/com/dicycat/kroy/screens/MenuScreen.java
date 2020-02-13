@@ -174,13 +174,10 @@ public class MenuScreen implements Screen{
 			
 			  // REFACTOR_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
 			  
-			  		// in this refactor, I am changing the format of the buttons to be more readable and easier to use.
-			  		// the MAINMENU switch statement is more readable now
-			  		// now, all you have to do is create an instance of a button that has it;s y coordinate, its image,
-			  		// 		another image of the button to be displayed when the mouse is in contact with it and the game instance
-			  		//      that the button exists in.
-			        // the simple if statement checks if a click has been performed on the button and if it has, true is returned and the code
-			  		// inside the if statement is executed.
+				// In this refactor, the format of the buttons has been changed to be more readable and easier to use.
+				// To create a button you create a Button object and pass the constructor its y coordinate, image,
+				// an on-hover image and the game instance that the button exists in.
+				// The following if statements check if the button has been clicked and execute the necessary code if so
 			  
 			  //for play button: checks if the position of the cursor is inside the coordinates of the button
 			  Button playButton = new Button(playButtonY, playButtonTexture, playButtonActiveTexture, game);
