@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.scenes.ControlsWindow;
 import com.dicycat.kroy.scenes.FireTruckSelectionScene;
+import com.dicycat.kroy.minigame.Minigame;
 import com.dicycat.kroy.scenes.OptionsWindow;
   
 /**
@@ -48,9 +49,13 @@ public class MenuScreen implements Screen{
   private Stage stage;
   
   private OptionsWindow optionsWindow;
+
+  private Minigame minigame;
+
   // CONTROL_SCREEN_ 2 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
   private ControlsWindow controlsWindow; 
   // CONTROL_SCREEN_2 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
+
   
   public static Music music = Gdx.audio.newMusic(Gdx.files.internal("gamemusic.mp3"));
   public static float musicVolume = 0.4f;
@@ -85,6 +90,7 @@ public class MenuScreen implements Screen{
 	  MAINMENU,
 	  TRUCKSELECT,
 	  OPTIONS,
+	  MINIGAME,
 	  // CONTROL_SCREEN_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
 	  CONTROLS // adding a new window state, the controls window
 	  // CONTROL_SCREEN_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
@@ -126,10 +132,13 @@ public class MenuScreen implements Screen{
 	  
 	  optionsWindow = new OptionsWindow(game);
 	  optionsWindow.visibility(false);
+
+	  minigame = new Minigame(game, false);
+	  minigame.visibility(false);
 	  
 	  controlsWindow = new ControlsWindow(game);
 	  controlsWindow.visibility(false);
-	  
+
   }
   
   @Override 
@@ -183,7 +192,8 @@ public class MenuScreen implements Screen{
 			  if(( (Gdx.input.getX() < (xAxisCentred + buttonWidth)) && (Gdx.input.getX() > xAxisCentred) ) && ( (Kroy.height - Gdx.input.getY() > minigameButtonY ) && (Kroy.height - Gdx.input.getY() < (minigameButtonY + buttonHeight)) ) ){
 				  game.batch.draw(minigameButtonActive, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
 				  if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					  //what shall we put?
+					  minigame.visibility(true);
+					  setGameState(MenuScreenState.MINIGAME);
 						  }
 					  } else {
 						  game.batch.draw(minigameButton, xAxisCentred, minigameButtonY, buttonWidth, buttonHeight);
@@ -235,6 +245,13 @@ public class MenuScreen implements Screen{
 			  optionsWindow.stage.draw();
 			  optionsWindow.clickCheck(true);
 			  break;
+
+		  case MINIGAME:
+		  	  Gdx.input.setInputProcessor(minigame.stage);
+		  	  minigame.stage.act();
+		  	  minigame.stage.draw();
+		  	  minigame.clickCheck();
+		  	  break;
 
 		  // CONTROL_SCREEN_7 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ------------------------------------------------------------------
 		  // Modification name: control_screen8
