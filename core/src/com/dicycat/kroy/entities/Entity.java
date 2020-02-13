@@ -1,5 +1,4 @@
 package com.dicycat.kroy.entities;
-// JS test for using git with eclipse
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.GameObject;
@@ -7,7 +6,7 @@ import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.gamemap.TiledGameMap;
 
 /**
- * Class for interactive gameObjects
+ * Class for interactive GameObjects
  * 
  * @author Riju De
  *
@@ -30,7 +29,7 @@ public abstract class Entity extends GameObject{
 		healthPoints = health;
 		maxHealthPoints = health;
 		this.radius = radius;
-		// RANGE - END OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+	// RANGE - END OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 		changePosition(spawnPos);
 	}
 
@@ -49,7 +48,7 @@ public abstract class Entity extends GameObject{
 	}
 
 	/**
-	 * Apply x amount of damage to the entity
+	 * Apply a specified amount of damage to the entity
 	 * @param damage Amount of damage to inflict on the Entity
 	 */
 	public void applyDamage(float damage) {	
@@ -67,12 +66,17 @@ public abstract class Entity extends GameObject{
 		Vector2 currentCoords = Kroy.mainGameScreen.getPlayer().getCentre(); // get current player coordinates
 		if (Vector2.dst(currentCoords.x, currentCoords.y, getCentre().x, getCentre().y) < radius ) { // checks the distance between the two entities
 			return true; // returns true if distance between entity and player is less than radius of item
-		}else {
+		}
+		else {
 			return false; // returns false otherwise
 		}
 	}
-	
-	public Integer getHealthPoints(){
+
+	public int getHealthPoints() {
 		return healthPoints;
 	}
+
+	// CODE_REFACTOR_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+	// Deleted unused code
+	// CODE_REFACTOR_3 - END OF MODIFICATION - NP STUDIO - LUCY IVATT
 }

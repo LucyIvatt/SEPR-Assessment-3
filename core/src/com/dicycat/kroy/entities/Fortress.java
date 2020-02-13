@@ -9,20 +9,17 @@ import com.dicycat.kroy.bullets.Pattern;
 import com.dicycat.kroy.misc.StatBar;
 
 /**
- * Static hostile Entity.
- * Fires at the player when within its radius.
- * 
- * @author 
- *
+ * Hostile building which fires at the player when within its radius.
  */
+
 public class Fortress extends Entity {
 
 	private BulletDispenser dispenser;
 	private Texture deadTexture;
 	private StatBar healthBar;
-	private int damage; 	// FORTRESS_DAMAGE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
-							// Added a new attribute 'damage'
-							// FORTRESS_DAMAGE_1 - END OF MODIFICATION - NP STUDIOS
+	// FORTRESS_DAMAGE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+	private int damage; 	// Added a new attribute 'damage'
+	// FORTRESS_DAMAGE_1 - END OF MODIFICATION - NP STUDIOS
 
 	/**
 	 * @param spawnPos
@@ -63,7 +60,7 @@ public class Fortress extends Entity {
 	}
 
 	/**
-	 * Removes from active pool and displays destroyed state
+	 * Removes from active pool and displays destroyed texture
 	 */
 	@Override
 	public void die() {
@@ -84,9 +81,10 @@ public class Fortress extends Entity {
 	}
 
 	/**
-	 * Apply x amount of damage to the entity
-	 * Updates the health bar
-	 * @param damage Amount of damage to inflict on the Entity
+	 * Apply certain amount of damage to the entity and updates the health bar
+	 * @param damage Amount of damage to apply to the Fortress
+	 *
+	 * Edited by Lucy Ivatt - NP STUDIOS
 	 */
 	@Override
 	public void applyDamage(float damage) {
@@ -96,7 +94,7 @@ public class Fortress extends Entity {
 	}
 
 	/**
-	 *
+	 * Updates the dispenser associated with the fortress and adds bullets to the mainGameScreen
 	 */
 	@Override
 	public void update() {

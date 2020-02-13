@@ -90,7 +90,7 @@ public abstract class GameObject {
 	}
 	
 	/**
-	 * 
+	 * Sets remove to true so it will not be rendered to the screen
 	 */
 	public void die() {
 		remove = true;

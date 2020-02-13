@@ -24,12 +24,12 @@ import com.dicycat.kroy.misc.Button;
 public class GameOverScreen implements Screen{
 	
 	private Kroy game; 
-	  private OrthographicCamera gamecam;	//m
-	  private Viewport gameport; 	//m
+	  private OrthographicCamera gamecam;
+	  private Viewport gameport;
 	  
 	  private Stage stage;
 	  
-	  public boolean result; //to change based on whether game is won or lost
+	  public boolean result; //if game is won or lost
 	  
 	  private Texture gameOverImage = new Texture("gameover.png");
 	  private Texture youWonImage = new Texture("youwon.png");
@@ -77,13 +77,7 @@ public class GameOverScreen implements Screen{
 	  private Pixmap pm = new Pixmap(Gdx.files.internal("handHD2.png")); //cursor
 	  private int xHotSpot = pm.getWidth() / 3;	//where the cursor's aim is 
 	  private int yHotSpot = 0;
-	  
-	  
-	  /**
-	 * @param game
-	 * @param truckNum
-	 * @param result
-	 */
+
 	public GameOverScreen(Kroy game, int truckNum, Boolean result) { 
 		  this.game = game; 
 		  this.result = result;
@@ -129,7 +123,7 @@ public class GameOverScreen implements Screen{
 	  public void show() {}
 	  
 	  /**
-	   *
+	   * Renders the elements of the GameOverScreen
 	   */
 	  @Override 
 	  public void render(float delta) {
@@ -179,10 +173,7 @@ public class GameOverScreen implements Screen{
 
 		  
 	  	}
-	  
-	  /**
-	   *
-	   */
+
 	  @Override 
 	  public void resize(int width, int height) { 
 		  gameport.update(width, height);
