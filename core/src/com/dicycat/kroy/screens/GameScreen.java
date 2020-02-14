@@ -230,22 +230,9 @@ public class GameScreen implements Screen{
 				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
 
 				hud.stage.draw();
-				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE-----------------
-				game.batch.begin();
-				game.batch.draw(minimap, 0, 0, 394, 350);
-
-				for (GameObject object : gameObjects){
-					game.batch.draw(object.getTexture(), object.getX()/19, object.getY()/19, object.getWidth()/10,
-							object.getHeight()/10);
-				} // Draws the fortresses and patrols to a minimap scaled down to the in the bottom left corner.
-				for (FireTruck truck : players) {
-					if (truck.getHealthPoints() > 0) {
-						game.batch.draw(truck.getTexture(), truck.getX() / 19, truck.getY() / 19, 20, 25);
-					}
-					//Draws the firetrucks on their relative position on the minimap. size is not to make their position obvious and clear.
-				}
-				game.batch.end();
-				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE--------------
+				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------
+				drawMinimap();
+				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE ---------------------
 				pauseWindow.stage.draw();
 
 				if (showDebug) {
@@ -347,6 +334,29 @@ public class GameScreen implements Screen{
 	}
 	// TRUCK_SELECT_CHANGE_16 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
+	/**
+	 * Draws the map's background as a texture in the bottom left corner.
+	 * And also redraws all the objects in gameObjects scaled down fit on the minimap.
+	 * The firetrucks in their relative postions are also drawn on the minimap texture.
+	 *
+	 * @author NP STUDIOS - Bethany Gilmore
+	 */
+	public void drawMinimap(){
+		game.batch.begin();
+		game.batch.draw(minimap, 0, 0, 394, 350);
+
+		for (GameObject object : gameObjects){
+			game.batch.draw(object.getTexture(), object.getX()/19, object.getY()/19, object.getWidth()/10,
+					object.getHeight()/10);
+		} // Draws the fortresses and patrols to a minimap scaled down to the in the bottom left corner.
+		for (FireTruck truck : players) {
+			if (truck.getHealthPoints() > 0) {
+				game.batch.draw(truck.getTexture(), truck.getX() / 19, truck.getY() / 19, 20, 25);
+			}
+			//Draws the firetrucks on their relative position on the minimap. size is not to scale to make their position obvious and clear.
+		}
+		game.batch.end();
+	}
 	/**
 	 * Draws all debug objects for one frame
 	 */
