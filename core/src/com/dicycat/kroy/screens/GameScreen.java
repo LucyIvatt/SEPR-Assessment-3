@@ -41,7 +41,7 @@ public class GameScreen implements Screen{
 	public static enum GameScreenState{
 		PAUSE,
 		RUN,
-		RESUME,,
+		RESUME,
 		MINIGAME
 	}
 	
