@@ -75,7 +75,7 @@ public class Minigame {
         table.setBackground(background);
 
         Random rand = new Random();
-        Integer config = rand.nextInt(2);
+        Integer config = rand.nextInt(3);
         if (config == 0) {
             state = State.GAME1;
             pipes.add(new Pipe(1, 1));
@@ -110,6 +110,25 @@ public class Minigame {
             pipes.add(new Pipe(2, 3));
         }else{
             state = State.GAME3;
+            pipes.add(new Pipe(2, 1));
+            pipes.add(new Pipe(2, 1));
+            pipes.add(new Pipe(2, 1));
+            pipes.add(new Pipe(1, 1));
+
+            pipes.add(new Pipe(2, 0));
+            pipes.add(new Pipe(3, 0));
+            pipes.add(new Pipe(1, 2));
+            pipes.add(new Pipe(0, 0));
+
+            pipes.add(new Pipe(0, 0));
+            pipes.add(new Pipe(1, 3));
+            pipes.add(new Pipe(0, 1));
+            pipes.add(new Pipe(1, 2));
+
+            pipes.add(new Pipe(1, 3));
+            pipes.add(new Pipe(0, 1));
+            pipes.add(new Pipe(0, 1));
+            pipes.add(new Pipe(0, 1));
         }
 
         updateDraw();
@@ -119,13 +138,12 @@ public class Minigame {
      * Allows for the user to interact with the minigame elements via clicking
      */
     public void clickCheck() {
-        for (int i = 0; i < 9; i += 1){
-            final int finalI = i;
-            pipes.get(i).getButton().addListener(new ClickListener() {
+        for (final Pipe pipe : pipes){
+            pipe.getButton().addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent input, float x, float y) {
                     table.reset();
-                    pipes.get(finalI).rotate();
+                    pipe.rotate();
                     updateDraw();
                 }
             });
@@ -203,12 +221,14 @@ public class Minigame {
                 stage.addActor(table);
                 break;
             case GAME2:
+            case GAME3:
                 table.row();
-                table.add(new Image(new Texture("waterarow.png")));
+                table.add(new Image(new Texture("waterarrow.png")));
                 table.add(pipes.get(0).getButton());
                 table.add(pipes.get(1).getButton());
                 table.add(pipes.get(2).getButton());
                 table.add(pipes.get(3).getButton());
+                table.add().width(160);
 
                 table.row();
                 table.add().width(160);
@@ -216,6 +236,7 @@ public class Minigame {
                 table.add(pipes.get(5).getButton());
                 table.add(pipes.get(6).getButton());
                 table.add(pipes.get(7).getButton());
+                table.add().width(160);
 
                 table.row();
                 table.add().width(160);
@@ -223,6 +244,7 @@ public class Minigame {
                 table.add(pipes.get(9).getButton());
                 table.add(pipes.get(10).getButton());
                 table.add(pipes.get(11).getButton());
+                table.add().width(160);
 
                 table.row();
                 table.add().width(160);
@@ -230,7 +252,19 @@ public class Minigame {
                 table.add(pipes.get(13).getButton());
                 table.add(pipes.get(14).getButton());
                 table.add(pipes.get(15).getButton());
+                table.add(new Image(new Texture("waterout.png")));
 
+                table.row();
+                table.add().width(160);
+                table.add().width(128);
+                table.add().width(128);
+                table.add().width(128);
+                table.add().width(128);
+                table.add(check);
+
+                table.setFillParent(true);
+                stage.addActor(table);
+                break;
 
             case WON:
                 table.row();

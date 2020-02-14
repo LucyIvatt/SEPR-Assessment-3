@@ -97,7 +97,7 @@ public class Pipe {
     }
 
     /**
-     *
+     * Returns true if the pipe is in it's correct roation to solve the minigame.
      * @return Boolean value
      */
     public boolean isCorrect(){
