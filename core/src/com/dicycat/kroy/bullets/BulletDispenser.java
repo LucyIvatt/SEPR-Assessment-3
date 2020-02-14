@@ -9,7 +9,7 @@ import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.entities.Entity;
 
 /**
- * Stores and handles firing of patterns
+ * Stores and handles firing patterns
  * 
  * @author Riju De
  *
@@ -18,7 +18,7 @@ public class BulletDispenser {
 
 	private List<Pattern> patterns;	//Stores all patterns
 	private Pattern firingPattern; 	//Current pattern firing
-	private Entity owner;			//Entity the bulletDispnser is attached to
+	private Entity owner;			//Entity the bulletDispenser is attached to
 	
 	private int currentPattern;		//Current pattern to fire
 	private int currentBullet;		//Current bullet to fire
@@ -29,8 +29,7 @@ public class BulletDispenser {
 	/**
 	 * @param creator Owner of the BulletDispenser
 	 */
-	public BulletDispenser(Entity creator)
-	{
+	public BulletDispenser(Entity creator) {
 		owner = creator;
 		patterns = new ArrayList<Pattern>();
 		currentPattern = 0;
@@ -39,7 +38,7 @@ public class BulletDispenser {
 	}
 	
 	/**
-	 * Add a pattern to the bullet dispensers arsenal
+	 * Adds a pattern to the bullet dispensers arsenal
 	 * @param pattern Pattern to add
 	 */
 	public void addPattern(Pattern pattern) {
@@ -51,8 +50,10 @@ public class BulletDispenser {
 	}
 	
 	/**
-	 * @param fire Should the dispenser fire?
-	 * @return bullets fired
+	 * @param fire Whether or not the dispenser can currently fire
+	 * @return array of the bullets fired
+	 *
+	 * Edited by Lucy Ivatt - NP Studios
 	 */
 	public Bullet[] update(Boolean fire) {		//Called every frame
 		if (patterns.size() == 0) {	//No patterns -> no checks required
@@ -88,7 +89,6 @@ public class BulletDispenser {
 				return toFire;
 			}
 		}
-		
 		return null;	//Not firing/no bullets
 	}
 }

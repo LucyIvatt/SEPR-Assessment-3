@@ -7,14 +7,14 @@ import com.dicycat.kroy.GameObject;
 /**
 * 
 * Sprites used to display statistics for the player
-* @author IsaacAlbiston
+* @author Isaac Albiston
 *
 */
 public class StatBar extends GameObject{
 	private int height;	//Height of the bar
 	
 	/**
-	 * initialises the bar
+	 * initialises the StatBar
 	 * @param spawnPos
 	 * @param texture
 	 * @param height
@@ -25,12 +25,17 @@ public class StatBar extends GameObject{
 	}
 	
 	/**
-	 * Changes the width of the bar to x
-	 * @param x
+	 * Changes the width of the bar
+	 * @param x width to set the bar to
+	 *
+	 * Edited by Lucy Ivatt - NP STUDIOS
 	 */
 	public void setBarDisplay(float x){
 		sprite.setScale(x,height);
 	}
 
-	public void update() {}
+
+	@Override
+	public void update() {
+	}
 }

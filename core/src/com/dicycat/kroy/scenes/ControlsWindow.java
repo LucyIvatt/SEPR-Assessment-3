@@ -61,15 +61,15 @@ public class ControlsWindow {
 	    stage.addActor(table);
 	}
 	
-	/**
-	 * @param state	Allows the window to be visible or hidden
+	/** Allows the window to be visible or hidden
+	 * @param state	true means visible, false means hidden
 	 */
 	public void visibility(boolean state){
 		this.table.setVisible(state);
 	}
 	
 	/**
-	 *  Check for whether the back button is pressed and goes back to the menu if so
+	 *  Check if the back button is pressed and goes back to the menu if so
 	 */
 	public void clickCheck() {
 		//back button
@@ -131,7 +131,6 @@ public class ControlsWindow {
 		table.add(blank);
 		table.add(blank);
 		table.add(blank);
-		table.add(back).width(centre/3.0f); // does size
+		table.add(back).width(centre/3.0f);
 	}
-	
 }

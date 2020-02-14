@@ -4,25 +4,21 @@ package com.dicycat.kroy.gamemap;
 import java.util.HashMap;
 
 /**
-* 
 * @author Martha Cartwright
-*
 */
 public enum TileType {
 	
 
 	NONCOLLIDABLE(422,false),
-	COLLIDABLE(421,true)
-	;
+	COLLIDABLE(421,true);
 
 	
 	private int id;
 	private boolean collidable;
 	
 	public static final int TILE_SIZE = 16;
-	
-	
-	private TileType(int id, boolean collidable) {
+
+	TileType(int id, boolean collidable) {
 		this.id = id;
 		this.collidable = collidable;
 	}

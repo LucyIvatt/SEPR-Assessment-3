@@ -57,15 +57,13 @@ public class OptionsWindow {
      *	Allows to have multiple 'pages' of the Option window without
      *	having to create several stages.
      */
-    public static enum State{
+    public enum State{
 		PAGE1,
 		MUSIC,
 		DEBUG,
 	}
-    
-    
+
 	/**
-	 * 
 	 * 	The important feature is the updateDraw() method
 	 * 	which can be found at the bottom.
 	 * 
@@ -80,7 +78,10 @@ public class OptionsWindow {
 		table.setBackground(background);
 		updateDraw();
 	}
-	
+
+	/** Allows the window to be visible or hidden
+	 * @param state	true means visible, false means hidden
+	 */
 	public void visibility(boolean state){
 		this.table.setVisible(state);
 	}

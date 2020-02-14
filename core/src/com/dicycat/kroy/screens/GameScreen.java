@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -48,8 +49,10 @@ public class GameScreen implements Screen{
 	public Kroy game;
 	public GameTextures textures;
 	public static Boolean showDebug = false;
-	public float gameTimer; //Timer to destroy station
-	
+	public float gameTimer; //Timer to destroy station.
+	// MINIMAP_1 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
+	private Texture minimap = new Texture("YorkMap.png"); // A .png version of the tilemap background to use as the background texture for the minimap.
+	// MINIMAP_1 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
 	
 	public GameScreenState state = GameScreenState.RUN;
 	
@@ -87,11 +90,6 @@ public class GameScreen implements Screen{
 	private List<GameObject> objectsToAdd;
 	private List<DebugDraw> debugObjects; //List of debug items
 
-
-
-	/**
-	 * @param _game
-	 */
 	// TRUCK_SELECT_CHANGE_12 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Removed truckNum from constructor parameters
 	public GameScreen(Kroy _game) {
@@ -121,7 +119,7 @@ public class GameScreen implements Screen{
 	// TRUCK_SELECT_CHANGE_12 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 	/**
-	 * Screen first shown
+	 * Initializes the screen which is first shown
 	 */
 	@Override
 	public void show() {
@@ -168,16 +166,16 @@ public class GameScreen implements Screen{
 		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
 				new Vector2(400, 240), 600, 15));
 		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
-				new Vector2(400, 400), 700, 20));
+				new Vector2(345, 213), 700, 20));
 		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
-				new Vector2(400, 400), 800, 25)); //382, 319
+				new Vector2(300, 240), 800, 25)); //382, 319
 		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
 				new Vector2(300, 270), 900, 30)); //45, 166
 		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
 	}
 
 	/**
-	 * Called every frame
+	 * Called every frame and calls the methods to update and render the game objects, as well as handling input.
 	 */
 	public void render(float delta) {
 		Gdx.input.setInputProcessor(pauseWindow.stage);  //Set input processor
@@ -227,6 +225,22 @@ public class GameScreen implements Screen{
 				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
 
 				hud.stage.draw();
+				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE-----------------
+				game.batch.begin();
+				game.batch.draw(minimap, 0, 0, 394, 350);
+
+				for (GameObject object : gameObjects){
+					game.batch.draw(object.getTexture(), object.getX()/19, object.getY()/19, object.getWidth()/10,
+							object.getHeight()/10);
+				} // Draws the fortresses and patrols to a minimap scaled down to the in the bottom left corner.
+				for (FireTruck truck : players) {
+					if (truck.getHealthPoints() > 0) {
+						game.batch.draw(truck.getTexture(), truck.getX() / 19, truck.getY() / 19, 20, 25);
+					}
+					//Draws the firetrucks on their relative position on the minimap. size is not to make their position obvious and clear.
+				}
+				game.batch.end();
+				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE--------------
 				pauseWindow.stage.draw();
 
 				if (showDebug) {
@@ -423,28 +437,10 @@ public class GameScreen implements Screen{
 		Kroy.mainGameScreen = null;
 	}
 
-	/**
-	 * @param s
-	 */
 	public void setGameState(GameScreenState s){
 	    state = s;
 	}
 
-	/**
-	 * @param index
-	 * @return
-	 */
-	public GameObject getGameObject(int index) {
-		if (index <= (gameObjects.size()-1)) {
-			return gameObjects.get(index);
-		}else {
-			return null;
-		}
-	}
-
-	/**
-	 * @return
-	 */
 	public List<GameObject> getGameObjects(){
 		return gameObjects;
 	}
@@ -454,7 +450,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Checks the pause buttons
+	 * Checks the pause buttons for input
 	 */
 	private void clickCheck() {
 		//resume button
@@ -485,7 +481,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Remove one fortress to the count
+	 * Remove one fortress to the fortressCount
 	 */
 	public void removeFortress() {
 		fortressesCount--;
@@ -511,7 +507,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * 
+	 * Calls game over if lives == 0, otherwise removes 1 from life counter
 	 */
 	public void updateLives() {
 		if (lives>1) {
@@ -548,7 +544,7 @@ public class GameScreen implements Screen{
 
 	// TRUCK_SELECT_CHANGE_18 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Sets the selected variable on each of the trucks to false and then sets the active trucks selected variable to true
-	public void selectTruck () {
+	public void selectTruck() {
 		for (FireTruck truck : players) {
 			truck.setSelected(false);
 		}

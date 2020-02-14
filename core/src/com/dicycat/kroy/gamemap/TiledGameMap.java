@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 /**
- * 
+ * Represents the TiledGameMap that is displayed on the screen.
  * 
  * @author Martha Cartwright
  *
@@ -19,10 +19,7 @@ public class TiledGameMap{
 	
 	private TiledMap tiledMap;
 	private OrthogonalTiledMapRenderer tiledMapRenderer;
-	
-	/**
-	 * 
-	 */
+
 	public TiledGameMap() {
 		tiledMap = new TmxMapLoader().load("YorkMap.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
