@@ -336,10 +336,10 @@ public class GameScreen implements Screen{
 
 	/**
 	 * Draws the map's background as a texture in the bottom left corner.
-	 * And also redraws all the objects in gameObjects scaled down fit on the minimap.
+	 * And also redraws all the objects in gameObjects scaled down to fit on the minimap.
 	 * The firetrucks in their relative postions are also drawn on the minimap texture.
 	 *
-	 * @author NP STUDIOS - Bethany Gilmore
+	 * @author Bethany Gilmore - NP STUDIOS
 	 */
 	public void drawMinimap(){
 		game.batch.begin();
