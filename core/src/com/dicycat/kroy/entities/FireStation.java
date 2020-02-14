@@ -43,7 +43,7 @@ public class FireStation extends Entity {
 			if (!Kroy.mainGameScreen.getPlayer().isFull()) {
 				Kroy.mainGameScreen.getPlayer().refillWater();
 				Kroy.mainGameScreen.newMinigame();
-				Kroy.mainGameScreen.setGameState(GameScreen.GameScreenState.MINIG);
+				Kroy.mainGameScreen.setGameState(GameScreen.GameScreenState.MINIGAME);
 			}
 		}
 		if (Kroy.mainGameScreen.gameTimer <= 0) {		//Once timer is over

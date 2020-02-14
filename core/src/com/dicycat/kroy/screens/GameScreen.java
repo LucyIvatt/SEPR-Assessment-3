@@ -41,9 +41,8 @@ public class GameScreen implements Screen{
 	public static enum GameScreenState{
 		PAUSE,
 		RUN,
-		RESUME,
-		OPTIONS,
-		MINIG
+		RESUME,,
+		MINIGAME
 	}
 	
 	public Kroy game;
@@ -256,7 +255,7 @@ public class GameScreen implements Screen{
 				pauseWindow.visibility(false);
 				setGameState(GameScreenState.RUN);
 				break;
-			case MINIG:
+			case MINIGAME:
 				Gdx.input.setInputProcessor(minigame.stage);
 				minigame.visibility(true);
 				minigame.stage.draw();

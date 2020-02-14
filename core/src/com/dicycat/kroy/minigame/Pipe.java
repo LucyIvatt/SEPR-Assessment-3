@@ -15,16 +15,16 @@ import java.util.Random;
 public class Pipe {
     private Texture image;
     private ImageButton button;
-    private Integer type;
-    private Integer rotation;
-    private Integer correctRotation;
+    private int type;
+    private int rotation;
+    private int correctRotation;
 
     /**
      *
      * @param type
      * @param correctRotation
      */
-    public Pipe(Integer type, Integer correctRotation){
+    public Pipe(int type, int correctRotation){
         this.correctRotation = correctRotation;
         this.type = type;
         Random rand = new Random();
