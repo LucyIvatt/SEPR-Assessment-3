@@ -63,15 +63,15 @@ public class Alien extends Entity {
 	}
 
 	/**
-	 * Called to update the Alien every game tick. Moves the alien around its patrol path until a player is in range.
-	 * If a player is in range, stops movement and instead shoots projectiles at the player.
+	 * Called to update the Alien every game tick. Moves the alien around its patrol path.
+	 * If a player is in range, shoots projectiles at the player.
 	 */
 	@Override
 	public void update() {
 		movementCountdown -= 1; // Decrements movement Countdown
 
-		// If the player is not in the aliens radius and the countdown is over, the moves the alien.
-		if(!playerInRadius() && movementCountdown < 0) {
+		// If the countdown is over, the moves the alien.
+		if(movementCountdown < 0) {
 				nextWayPoint();
 				setPosition(new Vector2(moveAlongPatrol(waypoints[currentWaypoint])));
 		}
