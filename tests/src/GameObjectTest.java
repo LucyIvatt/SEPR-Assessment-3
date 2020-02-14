@@ -28,18 +28,38 @@ public class GameObjectTest {
                 new Texture("../core/assets/fireTruck1.png"), new Vector2(0, 0));
     }
 
+    /**
+     * Test ID: GameObject_1.1
+     *
+     * Input: N/A
+     * Expected Output: Correct initialized variables
+     */
     //Testing that the GameObject Constructor is working as intended with a standard input
     @Test
     public void initGameObjectShouldInstantiateCorrectly() {
         assertFalse(gameObjectTest.isRemove());
     }
 
+    /**
+     * Test ID: GameObject_1.2
+     *
+     * Input: N/A
+     * Expected Output: The 'middle' between the position vector and the top-right corner (calculated by width and
+     * height)
+     */
     //Testing that when the GameObject is at location (0,0) .getCentre() calculates the correct centre
     @Test
     public void getCentreShouldReturnCentreWithZerosAsPosition() {
         assertEquals(new Vector2(25, 25), gameObjectTest.getCentre());
     }
 
+    /**
+     * Test ID: GameObject_1.3
+     *
+     * Input: New position vector
+     * Expected Output: The 'middle' between the new position vector and the top-right corner (calculated by width and
+     * height)
+     */
     //Testing that wen GameObject is at any 'middle' location .getCentre() calculates the correct centre
     @Test
     public void getCentreShouldReturnCentreAtStandardPosition() {
@@ -49,6 +69,12 @@ public class GameObjectTest {
         assertEquals(new Vector2(75, 75), gameObjectTest.getCentre());
     }
 
+    /**
+     * Test ID: GameObject_1.4
+     *
+     * Input: N/A
+     * Expected Output: The centre calculated when dimensions (width / height) are (0,0)
+     */
     //Testing that when the dimensions are (0, 0) .getCentre() calculates the correct centre
     @Test
     public void getCentreShouldReturnCentreWithZeroSize() {

@@ -36,12 +36,24 @@ public class BulletDispenserTest {
 
     }
 
+    /**
+     * Test ID: BulletDispenser_1.1
+     *
+     * Input: N/A
+     * Expected Output: Null
+     */
     //Testing that null is returned when updating with no patterns in the List
     @Test
     public void updateShouldReturnNullWithNoPatterns() {
         assertNull(testBulletDispenser.update(true));
     }
 
+    /**
+     * BulletDispenser_1.2
+     *
+     * Input: A mocked Pattern class
+     * Expected output: The time between firing patterns - 'PatternTime'
+     */
     //Testing that when passed a pattern and with one pattern in the List, the PatternTime is set to the correct value
     @Test
     public void addPatternShouldSetTheCorrectValuesIfSizeIsOne() {
@@ -52,6 +64,12 @@ public class BulletDispenserTest {
         assertEquals(1f, testBulletDispenser.getPatternTime(), 0.0f);
     }
 
+    /**
+     * BulletDispenser_1.3
+     *
+     * Input: A mocked Pattern class
+     * Expected output: The same mocked Pattern Class as inputted - 'FiringPattern'
+     */
     //Testing that the pattern passed is added and that the correct FiringPattern
     @Test
     public void addPatternShouldSetTheCorrectPatternIfSizeIsOne() {
@@ -61,6 +79,12 @@ public class BulletDispenserTest {
         assertEquals(mockPattern, testBulletDispenser.getFiringPattern());
     }
 
+    /**
+     * BulletDispenser_1.4
+     *
+     * Input: Two mocked Pattern classes
+     * Expected Output: The 'PatternTime' from the first passed Pattern class
+     */
     //Testing that the if a second pattern was added the 'patternTime' do not change
     @Test
     public void addPatternShouldNotChangePatternTimeValueWhenSecondPatternIsAdded() {
@@ -68,6 +92,7 @@ public class BulletDispenserTest {
         Pattern mockPatternTwo = mock(Pattern.class);
 
         when(mockPatternOne.getCooldown()).thenReturn(1f);
+        when(mockPatternTwo.getCooldown()).thenReturn(2f);
 
         testBulletDispenser.addPattern(mockPatternOne);
         testBulletDispenser.addPattern(mockPatternTwo);
@@ -75,6 +100,12 @@ public class BulletDispenserTest {
         assertEquals(1f, testBulletDispenser.getPatternTime(), 0.0f);
     }
 
+    /**
+     * BulletDispenser_1.5
+     *
+     * Input: Two mocked Pattern classes
+     * Expected Output: The first passed Pattern class - 'FiringPattern'
+     */
     //Testing that the if a second pattern was added the 'firingPattern' do not change
     @Test
     public void addPatternShouldNotChangeFiringPatternValueWhenSecondPatternIsAdded() {
