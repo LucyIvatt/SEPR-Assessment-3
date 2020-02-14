@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * A class for the pipes of the minigame. Essentially puzzle pieces.
  *
- * @author Bethany Girlmore - NP STUDIOS
+ * @author Bethany Gilmore - NP STUDIOS
  *
  */
 public class Pipe {
@@ -19,11 +19,6 @@ public class Pipe {
     private int rotation;
     private int correctRotation;
 
-    /**
-     *
-     * @param type
-     * @param correctRotation
-     */
     public Pipe(int type, int correctRotation){
         this.correctRotation = correctRotation;
         this.type = type;
@@ -65,10 +60,6 @@ public class Pipe {
         button = new ImageButton(new TextureRegionDrawable(new TextureRegion(this.image)));
     }
 
-    /**
-     *
-     * @return
-     */
     public ImageButton getButton(){
         return this.button;
     }
@@ -97,8 +88,8 @@ public class Pipe {
     }
 
     /**
-     * Returns true if the pipe is in it's correct roation to solve the minigame.
-     * @return Boolean value
+     * Checks if the orientation of the pipe is correct
+     * @return true if correct, otherwise false
      */
     public boolean isCorrect(){
         if (this.rotation == this.correctRotation){

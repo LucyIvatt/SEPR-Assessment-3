@@ -23,7 +23,7 @@ import java.util.Random;
 /**
  * A window to display the minigame.
  *
- * @author Bethany Girlmore - NP STUDIOS
+ * @author Bethany Gilmore - NP STUDIOS
  *
  */
 
@@ -45,8 +45,7 @@ public class Minigame {
     private static Minigame.State state;
 
     /**
-     *	Allows to have multiple 'pages' of the Minigame without
-     *	having to create several stages.
+     *	Allows to have multiple versions of the Minigame without needing to create multiple Stages.
      */
     public static enum State{
         GAME1,
@@ -55,11 +54,6 @@ public class Minigame {
         WON,
     }
 
-    /**
-     *
-     * @param game
-     * @param inGame
-     */
     public Minigame(Kroy game, boolean inGame){
         patch = new NinePatch(new Texture("loool.jpg"), 3, 3, 3, 3);
         background = new NinePatchDrawable(patch);
@@ -135,7 +129,8 @@ public class Minigame {
     }
 
     /**
-     * Allows for the user to interact with the minigame elements via clicking
+     * Allows for the user to interact with the minigame pipes and buttons via clicking. Executes the necessary code
+     * when this occurs.
      */
     public void clickCheck() {
         for (final Pipe pipe : pipes){
@@ -178,8 +173,8 @@ public class Minigame {
     }
 
     /**
-     * Redraws the minigame: the rotations of pipes; the current 'page', when called.
-     * This done by adding the elements to a table in a specific order to visually represent the puzzle.
+     * Draws the pipes in their current rotation once a click event occurs. Also draws the end of game screen
+     * if the user correctly completes the puzzle.
      */
     public void updateDraw(){
         switch(state) {
@@ -280,8 +275,8 @@ public class Minigame {
     }
 
     /**
-     *
-     * @param state
+     * Determines if the minigame is visible to the user
+     * @param state true if visible, false if not
      */
     public void visibility(boolean state){
         this.table.setVisible(state);
