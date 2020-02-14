@@ -22,6 +22,12 @@ public class WaterStreamTest {
         testWaterStream = new WaterStream(new Vector2(0, 0));
     }
 
+    /**
+     * Test ID: WaterStream_1.1
+     *
+     * Input: N/A
+     * Expected Output: Correct initialized variables
+     */
     //Testing that the constructor for WaterStream works correctly
     @Test
     public void waterStreamShouldInitializeCorrectly() {

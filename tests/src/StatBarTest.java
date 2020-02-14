@@ -19,6 +19,12 @@ public class StatBarTest {
         testStatBar = new StatBar(Vector2.Zero, "Blue.png", 3);
     }
 
+    /**
+     * Test ID; StatBar_1.1
+     *
+     * Input: N/A
+     * Expected Output: Correct initialized variables
+     */
     //Testing that the constructor initializes StatBar correctly by checking values
     @Test
     public void StatBarShouldInitializeCorrectly() {
