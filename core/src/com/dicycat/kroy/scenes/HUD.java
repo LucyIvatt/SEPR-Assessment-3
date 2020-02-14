@@ -84,10 +84,9 @@ public class HUD {
 	}
 	
 	/**
-	 * Using delta time allows to operate with the real-world time (seconds)
-	 * rather than the in-game time (which is computed using frames)
-	 * 
-	 * @param dt	Delta Time 
+	 * Increments the timer using delta time so that it will count up in seconds. Updates the labels in the HUD:
+	 * the timer label, the score label and the fortress count label
+	 * @param dt delta time
 	 */
 	public void update(float dt) {
 		// SCREEN_COUNTDOWN_3 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
@@ -106,21 +105,16 @@ public class HUD {
 		// FORTRESS_COUNT_3 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 	}
 
-
 	public Integer getFinalScore() {
 		return score;
 	}
 
-	public void setScore(Integer x){
-		score = x;
-	}
+	// CODE_REFACTOR_5 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
+	// Deleted unused methods
+	// CODE_REFACTOR_5 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 
-	public Integer getScore(){
-		return score;
-	}
-
-	/**
-	 * @param x		Points to be added to the score
+	/** Updates the score variable
+	 * @param x	points to be added to the score
 	 */
 	public void updateScore(Integer x){
 		score += x;

@@ -14,11 +14,13 @@ import java.util.Arrays;
  *
  */
 public class GameTextures {
+
 	// TRUCK_SELECT_CHANGE_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Changed truck texture to truck0, truck1, truck2, truck3 as all the different textures will be used with our
 	// new selection method and defined the array list which will be used to store them
 	private Texture truck0, truck1, truck2, truck3, ufo, bullet, fireStation, fireStationDead;
 	private ArrayList<Texture> trucks;
+
 	// TRUCK_SELECT_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// NEW_FORTRESSES_1 - START OF MODIFICATION - NP STUDIOS - Alasdair Pilmore-Bedford ---------------------------
 	// Added new textures add for new fortresses
@@ -32,10 +34,7 @@ public class GameTextures {
 	// NEW_FORTRESSES_1 - END OF MODIFICATION - NP STUDIOS - Alasdair Pilmore-Bedford ---------------------------
 
 	private String[] truckAddress = {"fireTruck1.png", "fireTruck2.png", "fireTruck3.png", "fireTruck4.png"};
-	
-	
-	/**
-	 */
+
 	public GameTextures() {
 		// TRUCK_SELECT_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		// Initialises all 4 truck texures and adds them to an array list rather than just the single texture used previously.
