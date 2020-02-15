@@ -13,14 +13,12 @@ import java.util.Random;
  * the player if the player is within range.
  * 
  * @author Lucy Ivatt
- *
  */
 public class Alien extends Entity {
 
 	BulletDispenser dispenser;
 	int speed;
 
-	// PATROLS - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 	private Vector2[] waypoints; // The waypoints that the alien will follow
 	private int currentWaypoint; // The waypoint index the alien is currently at
 	private float movementCountdown; // Delays first movement of the alien, stops them from overlapping at beginning.
@@ -65,15 +63,15 @@ public class Alien extends Entity {
 	}
 
 	/**
-	 * Called to update the Alien every game tick. Moves the alien around its patrol path until a player is in range.
-	 * If a player is in range, stops movement and instead shoots projectiles at the player.
+	 * Called to update the Alien every game tick. Moves the alien around its patrol path.
+	 * If a player is in range, shoots projectiles at the player.
 	 */
 	@Override
 	public void update() {
 		movementCountdown -= 1; // Decrements movement Countdown
 
-		// If the player is not in the aliens radius and the countdown is over, the moves the alien.
-		if(!playerInRadius() && movementCountdown < 0) {
+		// If the countdown is over, the moves the alien.
+		if(movementCountdown < 0) {
 				nextWayPoint();
 				setPosition(new Vector2(moveAlongPatrol(waypoints[currentWaypoint])));
 		}
@@ -134,5 +132,4 @@ public class Alien extends Entity {
 			}
 		}
 	}
-	// PATROLS - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 }

@@ -6,14 +6,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import java.util.Random;
 
+/**
+ * A class for the pipes of the minigame. Essentially puzzle pieces.
+ *
+ * @author Bethany Gilmore - NP STUDIOS
+ *
+ */
 public class Pipe {
     private Texture image;
     private ImageButton button;
-    private Integer type;
-    private Integer rotation;
-    private Integer correctRotation;
+    private int type;
+    private int rotation;
+    private int correctRotation;
 
-    public Pipe(Integer type, Integer correctRotation){
+    public Pipe(int type, int correctRotation){
         this.correctRotation = correctRotation;
         this.type = type;
         Random rand = new Random();
@@ -58,6 +64,10 @@ public class Pipe {
         return this.button;
     }
 
+    /**
+     * Replaces the image of the pipe with one rotated by 90 degrees
+     * And changes the variable representing the current rotation accordingly
+     */
     public void rotate(){
         if (this.type == 0){
             this.rotation = (this.rotation + 1) % 2;
@@ -77,6 +87,10 @@ public class Pipe {
         }
     }
 
+    /**
+     * Checks if the orientation of the pipe is correct
+     * @return true if correct, otherwise false
+     */
     public boolean isCorrect(){
         if (this.rotation == this.correctRotation){
             System.out.println("true");

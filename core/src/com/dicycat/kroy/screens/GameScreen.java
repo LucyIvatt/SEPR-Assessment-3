@@ -42,8 +42,7 @@ public class GameScreen implements Screen{
 		PAUSE,
 		RUN,
 		RESUME,
-		OPTIONS,
-		MINIG
+		MINIGAME
 	}
 	
 	public Kroy game;
@@ -90,11 +89,6 @@ public class GameScreen implements Screen{
 	private List<GameObject> objectsToAdd;
 	private List<DebugDraw> debugObjects; //List of debug items
 
-
-
-	/**
-	 * @param _game
-	 */
 	// TRUCK_SELECT_CHANGE_12 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Removed truckNum from constructor parameters
 	public GameScreen(Kroy _game) {
@@ -124,7 +118,7 @@ public class GameScreen implements Screen{
 	// TRUCK_SELECT_CHANGE_12 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 	/**
-	 * Screen first shown
+	 * Initializes the screen which is first shown
 	 */
 	@Override
 	public void show() {
@@ -180,7 +174,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Called every frame
+	 * Called every frame and calls the methods to update and render the game objects, as well as handling input.
 	 */
 	public void render(float delta) {
 		Gdx.input.setInputProcessor(pauseWindow.stage);  //Set input processor
@@ -230,22 +224,9 @@ public class GameScreen implements Screen{
 				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
 
 				hud.stage.draw();
-				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE-----------------
-				game.batch.begin();
-				game.batch.draw(minimap, 0, 0, 394, 350);
-
-				for (GameObject object : gameObjects){
-					game.batch.draw(object.getTexture(), object.getX()/19, object.getY()/19, object.getWidth()/10,
-							object.getHeight()/10);
-				} // Draws the fortresses and patrols to a minimap scaled down to the in the bottom left corner.
-				for (FireTruck truck : players) {
-					if (truck.getHealthPoints() > 0) {
-						game.batch.draw(truck.getTexture(), truck.getX() / 19, truck.getY() / 19, 20, 25);
-					}
-					//Draws the firetrucks on their relative position on the minimap. size is not to make their position obvious and clear.
-				}
-				game.batch.end();
-				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE--------------
+				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------
+				drawMinimap();
+				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE ---------------------
 				pauseWindow.stage.draw();
 
 				if (showDebug) {
@@ -261,7 +242,7 @@ public class GameScreen implements Screen{
 				pauseWindow.visibility(false);
 				setGameState(GameScreenState.RUN);
 				break;
-			case MINIG:
+			case MINIGAME:
 				Gdx.input.setInputProcessor(minigame.stage);
 				minigame.visibility(true);
 				minigame.stage.draw();
@@ -347,6 +328,29 @@ public class GameScreen implements Screen{
 	}
 	// TRUCK_SELECT_CHANGE_16 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
+	/**
+	 * Draws the map's background as a texture in the bottom left corner.
+	 * And also redraws all the objects in gameObjects scaled down to fit on the minimap.
+	 * The firetrucks in their relative postions are also drawn on the minimap texture.
+	 *
+	 * @author Bethany Gilmore - NP STUDIOS
+	 */
+	public void drawMinimap(){
+		game.batch.begin();
+		game.batch.draw(minimap, 0, 0, 394, 350);
+
+		for (GameObject object : gameObjects){
+			game.batch.draw(object.getTexture(), object.getX()/19, object.getY()/19, object.getWidth()/10,
+					object.getHeight()/10);
+		} // Draws the fortresses and patrols to a minimap scaled down to the in the bottom left corner.
+		for (FireTruck truck : players) {
+			if (truck.getHealthPoints() > 0) {
+				game.batch.draw(truck.getTexture(), truck.getX() / 19, truck.getY() / 19, 20, 25);
+			}
+			//Draws the firetrucks on their relative position on the minimap. size is not to scale to make their position obvious and clear.
+		}
+		game.batch.end();
+	}
 	/**
 	 * Draws all debug objects for one frame
 	 */
@@ -442,28 +446,10 @@ public class GameScreen implements Screen{
 		Kroy.mainGameScreen = null;
 	}
 
-	/**
-	 * @param s
-	 */
 	public void setGameState(GameScreenState s){
 	    state = s;
 	}
 
-	/**
-	 * @param index
-	 * @return
-	 */
-	public GameObject getGameObject(int index) {
-		if (index <= (gameObjects.size()-1)) {
-			return gameObjects.get(index);
-		}else {
-			return null;
-		}
-	}
-
-	/**
-	 * @return
-	 */
 	public List<GameObject> getGameObjects(){
 		return gameObjects;
 	}
@@ -473,7 +459,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Checks the pause buttons
+	 * Checks the pause buttons for input
 	 */
 	private void clickCheck() {
 		//resume button
@@ -504,7 +490,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * Remove one fortress to the count
+	 * Remove one fortress to the fortressCount
 	 */
 	public void removeFortress() {
 		fortressesCount--;
@@ -530,7 +516,7 @@ public class GameScreen implements Screen{
 	}
 
 	/**
-	 * 
+	 * Calls game over if lives == 0, otherwise removes 1 from life counter
 	 */
 	public void updateLives() {
 		if (lives>1) {
@@ -567,7 +553,7 @@ public class GameScreen implements Screen{
 
 	// TRUCK_SELECT_CHANGE_18 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Sets the selected variable on each of the trucks to false and then sets the active trucks selected variable to true
-	public void selectTruck () {
+	public void selectTruck() {
 		for (FireTruck truck : players) {
 			truck.setSelected(false);
 		}

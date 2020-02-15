@@ -51,6 +51,7 @@ public class Kroy extends Game {
 	
 	@Override
 	public void dispose () {}
+
 	/**
 	 * Call to generate a brand new GameScreen which runs a new game
 	 */
