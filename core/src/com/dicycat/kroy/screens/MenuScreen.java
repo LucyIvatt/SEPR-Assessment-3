@@ -47,7 +47,7 @@ public class MenuScreen implements Screen{
 // REFACTOR_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
 
 	// CONTROL_SCREEN_1 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER ---
-  		// added the controls screen and need the button textures to be stored in these variables
+	// added the controls screen and need the button textures to be stored in these variables
   	controlsButtonTexture, 
   	controlsButtonActiveTexture;
 	// CONTROL_SCREEN_1 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER -----
