@@ -132,4 +132,18 @@ public class Alien extends Entity {
 			}
 		}
 	}
+
+	// UNIT_TESTING_CHANGE_7 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
+	public int getCurrentWaypoint() {
+		return currentWaypoint;
+	}
+
+	public void setCurrentWaypoint(int currentWaypoint) {
+		this.currentWaypoint = currentWaypoint;
+	}
+
+	// UNIT_TESTING_CHANGE_7 - END OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
+
 }

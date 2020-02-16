@@ -29,11 +29,6 @@ public class FireTruck extends Entity{
 	private float speed;	//How fast the truck can move
 	private float flowRate;	//How fast the truck can dispense water
 	private float maxWater; //How much water the truck can hold
-
-	public float getCurrentWater() {
-		return currentWater;
-	}
-
 	private float currentWater; //Current amount of water
 	// TRUCK_SELECT_CHANGE_5- START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	private boolean selected; // Added boolean to say whether or not the truck is selected
@@ -347,4 +342,10 @@ public class FireTruck extends Entity{
 		this.direction = direction;
 	}
 	// UNIT_TESTING_CHANGE_6 - END OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
+	// UNIT_TESTING_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+	public float getCurrentWater() {
+		return currentWater;
+	}
+	// UNIT_TESTING_CHANGE_2 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
 }

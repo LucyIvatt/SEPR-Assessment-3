@@ -100,6 +100,7 @@ public class GameScreen implements Screen{
 		gameport = new FitViewport(Kroy.width, Kroy.height, gamecam);	//Mic:could also use StretchViewPort to make the screen stretch instead of adapt
 
 		// UNIT_TESTING_CHANGE_3 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
 		gameMap = new TiledGameMap();										//or FitPort to make it fit into a specific width/height ratio
 //		pauseWindow = new PauseWindow(game);
 //		pauseWindow.visibility(false);
@@ -112,6 +113,7 @@ public class GameScreen implements Screen{
 		// FIRESTATION_RANGE_FIX_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		gameTimer = 60 * 15; //Set timer to 15 minutes
 //		hud = new HUD(game.batch, gameTimer);
+
 		// UNIT_TESTING_CHANGE_3 - END OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
 
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
@@ -267,7 +269,7 @@ public class GameScreen implements Screen{
 	 * Adds dead objects to render queue.
 	 * Respawns the player if necessary.
 	 */
-	private void updateLoop() {
+	public void updateLoop() {
 		List<GameObject> toRemove = new ArrayList<GameObject>();
 		for (GameObject gObject : gameObjects) {	//Go through every game object
 			gObject.update();						//Update the game object
@@ -562,4 +564,13 @@ public class GameScreen implements Screen{
 		players.get(activeTruck).setSelected(true);
 	}
 	// TRUCK_SELECT_CHANGE_18 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
+	// UNIT_TESTING_CHANGE_7 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+	public Float[][] getTruckStats() {
+		return truckStats;
+	}
+	// UNIT_TESTING_CHANGE_7 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
+
+
 }
