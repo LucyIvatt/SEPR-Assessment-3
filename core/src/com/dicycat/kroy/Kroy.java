@@ -29,6 +29,11 @@ public class Kroy extends Game {
 	public static Preferences highscore;
 	// HIGHSCORE_1 - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 	public SpriteBatch batch;
+
+	public Kroy() {
+		mainGameScreen = new GameScreen(this);// Initialise new game
+		setScreen(mainGameScreen);// Display new game
+	}
 	
 	@Override
 	public void create () {

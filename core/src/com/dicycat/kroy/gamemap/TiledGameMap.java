@@ -22,7 +22,11 @@ public class TiledGameMap{
 
 	public TiledGameMap() {
 		tiledMap = new TmxMapLoader().load("YorkMap.tmx");
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+		// UNIT_TESTING_CHANGE_4 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+//		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		// UNIT_TESTING_CHANGE_4 - END OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
 	}
 
 

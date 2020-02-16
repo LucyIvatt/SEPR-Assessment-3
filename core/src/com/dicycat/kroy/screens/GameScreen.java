@@ -98,20 +98,22 @@ public class GameScreen implements Screen{
 		game = _game;
 		gamecam = new OrthographicCamera();
 		gameport = new FitViewport(Kroy.width, Kroy.height, gamecam);	//Mic:could also use StretchViewPort to make the screen stretch instead of adapt
+
+		// UNIT_TESTING_CHANGE_3 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
 		gameMap = new TiledGameMap();										//or FitPort to make it fit into a specific width/height ratio
-		pauseWindow = new PauseWindow(game);
-		pauseWindow.visibility(false);
-		optionsWindow = new OptionsWindow(game);
-		optionsWindow.visibility(false);
-//		minigame = new Minigame(game);
-//		minigame.visibility(false);
+//		pauseWindow = new PauseWindow(game);
+//		pauseWindow.visibility(false);
+//		optionsWindow = new OptionsWindow(game);
+//		optionsWindow.visibility(false);
 		textures = new GameTextures(); // removed truckNum from GameTextures constructor call
 		// FIRESTATION_RANGE_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		// Edited coordinate so firestation is in the middle of the square
 		spawnPosition = new Vector2(234 * 16, 3900);
 		// FIRESTATION_RANGE_FIX_1 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		gameTimer = 60 * 15; //Set timer to 15 minutes
-		hud = new HUD(game.batch, gameTimer);
+//		hud = new HUD(game.batch, gameTimer);
+		// UNIT_TESTING_CHANGE_3 - END OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
 
 	}

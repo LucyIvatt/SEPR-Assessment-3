@@ -29,6 +29,11 @@ public class FireTruck extends Entity{
 	private float speed;	//How fast the truck can move
 	private float flowRate;	//How fast the truck can dispense water
 	private float maxWater; //How much water the truck can hold
+
+	public float getCurrentWater() {
+		return currentWater;
+	}
+
 	private float currentWater; //Current amount of water
 	// TRUCK_SELECT_CHANGE_5- START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	private boolean selected; // Added boolean to say whether or not the truck is selected
@@ -46,6 +51,10 @@ public class FireTruck extends Entity{
 	private boolean firing;
 	private float range;
 
+	/**
+	 * @param spawnPos
+	 * @param truckStats
+	 */
 	public FireTruck(Vector2 spawnPos, Float[] truckStats, int truckNum) {
 		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(truckNum), new Vector2(25,50), 100, 500);
 
@@ -69,11 +78,16 @@ public class FireTruck extends Entity{
 		firing = false;
 		water = new WaterStream(Vector2.Zero);
 
-		tank = new StatBar(Vector2.Zero, "Blue.png", 3);
-		Kroy.mainGameScreen.addGameObject(tank);
+		// UNIT_TESTING_CHANGE_1 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+//
+//		tank = new StatBar(Vector2.Zero, "Blue.png", 3);
+//		Kroy.mainGameScreen.addGameObject(tank);
+//
+//		healthBar= new StatBar(Vector2.Zero, "Green.png", 3);
+//		Kroy.mainGameScreen.addGameObject(healthBar);
 
-		healthBar= new StatBar(Vector2.Zero, "Green.png", 3);
-		Kroy.mainGameScreen.addGameObject(healthBar);
+		// UNIT_TESTING_CHANGE_1 - END OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
 
 		// TRUCK_SELECT_CHANGE_6 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		selected = false; // initially sets the truck to false
@@ -81,7 +95,7 @@ public class FireTruck extends Entity{
 	}
 
 	/**
-	 * This method moves the truck in the direction calculated in updateDirection()
+	 * When called, this method moves the truck by 1 unit of movement in the direction calculated in "updateDirection()"
 	 */
 	public void moveInDirection() {
 
@@ -178,12 +192,17 @@ public class FireTruck extends Entity{
 		// Deleted debug hitbox being drawn to the screen even if drawDebug in GameScreen == false.
 		// MEMORY LEAK FIX 1 - END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
-		//water bar update
-		tank.setPosition(getCentre().add(0,20));
-		tank.setBarDisplay((currentWater/maxWater)*50);
 
-		healthBar.setPosition(getCentre().add(0,25));
-		healthBar.setBarDisplay((healthPoints*50)/maxHealthPoints);
+
+		// UNIT_TESTING_CHANGE_5 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+//		water bar update;
+//		tank.setPosition(getCentre().add(0,20));
+//		tank.setBarDisplay((currentWater/maxWater)*50);
+//
+//		healthBar.setPosition(getCentre().add(0,25));
+//		healthBar.setBarDisplay((healthPoints*50)/maxHealthPoints);
+		// UNIT_TESTING_CHANGE_5 - END OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+
 
 	}
 	
@@ -253,7 +272,8 @@ public class FireTruck extends Entity{
 	 * @return Is the object within range?
 	 */
 	public boolean objectInRange(GameObject object) {
-		return (Vector2.dst(object.getCentre().x, object.getCentre().y, getCentre().x, getCentre().y)<range);
+		return (Vector2.dst(object.getCentre().x, object.getCentre().y, getCentre().x, getCentre().y) <  range);
+
 	}
 
 	/**
@@ -297,7 +317,6 @@ public class FireTruck extends Entity{
 			healthPoints += 2;
 		}
 	}
-	// REPLENISH_2: OVER TIME -> INSTANT  - END OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 
 	/**
 	 * Checks finds the tile that the coordinate is a part of and checks if that tile is solid
@@ -322,4 +341,10 @@ public class FireTruck extends Entity{
 		this.selected = selected;
 	}
 	// TRUCK_SELECT_CHANGE_8 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
+	// UNIT_TESTING_CHANGE_6 - START OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
+	public void setDirection(Integer direction) {
+		this.direction = direction;
+	}
+	// UNIT_TESTING_CHANGE_6 - END OF MODIFICATION - NP STUDIOS - BRUNO DAVIES ----
 }
