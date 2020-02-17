@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 
 //Mostly covered ~ calculate coverage (did not do all getters and setters since most are standard)
@@ -27,6 +27,7 @@ public class GameObjectTest {
         gameObjectTestZeros = new GameObjectTester(new Vector2(50, 50),
                 new Texture("../core/assets/fireTruck1.png"), new Vector2(0, 0));
     }
+
 
     /**
      * Test ID: GameObject_1.1

@@ -2,8 +2,8 @@ package com.dicycat.kroy.misc;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.dicycat.kroy.Kroy;
 import com.badlogic.gdx.graphics.Texture;
+import com.dicycat.kroy.Kroy;
 
 /**
 * Class which handles the buttons used on the main menu. Contains the two textures need for active and incactive states

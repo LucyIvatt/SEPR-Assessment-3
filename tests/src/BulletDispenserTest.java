@@ -1,21 +1,17 @@
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.dicycat.kroy.GameObject;
 import com.dicycat.kroy.bullets.BulletDispenser;
 import com.dicycat.kroy.bullets.Pattern;
-import com.dicycat.kroy.entities.Entity;
 import de.tomgrill.gdxtesting.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-//Limited testing due to 'Kroy.mainGameScreen. ...' error, find the link in the Assessment 3 zip to our GitHubs altered
-//Unit tests.
 @RunWith(GdxTestRunner.class)
 public class BulletDispenserTest {
 
@@ -42,7 +38,7 @@ public class BulletDispenserTest {
      * Input: N/A
      * Expected Output: Null
      */
-    //Testing that null is returned when updating with no patterns in the List
+    //Testing that the BulletDispenser constructor is working as intended with standard input
     @Test
     public void updateShouldReturnNullWithNoPatterns() {
         assertNull(testBulletDispenser.update(true));

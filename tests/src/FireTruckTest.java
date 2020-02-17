@@ -3,26 +3,29 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.entities.FireTruck;
-
 import de.tomgrill.gdxtesting.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(GdxTestRunner.class)
 public class FireTruckTest {
 
     private Kroy testKroy;
     private FireTruck testTruck;
+    private FireTruck testTruck2;
+
     private Float[] testTruckStats = new Float[] {1f, 1f, 100f, 1000f};
+    private Float[]  fireTruckStats2 = new Float[] {50f, 3f, 10f, 7f};
+
 
     @Before
     public void init() {
         testKroy = new Kroy();
         testTruck = new FireTruck(new Vector2(0, 0), testTruckStats, 1);
-
+        testTruck2 = new FireTruck(new Vector2(100, 100), fireTruckStats2, 2);
     }
 
 
@@ -36,6 +39,8 @@ public class FireTruckTest {
     @Test
     public void fireTruckShouldInitializeCorrectly() {
         assertEquals(new Vector2(12.5f, 25f), testTruck.getCentre());
+        assertEquals(new Vector2(112.5f, 125f), testTruck2.getCentre());
+
     }
 
 

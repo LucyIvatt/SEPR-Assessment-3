@@ -2,13 +2,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.entities.Alien;
-
 import de.tomgrill.gdxtesting.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(GdxTestRunner.class)
 public class AlienTest {

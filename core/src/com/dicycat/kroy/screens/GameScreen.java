@@ -1,7 +1,5 @@
 package com.dicycat.kroy.screens;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -21,12 +19,18 @@ import com.dicycat.kroy.debug.DebugCircle;
 import com.dicycat.kroy.debug.DebugDraw;
 import com.dicycat.kroy.debug.DebugLine;
 import com.dicycat.kroy.debug.DebugRect;
-import com.dicycat.kroy.entities.*;
+import com.dicycat.kroy.entities.Alien;
+import com.dicycat.kroy.entities.FireStation;
+import com.dicycat.kroy.entities.FireTruck;
+import com.dicycat.kroy.entities.Fortress;
 import com.dicycat.kroy.gamemap.TiledGameMap;
 import com.dicycat.kroy.minigame.Minigame;
 import com.dicycat.kroy.scenes.HUD;
 import com.dicycat.kroy.scenes.OptionsWindow;
 import com.dicycat.kroy.scenes.PauseWindow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

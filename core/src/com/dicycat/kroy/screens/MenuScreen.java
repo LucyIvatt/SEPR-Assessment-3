@@ -1,24 +1,21 @@
 package com.dicycat.kroy.screens;
-  
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dicycat.kroy.Kroy;
+import com.dicycat.kroy.minigame.Minigame;
 import com.dicycat.kroy.misc.Button;
 import com.dicycat.kroy.scenes.ControlsWindow;
 import com.dicycat.kroy.scenes.FireTruckSelectionScene;
-import com.dicycat.kroy.minigame.Minigame;
 import com.dicycat.kroy.scenes.OptionsWindow;
   
 /**

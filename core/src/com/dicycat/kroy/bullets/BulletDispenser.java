@@ -1,12 +1,12 @@
 package com.dicycat.kroy.bullets;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.entities.Entity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stores and handles firing patterns

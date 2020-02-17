@@ -1,7 +1,6 @@
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.entities.Entity;
-import com.dicycat.kroy.GameObject;
 import com.dicycat.kroy.entities.FireTruck;
 import de.tomgrill.gdxtesting.GdxTestRunner;
 import org.junit.Before;
@@ -112,6 +111,7 @@ public class EntityTest {
         assertTrue(entityTest.isAlive());
     }
 
+    //Testing that isAlive works after Entity takes damage but not kills
     /**
      * Test ID: Entity_1.7
      *
