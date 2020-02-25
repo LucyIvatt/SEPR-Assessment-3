@@ -108,7 +108,7 @@ public class FireTruck extends Entity{
 	}
 
 	/**
-	 * Method checks if any arrow keys currently pressed and then converts them into a integer direction
+	 * Method checks if any arrow keys currently pressed and then converts them into a integer direction b
 	 * @return Direction to follow
 	 */
 	public Integer updateDirection() { 
