@@ -44,6 +44,14 @@ public abstract class GameObject {
 		sprite.setX(getX() + v.x);
 		sprite.setY(getY() + v.y);
 	}
+	
+	/**
+	 * sets the current texture to a new texture (should be the same size)
+	 * @param tex Texture to change to
+	 */
+	public void setTexture(Texture tex) {
+		sprite.setTexture(tex);
+	}
 
 	//Getters
 	public Texture getTexture() { return sprite.getTexture(); }

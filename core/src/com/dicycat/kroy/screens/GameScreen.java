@@ -144,12 +144,12 @@ public class GameScreen implements Screen{
 		// TRUCK_SELECT_CHANGE_13 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 		gameObjects.add(new FireStation());
-		gameObjects.add(new PowerUp(new Vector2(1772,4633), new Texture("PowerUpBlue.png")));//
-		gameObjects.add(new PowerUp(new Vector2(4344,3729), new Texture("PowerUpBlue.png")));//
-		gameObjects.add(new PowerUp(new Vector2(5512,2696), new Texture("PowerUpBlue.png")));//
-		gameObjects.add(new PowerUp(new Vector2(5055,1415), new Texture("PowerUpBlue.png")));//
-		gameObjects.add(new PowerUp(new Vector2(1608,585), new Texture("PowerUpBlue.png")));//
-		gameObjects.add(new PowerUp(new Vector2(1919,3871), new Texture("PowerUpBlue.png")));//
+		gameObjects.add(new PowerUp(new Vector2(1772,4633)));
+		gameObjects.add(new PowerUp(new Vector2(4344,3729)));
+		gameObjects.add(new PowerUp(new Vector2(5512,2696)));
+		gameObjects.add(new PowerUp(new Vector2(5055,1415)));
+		gameObjects.add(new PowerUp(new Vector2(1608, 585)));
+		gameObjects.add(new PowerUp(new Vector2(1919,3871)));
 		
 		
 
@@ -210,7 +210,7 @@ public class GameScreen implements Screen{
 				}
 
 				selectTruck();
-				System.out.println(players.get(activeTruck).getCentre());
+				//System.out.println(players.get(activeTruck).getCentre());
 				
 				// TRUCK_SELECT_CHANGE_14 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
