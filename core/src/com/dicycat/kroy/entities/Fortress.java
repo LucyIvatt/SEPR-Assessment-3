@@ -20,6 +20,7 @@ public class Fortress extends Entity {
 	// FORTRESS_DAMAGE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 	private int damage; 	// Added a new attribute 'damage'
 	// FORTRESS_DAMAGE_1 - END OF MODIFICATION - NP STUDIOS
+	public int index;
 
 	/**
 	 * @param spawnPos
@@ -30,11 +31,12 @@ public class Fortress extends Entity {
 
 	// FORTRESS_HEALTH_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 	// Added health parameter to Fortress constructor and changed it in the call to super from "500" to "health"
-	public Fortress(Vector2 spawnPos, Texture fortressTexture, Texture deadTexture, Vector2 size, int health, int fortressDamage ) { ////
+	public Fortress(Vector2 spawnPos, Texture fortressTexture, Texture deadTexture, Vector2 size, int health, int fortressDamage, int index ) { ////
 		super(spawnPos, fortressTexture, size, health, 500);
 	// FORTRESS_HEALTH_2 - END OF MODIFICATION - NP STUDIOS
 		this.damage = fortressDamage;
-
+		this.index = index;
+		System.out.println(index);
 		// FORTRESS_DAMAGE_3 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 		// Added fortressDamage as a parameter to the constructor above
 		// Passed the damage to the Pattern constructors
@@ -120,9 +122,8 @@ public class Fortress extends Entity {
 	 */
 	@Override
 	public String save() {
-		//For Fortresses, we need the position, and the health.
-		String output = this.getPosition().toString();
-		output += "|" + this.healthPoints;
+		//For Fortresses, we need the health.
+		String output = Integer.toString(this.healthPoints);
 		return output;
 	}
 }

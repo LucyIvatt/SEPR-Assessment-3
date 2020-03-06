@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dicycat.kroy.screens.GameScreen;
 import com.dicycat.kroy.screens.MenuScreen;
 
+import java.util.Map;
+
 /**
  * Main game class
  * 
@@ -59,11 +61,19 @@ public class Kroy extends Game {
 	// Deleted truck num parameter as it is no longer needed because the user starts with 1 of each truck rather than
 	// choosing one and having multiple lives.
 	public void newGame() {
-		mainGameScreen = new GameScreen(this);// Initialise new game
+		mainGameScreen = new GameScreen(this, null);// Initialise new game
 	// TRUCK_SELECT_CHANGE_4 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		setScreen(mainGameScreen);// Display new game
 	}
 
+
+	/**
+	 * Resume a game with entities
+	 */
+	public void resumeSavedGame(Preferences load) {
+		mainGameScreen = new GameScreen(this, load);
+		setScreen(mainGameScreen);
+	}
 	/**
 	 * Return back to the menu screen
 	 */

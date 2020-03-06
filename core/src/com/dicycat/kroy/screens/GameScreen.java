@@ -66,6 +66,7 @@ public class GameScreen implements Screen{
 	private OptionsWindow optionsWindow;
 	private Minigame minigame;
 
+	private Preferences save = null;
 	// TRUCK_SELECT_CHANGE_11 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Slightly edited trucks statistics to make the game more balanced.
 	private Float[][] truckStats = {	//Each list is a configuration of a specific truck. {speed, flowRate, capacity, range}
@@ -92,7 +93,7 @@ public class GameScreen implements Screen{
 
 	// TRUCK_SELECT_CHANGE_12 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Removed truckNum from constructor parameters
-	public GameScreen(Kroy _game) {
+	public GameScreen(Kroy _game, Preferences save) {
 		// END_GAME_FIX_1 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT
 		fortressesCount = 6; // Initialize fortress count to 6
 		// END_GAME_FIX_1 - END OF MODIFICATION - NP STUDIOS
@@ -115,8 +116,13 @@ public class GameScreen implements Screen{
 		hud = new HUD(game.batch, gameTimer);
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
 
+		this.save = save;
+
 	}
+
 	// TRUCK_SELECT_CHANGE_12 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
+	//The constructor we use if we should load a game instead
 
 	/**
 	 * Initializes the screen which is first shown
@@ -135,51 +141,71 @@ public class GameScreen implements Screen{
 		players.add(new FireTruck(new Vector2(spawnPosition.x, spawnPosition.y), truckStats[2], 2));
 		players.add(new FireTruck(new Vector2(spawnPosition.x, spawnPosition.y - 50), truckStats[3], 3));
 
+
 		// Iterates through the players array lists and adds them to gameObjects.
-		for (FireTruck truck : players) {
-			gameObjects.add(truck);	//Player
+		for (int i = 0; i < 4; i++) {
+			if (save != null) {
+				String value = save.getString("firetruck" + i);
+				if (value != "") {
+					String[] split = value.split("@");
+					Vector2 pos = getPos(split[0]);
+					int health = Integer.parseInt(split[1]);
+					float water = Float.parseFloat(split[2]);
+					boolean selected = (split[3] == "true");
+					players.get(i).setPosition(pos);
+					players.get(i).setHealthPoints(health);
+					players.get(i).setWater(water);
+					if (selected) {
+						this.activeTruck = i;
+					}
+				}
+			}
+			else {
+				players.get(i).applyDamage(20000);
+			}
+			gameObjects.add(players.get(i));    //Player
 		}
 
 		// Sets initial camera position to the active truck's position (set to arbitrary truck at the beginning of the game)
-		gamecam.translate(new Vector2(players.get(activeTruck).getX(),players.get(activeTruck).getY())); // sets initial Camera position
+		gamecam.translate(new Vector2(players.get(activeTruck).getX(), players.get(activeTruck).getY())); // sets initial Camera position
 		// TRUCK_SELECT_CHANGE_13 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-
 		gameObjects.add(new FireStation());
-		gameObjects.add(new PowerUp(new Vector2(1772,4633)));
-		gameObjects.add(new PowerUp(new Vector2(4344,3729)));
-		gameObjects.add(new PowerUp(new Vector2(5512,2696)));
-		gameObjects.add(new PowerUp(new Vector2(5055,1415)));
+		gameObjects.add(new PowerUp(new Vector2(1772, 4633)));
+		gameObjects.add(new PowerUp(new Vector2(4344, 3729)));
+		gameObjects.add(new PowerUp(new Vector2(5512, 2696)));
+		gameObjects.add(new PowerUp(new Vector2(5055, 1415)));
 		gameObjects.add(new PowerUp(new Vector2(1608, 585)));
-		gameObjects.add(new PowerUp(new Vector2(1919,3871)));
-		
-		
+		gameObjects.add(new PowerUp(new Vector2(1919, 3871)));
+
 
 		// PATROLS_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 		// Creates the aliens for the patrols and adds them to gameObjects so they can be updated each tick
 		int timeBetween = 50;
-		for (int patrolNum = 1; patrolNum <=4; patrolNum++)
-		for (int i = 0; i < 5; i++) {
-			gameObjects.add(new Alien(patrolNum, i * timeBetween, 300));
-		}
-		// PATROLS_4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
+		for (int patrolNum = 1; patrolNum <= 4; patrolNum++)
+			for (int i = 0; i < 5; i++) {
+				gameObjects.add(new Alien(patrolNum, i * timeBetween, 300));
+			}
+			// PATROLS_4 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 
 
 		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 		// Added health and damage values for each fortress instantiation
 		// Added new fortresses and set position in accordance with collisions on tiled map
-		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
-				new Vector2(256, 218), 400, 5));
-		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
-				new Vector2(256, 320), 500, 10));
-		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
-				new Vector2(400, 240), 600, 15));
-		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
-				new Vector2(345, 213), 700, 20));
-		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
-				new Vector2(300, 240), 800, 25)); //382, 319
-		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
-				new Vector2(300, 270), 900, 30)); //45, 166
-		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
+		gameObjects.add(new Fortress(new Vector2(2903, 3211), textures.getFortress(0), textures.getDeadFortress(0),
+					new Vector2(256, 218), 400, 5, 0));
+			gameObjects.add(new Fortress(new Vector2(3200, 5681), textures.getFortress(1), textures.getDeadFortress(1),
+					new Vector2(256, 320), 500, 10, 1));
+			gameObjects.add(new Fortress(new Vector2(2050, 1937), textures.getFortress(2), textures.getDeadFortress(2),
+					new Vector2(400, 240), 600, 15, 2));
+			gameObjects.add(new Fortress(new Vector2(4496, 960), textures.getFortress(3), textures.getDeadFortress(3),
+					new Vector2(345, 213), 700, 20, 3));
+			gameObjects.add(new Fortress(new Vector2(6112, 1100), textures.getFortress(4), textures.getDeadFortress(4),
+					new Vector2(300, 240), 800, 25, 4)); //382, 319
+			gameObjects.add(new Fortress(new Vector2(600, 4000), textures.getFortress(5), textures.getDeadFortress(5),
+					new Vector2(300, 270), 900, 30, 5)); //45, 166
+			// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
+
+
 	}
 
 	/**
@@ -502,10 +528,11 @@ public class GameScreen implements Screen{
 		pauseWindow.save.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				//It makes more sense to start a new game. but not before passing over our important data!
 				/**
 				 * We save the following data:
-				 * The health and position of each living fortress
-				 * The health, position, and water of each living firetruck
+				 * The health of each living fortress
+				 * The health, position, water, and index of each living firetruck
 				 * The position, and patrol number of every patrol
 				 * The current firetruck selected
 				 * The position, and type of every powerup.
@@ -522,12 +549,20 @@ public class GameScreen implements Screen{
 
 						Entity e = (Entity) gObject;
 						//Get rid of the "class com.dicycat.Kroy....." part
-						System.out.println("Should be saving " + gObject.getClass().toString().substring(32));
+						String key = gObject.getClass().toString().substring(32).toLowerCase().trim();
+						if (gObject instanceof Fortress) {
+							key += ((Fortress) gObject).index;
+						}
+
+						else if (gObject instanceof FireTruck) {
+							key  += ((FireTruck) gObject).index;
+						}
+						System.out.println("Should be saving " + key);
 						System.out.println("Its location is at " + gObject.save());
 
 						//Does the value for the key matter? Somewhat. We can just just have it be Fortress1, Fortress2
 						//Alien1, Alien2. Number doesn't matter at all.
-						pref.putString(gObject.getClass().toString().substring(32) + Integer.toString(index), gObject.save());
+						pref.putString(key, gObject.save());
 
 
 					}
@@ -545,31 +580,7 @@ public class GameScreen implements Screen{
 			public void clicked(InputEvent event, float x, float y) {
 				//Grab our preferences
 				Preferences pref = Gdx.app.getPreferences("Test");
-				pref.get().forEach((k, v) -> {
-					/**
-					 * It's in a K:V pair where K is the class name and V is its important data
-					 * We can write a case statement to check the key, if it's any of the classes we instansiate a new
-					 * instance of the respective class. otherwise it's score or gametimer so we just update it
-					 */
-					System.out.println(k.toString() + " " + v.toString());
-					switch(k) {
-						case "alien":
-							System.out.println("got alien with " + v.toString());
-							break;
-						case "fortress":
-							System.out.println("got fortress with " + v.toString());
-							break;
-						case "powerup":
-							System.out.println("Got powerup with " + v.toString());
-							break;
-						case "firetruck":
-							System.out.println("Got firetruck with " + v.toString());
-							break;
-						default:
-							System.out.println("Got " + k + " with " +v.toString());
-							break;
-					}
-				});
+				System.out.println(pref.getString("fortress1"));
 			}
 		});
 	}
@@ -645,4 +656,11 @@ public class GameScreen implements Screen{
 		players.get(activeTruck).setSelected(true);
 	}
 	// TRUCK_SELECT_CHANGE_18 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+	//Convenience function to grab the position quickly
+	private Vector2 getPos (String values) {
+		String stripped = values.substring(1, values.length() - 1);
+		String[] split = stripped.split(",");
+		return new Vector2(Float.parseFloat(split[0]), Float.parseFloat(split[1]));
+	}
+
 }

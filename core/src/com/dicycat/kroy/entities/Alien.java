@@ -22,13 +22,11 @@ public class Alien extends Entity {
 	private Vector2[] waypoints; // The waypoints that the alien will follow
 	private int currentWaypoint; // The waypoint index the alien is currently at
 	private float movementCountdown; // Delays first movement of the alien, stops them from overlapping at beginning.
-	private float patrolNumber; //We made this an attribute now because we need to save it.
 
 	public Alien(int patrolNumber, float movementCountdown, int radius) {
 		// Edited Entity constructor to include radius so that alien radius can be changed.
 		super(new Vector2(0, 0), Kroy.mainGameScreen.textures.getUFO(),
 				new Vector2(80, 80), 500, radius);
-		this.patrolNumber = patrolNumber;
 		// Sets waypoints variable to be equal to the right array of pre-defined coordinates.
 		if (patrolNumber == 1) {
 			waypoints = new Vector2[]{new Vector2(268 * 16, (400 - 254) * 16), new Vector2(344 * 16, (400 - 254) * 16),
@@ -61,7 +59,6 @@ public class Alien extends Entity {
 		currentWaypoint = 0; // Sets current waypoint as the first waypoint in the array.
 		this.movementCountdown = movementCountdown;
 		speed = 150;
-		shouldSave = true;
 	}
 
 	/**
@@ -135,14 +132,4 @@ public class Alien extends Entity {
 		}
 	}
 
-	/**
-	 * Convert Alien attributes into a format we need to save
-	 */
-	@Override
-	public String save() {
-		//For firetrucks, we need the position, and the patrol number.
-		String output = this.getPosition().toString();
-		output += "|" + this.patrolNumber;
-		return output;
-	}
 }

@@ -297,6 +297,8 @@ public class MenuScreen implements Screen{
 			 game.newGame(); // Calls the function in Kroy to start a new game
 		 }
 	}
+
+
 	// TRUCK_SELECT_CHANGE_20 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
   public void setCurrentlyRunningGame(boolean state) {

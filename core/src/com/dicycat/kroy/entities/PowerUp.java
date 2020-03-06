@@ -124,7 +124,7 @@ public class PowerUp extends Entity {
 	public String save() {
 		//For powerups, we need the position, and which powerup it is.
 		String output = this.getPosition().toString();
-		output += "|" + this.type.toString();
+		output += "@" + this.type.toString();
 		return output;
 	}
 }

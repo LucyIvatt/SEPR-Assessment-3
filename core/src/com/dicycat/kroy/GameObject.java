@@ -110,8 +110,8 @@ public abstract class GameObject {
 	 * Returns save data to be written to prefs file
 	 * IMPORTANT:
 	 * While you don't see it here, in other classes where we define an implementation of save(),
-	 * we use the | value to split values being saved. We cannot use , because vector.tostring() contains a , and would
-	 * make things harder. I chose | over . because . looks like , .
+	 * we use the @ value to split values being saved. We cannot use , because vector.tostring() contains a , and would
+	 * make things harder. I chose @ over . because . looks like , .
 	 */
 	public String save() {
 		return null;

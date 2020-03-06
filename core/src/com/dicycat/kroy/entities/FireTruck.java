@@ -44,12 +44,12 @@ public class FireTruck extends Entity{
 	private StatBar healthBar;
 	private boolean firing;
 	private float range;
-
+	public int index;
 
 	public FireTruck(Vector2 spawnPos, Float[] truckStats, int truckNum) {
 
 		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(truckNum), new Vector2(25,50), 100, 500);
-
+		this.index = truckNum;
 		DIRECTIONS.put("n",0);			//North Facing Direction (up arrow)
 		DIRECTIONS.put("w",90);			//West Facing Direction (left arrow)
 		DIRECTIONS.put("s",180);		//South Facing Direction (down arrow)
@@ -288,6 +288,7 @@ public class FireTruck extends Entity{
 	public void refillWater(){
 		this.currentWater = this.maxWater;
 	}
+	public void setWater(float water) {this.currentWater = water;}
 	// END OF MODIFICATION  - NP STUDIOS -----------------------------------------
 
 	// REPLENISH_2: OVER TIME -> INSTANT  - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
@@ -378,11 +379,11 @@ public class FireTruck extends Entity{
 	 */
  	@Override
 	public String save() {
-		//For firetrucks, we need the position, health, and water.
+		//For firetrucks, we need the position, health, water, index, and whether its selected.
 		String output = this.getPosition().toString();
-		output += "|" + this.healthPoints;
-		output += "|" + this.currentWater;
-		output += "|" + this.selected;
+		output += "@" + this.healthPoints;
+		output += "@" + this.currentWater;
+		output += "@" + this.selected;
 		return output;
 	}
 
