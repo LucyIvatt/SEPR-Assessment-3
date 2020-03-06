@@ -19,8 +19,8 @@ public class Kroy extends Game {
 
 	// GAME_SIZE - START OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 	// Made the game window larger
-	public static final int width = 1820;
-	public static final int height = 980;
+	public static final int width = 1280; //Changed window size to run better on MacOS
+	public static final int height = 720;
 	// GAME_SIZE - END OF MODIFICATION - NP STUDIOS - LUCY IVATT -----------------------------------------
 	
 	public static GameScreen mainGameScreen;

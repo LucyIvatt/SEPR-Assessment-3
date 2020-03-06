@@ -4,22 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.dicycat.kroy.GameObject;
 import com.dicycat.kroy.Kroy;
 import com.dicycat.kroy.misc.StatBar;
 import com.dicycat.kroy.misc.WaterStream;
 import com.dicycat.kroy.screens.GameScreen;
+//Power up changes by Sam Hutchings
+import java.time.Instant;
+import java.time.Duration;
 
 /**
- * GameObject controlled controlled by the player which automatically fires
+ * GameObject controlled by the player which automatically fires
  * at hostile enemies when they're within range.
  * 
  * @author Riju De
@@ -45,6 +44,7 @@ public class FireTruck extends Entity{
 	private StatBar healthBar;
 	private boolean firing;
 	private float range;
+	
 
 	public FireTruck(Vector2 spawnPos, Float[] truckStats, int truckNum) {
 		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(truckNum), new Vector2(25,50), 100, 500);
@@ -184,6 +184,10 @@ public class FireTruck extends Entity{
 
 		healthBar.setPosition(getCentre().add(0,25));
 		healthBar.setBarDisplay((healthPoints*50)/maxHealthPoints);
+		
+		
+		//Changes for shield powerup
+		if(shield) updateShield();
 
 	}
 	
@@ -322,4 +326,51 @@ public class FireTruck extends Entity{
 		this.selected = selected;
 	}
 	// TRUCK_SELECT_CHANGE_8 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
+	
+	//Power up changes
+	
+	public float getSpeed() { return speed; }
+	public void setSpeed(float speed) {	this.speed = speed; }
+	public float getFlowRate() { return flowRate; }
+	public void setFlowRate(float flowRate) { this.flowRate = flowRate; }
+	public float getMaxWater() { return maxWater; }
+	public void setMaxWater(float maxWater) { this.maxWater = maxWater; }
+	
+	public void increaseSpeed() {
+		setSpeed(getSpeed()*1.5f);
+	}
+	
+	public void increaseDamage() {
+		setFlowRate(getFlowRate()*3f);
+		setMaxWater(getMaxWater()*3f);
+		currentWater = currentWater * 3f;
+	}
+	
+	private Boolean shield = false;
+	private Instant shieldActivatedTime;
+	private float shieldLifeTime;
+	private int shieldHealth;
+	private Texture originalTexture;
+	
+	public void setShield(float time) {
+		shield = true;
+		shieldActivatedTime = Instant.now();
+		shieldLifeTime = time;
+		originalTexture = getTexture();
+		setTexture(new Texture("fireTruckShield.png"));
+		shieldHealth = healthPoints;
+	}
+	
+	public void updateShield() {
+		if ((Duration.between(shieldActivatedTime, Instant.now()).getSeconds()) > shieldLifeTime) {
+			shield = false;
+			setTexture(originalTexture);
+		} else {
+			healthPoints = shieldHealth;
+		}
+	}
+	
+	
+	
 }

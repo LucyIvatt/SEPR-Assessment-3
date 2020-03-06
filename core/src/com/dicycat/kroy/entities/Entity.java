@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.dicycat.kroy.GameObject;
 import com.dicycat.kroy.Kroy;
-import com.dicycat.kroy.gamemap.TiledGameMap;
 
 /**
  * Class for interactive gameObjects
@@ -70,7 +69,7 @@ public abstract class Entity extends GameObject{
 		Vector2 currentCoords = Kroy.mainGameScreen.getPlayer().getCentre(); // get current player coordinates
 		if (Vector2.dst(currentCoords.x, currentCoords.y, getCentre().x, getCentre().y) < radius ) { // checks the distance between the two entities
 			return true; // returns true if distance between entity and player is less than radius of item
-		}else {
+		} else {
 			return false; // returns false otherwise
 		}
 	}
@@ -78,4 +77,22 @@ public abstract class Entity extends GameObject{
 	public int getHealthPoints(){
 		return healthPoints;
 	}
+
+	//Methods added by Sam Hutchings to implement power ups.
+	
+	public int getMaxHealthPoints() {
+		return maxHealthPoints;
+	}
+	
+	public void refillHealth() {
+		setHealthPoints(getMaxHealthPoints());
+	}
+
+	public void setHealthPoints(int healthPoints) {
+		if (healthPoints <= maxHealthPoints) {
+			this.healthPoints = healthPoints;
+		} else
+			System.err.println("healthPoints > maxHealthPoints");
+	}
+
 }

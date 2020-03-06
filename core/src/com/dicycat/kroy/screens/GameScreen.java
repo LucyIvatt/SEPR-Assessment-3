@@ -144,6 +144,14 @@ public class GameScreen implements Screen{
 		// TRUCK_SELECT_CHANGE_13 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 		gameObjects.add(new FireStation());
+		gameObjects.add(new PowerUp(new Vector2(1772,4633)));
+		gameObjects.add(new PowerUp(new Vector2(4344,3729)));
+		gameObjects.add(new PowerUp(new Vector2(5512,2696)));
+		gameObjects.add(new PowerUp(new Vector2(5055,1415)));
+		gameObjects.add(new PowerUp(new Vector2(1608, 585)));
+		gameObjects.add(new PowerUp(new Vector2(1919,3871)));
+		
+		
 
 		// PATROLS_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 		// Creates the aliens for the patrols and adds them to gameObjects so they can be updated each tick
@@ -202,7 +210,8 @@ public class GameScreen implements Screen{
 				}
 
 				selectTruck();
-
+				//System.out.println(players.get(activeTruck).getCentre());
+				
 				// TRUCK_SELECT_CHANGE_14 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 				gameTimer -= delta;		//Decrement timer
@@ -220,9 +229,9 @@ public class GameScreen implements Screen{
 				renderObjects(); // Renders objects specified in the UpdateLoop() called previously
 
 				game.batch.end();
-
+				
 				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
-
+				
 				hud.stage.draw();
 				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------
 				drawMinimap();
