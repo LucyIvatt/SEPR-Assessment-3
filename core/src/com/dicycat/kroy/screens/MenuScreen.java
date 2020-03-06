@@ -98,8 +98,9 @@ public class MenuScreen implements Screen{
 	  OPTIONS,
 	  MINIGAME,
 	  // CONTROL_SCREEN_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-	  CONTROLS // adding a new window state, the controls window, has the code that calls the creation and setup of the controls window
+	  CONTROLS, // adding a new window state, the controls window, has the code that calls the creation and setup of the controls window
 	  // CONTROL_SCREEN_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
+	  LOADGAME
   }
   
   public MenuScreenState state = MenuScreenState.MAINMENU;
