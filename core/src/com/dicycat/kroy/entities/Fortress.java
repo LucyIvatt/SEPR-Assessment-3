@@ -57,6 +57,7 @@ public class Fortress extends Entity {
 
 		healthBar = new StatBar(new Vector2(getCentre().x, getCentre().y + 100), "Red.png", 10);
 		Kroy.mainGameScreen.addGameObject(healthBar);
+		shouldSave = true;
 	}
 
 	/**
@@ -113,4 +114,15 @@ public class Fortress extends Entity {
 		return this.damage;				// Implemented a getter for damage
 	}									// FORTRESS_DAMAGE_2 - END OF MODIFICATION - NP STUDIOS
 
+
+	/**
+	 * Convert Fortress attributes into a format we need to save
+	 */
+	@Override
+	public String save() {
+		//For Fortresses, we need the position, and the health.
+		String output = this.getPosition().toString();
+		output += "|" + this.healthPoints;
+		return output;
+	}
 }

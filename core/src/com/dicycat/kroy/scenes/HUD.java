@@ -119,5 +119,9 @@ public class HUD {
 	public void updateScore(Integer x){
 		score += x;
 	}
+
+	public int getScore() {
+		return score;
+	}
 }
 

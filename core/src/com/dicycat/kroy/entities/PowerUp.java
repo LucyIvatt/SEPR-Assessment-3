@@ -34,7 +34,7 @@ public class PowerUp extends Entity {
 
 	public PowerUp(Vector2 spawnPos, Texture img, Vector2 imSize, int health, int radius) {
 		super(spawnPos, img, imSize, health, radius);
-
+		shouldSave = true;
 	}
 
 	/**
@@ -54,6 +54,7 @@ public class PowerUp extends Entity {
 	public PowerUp(Vector2 spawnPos, Texture img, PowerUpType type) {
 		this(spawnPos, img, imSize, health, radius);
 		this.type = type;
+		shouldSave = true;
 	}
 
 	public PowerUp(Vector2 spawnPos) {
@@ -80,6 +81,7 @@ public class PowerUp extends Entity {
 			break;
 
 		}
+		shouldSave = true;
 	}
 
 	/**
@@ -113,5 +115,16 @@ public class PowerUp extends Entity {
 			}
 			applyDamage(1);
 		}
+	}
+
+	/**
+	 * Convert PowerUp attributes into a format we need to save
+	 */
+	@Override
+	public String save() {
+		//For powerups, we need the position, and which powerup it is.
+		String output = this.getPosition().toString();
+		output += "|" + this.type.toString();
+		return output;
 	}
 }

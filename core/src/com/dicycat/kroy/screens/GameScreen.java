@@ -1,9 +1,10 @@
 package com.dicycat.kroy.screens;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -496,6 +497,81 @@ public class GameScreen implements Screen{
 	    		return;
 	    	}
 	    });
+
+		//save
+		pauseWindow.save.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				/**
+				 * We save the following data:
+				 * The health and position of each living fortress
+				 * The health, position, and water of each living firetruck
+				 * The position, and patrol number of every patrol
+				 * The current firetruck selected
+				 * The position, and type of every powerup.
+				 * The gametime (mostly for the station destruction)
+				 * The score
+				 */
+				Preferences pref = Gdx.app.getPreferences("Test");
+				//Clear it since anything important we're overwriting anyways.
+				pref.clear();
+				int index = 0;
+				for (GameObject gObject: gameObjects) {
+					index += 1;
+					if (gObject.shouldSave) {
+
+						Entity e = (Entity) gObject;
+						//Get rid of the "class com.dicycat.Kroy....." part
+						System.out.println("Should be saving " + gObject.getClass().toString().substring(32));
+						System.out.println("Its location is at " + gObject.save());
+
+						//Does the value for the key matter? Somewhat. We can just just have it be Fortress1, Fortress2
+						//Alien1, Alien2. Number doesn't matter at all.
+						pref.putString(gObject.getClass().toString().substring(32) + Integer.toString(index), gObject.save());
+
+
+					}
+				}
+				//Also save the gametime, and the score.
+				pref.putFloat("gametime", gameTimer);
+				pref.putInteger("score", Kroy.mainGameScreen.hud.getScore());
+				pref.flush();
+			}
+		});
+
+		//load
+		pauseWindow.load.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				//Grab our preferences
+				Preferences pref = Gdx.app.getPreferences("Test");
+				pref.get().forEach((k, v) -> {
+					/**
+					 * It's in a K:V pair where K is the class name and V is its important data
+					 * We can write a case statement to check the key, if it's any of the classes we instansiate a new
+					 * instance of the respective class. otherwise it's score or gametimer so we just update it
+					 */
+					System.out.println(k.toString() + " " + v.toString());
+					switch(k) {
+						case "alien":
+							System.out.println("got alien with " + v.toString());
+							break;
+						case "fortress":
+							System.out.println("got fortress with " + v.toString());
+							break;
+						case "powerup":
+							System.out.println("Got powerup with " + v.toString());
+							break;
+						case "firetruck":
+							System.out.println("Got firetruck with " + v.toString());
+							break;
+						default:
+							System.out.println("Got " + k + " with " +v.toString());
+							break;
+					}
+				});
+			}
+		});
 	}
 
 	/**

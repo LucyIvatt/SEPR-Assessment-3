@@ -16,6 +16,8 @@ public abstract class GameObject {
 	protected Boolean remove, displayable;			//Should this GameObject be removed? Should this item be displayed?
 	protected float rotation = 0;	//Current angle the truck is facing in degrees
 
+	//For objects we should be saving, we set this bool to true (and also have redefined the respective function
+	public boolean shouldSave = false;
 	public GameObject(Vector2 spawnPos, Texture image, Vector2 imSize) {	//Constructor; takes the screen to be put on, spawn position vector, image and a vector for its size
 		sprite = new Sprite(image,(int) spawnPos.x ,(int) spawnPos.y ,(int) imSize.x,(int) imSize.y); // sprite class stores the texture position and size of the object
 		remove = false;
@@ -102,5 +104,16 @@ public abstract class GameObject {
 	 */
 	public void die() {
 		remove = true;
+	}
+
+	/**
+	 * Returns save data to be written to prefs file
+	 * IMPORTANT:
+	 * While you don't see it here, in other classes where we define an implementation of save(),
+	 * we use the | value to split values being saved. We cannot use , because vector.tostring() contains a , and would
+	 * make things harder. I chose | over . because . looks like , .
+	 */
+	public String save() {
+		return null;
 	}
 }

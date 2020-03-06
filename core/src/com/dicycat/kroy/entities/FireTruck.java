@@ -44,9 +44,10 @@ public class FireTruck extends Entity{
 	private StatBar healthBar;
 	private boolean firing;
 	private float range;
-	
+
 
 	public FireTruck(Vector2 spawnPos, Float[] truckStats, int truckNum) {
+
 		super(spawnPos, Kroy.mainGameScreen.textures.getTruck(truckNum), new Vector2(25,50), 100, 500);
 
 		DIRECTIONS.put("n",0);			//North Facing Direction (up arrow)
@@ -78,6 +79,7 @@ public class FireTruck extends Entity{
 		// TRUCK_SELECT_CHANGE_6 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		selected = false; // initially sets the truck to false
 		// TRUCK_SELECT_CHANGE_6 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+		shouldSave = true;
 	}
 
 	/**
@@ -370,7 +372,20 @@ public class FireTruck extends Entity{
 			healthPoints = shieldHealth;
 		}
 	}
-	
+
+	/**
+	 * Convert FireTruck attributes into a format we need to save
+	 */
+ 	@Override
+	public String save() {
+		//For firetrucks, we need the position, health, and water.
+		String output = this.getPosition().toString();
+		output += "|" + this.healthPoints;
+		output += "|" + this.currentWater;
+		output += "|" + this.selected;
+		return output;
+	}
+
 	
 	
 }
