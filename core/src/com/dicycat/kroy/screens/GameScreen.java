@@ -1,6 +1,8 @@
 package com.dicycat.kroy.screens;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -161,7 +163,8 @@ public class GameScreen implements Screen{
 				}
 			}
 			else {
-				players.get(i).applyDamage(20000);
+				System.out.println("ruh roh");
+				//players.get(i).applyDamage(20000);
 			}
 			gameObjects.add(players.get(i));    //Player
 		}
@@ -237,7 +240,6 @@ public class GameScreen implements Screen{
 				}
 
 				selectTruck();
-				//System.out.println(players.get(activeTruck).getCentre());
 				
 				// TRUCK_SELECT_CHANGE_14 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
@@ -539,50 +541,77 @@ public class GameScreen implements Screen{
 				 * The gametime (mostly for the station destruction)
 				 * The score
 				 */
-				Preferences pref = Gdx.app.getPreferences("Test");
-				//Clear it since anything important we're overwriting anyways.
-				pref.clear();
-				int index = 0;
-				for (GameObject gObject: gameObjects) {
-					index += 1;
-					if (gObject.shouldSave) {
-
-						Entity e = (Entity) gObject;
-						//Get rid of the "class com.dicycat.Kroy....." part
-						String key = gObject.getClass().toString().substring(32).toLowerCase().trim();
-						if (gObject instanceof Fortress) {
-							key += ((Fortress) gObject).index;
-						}
-
-						else if (gObject instanceof FireTruck) {
-							key  += ((FireTruck) gObject).index;
-						}
-						System.out.println("Should be saving " + key);
-						System.out.println("Its location is at " + gObject.save());
-
-						//Does the value for the key matter? Somewhat. We can just just have it be Fortress1, Fortress2
-						//Alien1, Alien2. Number doesn't matter at all.
-						pref.putString(key, gObject.save());
-
-
-					}
-				}
-				//Also save the gametime, and the score.
+				
+				saveObjects(gameObjects, "gameObjects");
+				saveObjects(deadObjects, "deadObjects");
+				
+				Preferences pref = Gdx.app.getPreferences("gameData");
 				pref.putFloat("gametime", gameTimer);
 				pref.putInteger("score", Kroy.mainGameScreen.hud.getScore());
 				pref.flush();
+				
 			}
 		});
-
-		//load
+		
+		
+		// load
 		pauseWindow.load.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//Grab our preferences
-				Preferences pref = Gdx.app.getPreferences("Test");
-				System.out.println(pref.getString("fortress1"));
+				
+				
+				Preferences pref = Gdx.app.getPreferences("deadObjects");
+				gameObjects.forEach(o -> {
+					if(o.shouldSave() && pref.contains(o.getUUID())) {
+						o.setRemove(true);
+						gameObjects.remove(o);
+						deadObjects.add(o);
+					}
+				});
+				List<GameObject> kill = new ArrayList<GameObject>();
+				Preferences pref2 = Gdx.app.getPreferences("gameObjects");
+				deadObjects.forEach(o -> {
+					if(o.shouldSave() && pref2.contains(o.getUUID())) {
+						System.out.println("AAAA");
+						o.setRemove(false);
+						kill.add(o);
+						gameObjects.add(o);
+					}
+				});
+				kill.forEach(o -> deadObjects.remove(o));
+				
+				loadObjects(gameObjects, "gameObjects");
+				System.out.println("BBB");
+				loadObjects(deadObjects, "deadObjects");
+				System.out.println("CC");
+				
+					
+			}
+		});//if something in gameobjects is in the deadobjects prefs, delete it, and vice versa
+		   // do some crazy X crossrail stuff
+		
+	}
+
+	public void loadObjects(List<GameObject> data, String prefName) {
+		Preferences pref = Gdx.app.getPreferences(prefName);
+		data.stream().filter(GameObject::shouldSave)
+		.filter(FireTruck.class::isInstance)
+		.forEach(gObject -> {
+			try {
+				System.out.format("ID: %s, Data: %s \n",gObject.getUUID(),pref.getString(gObject.getUUID()));
+				gObject.load(pref.getString(gObject.getUUID()));
+			} catch (Exception e) {
+				System.err.println(e);
 			}
 		});
+	}
+
+	public void saveObjects(List<GameObject> data, String prefName) {
+		Preferences pref = Gdx.app.getPreferences(prefName);
+		pref.clear();
+		pref.put(data.stream().filter(GameObject::shouldSave)
+				.collect(Collectors.toMap(GameObject::getUUID, GameObject::save)));
+		pref.flush();
 	}
 
 	/**

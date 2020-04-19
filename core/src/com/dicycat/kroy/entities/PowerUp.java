@@ -127,4 +127,10 @@ public class PowerUp extends Entity {
 		output += "@" + this.type.toString();
 		return output;
 	}
+	
+	@Override
+ 	public String getUUID() {
+ 		return ("powerup" + getPosition().toString());
+ 	}
+	
 }

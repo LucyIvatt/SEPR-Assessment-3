@@ -273,6 +273,7 @@ public class FireTruck extends Entity{
 		water.setRemove(true);
 		tank.setRemove(true);
 		healthBar.setRemove(true);
+		displayable = true;
 	}
 
 	public Rectangle getHitbox(){
@@ -380,13 +381,25 @@ public class FireTruck extends Entity{
  	@Override
 	public String save() {
 		//For firetrucks, we need the position, health, water, index, and whether its selected.
-		String output = this.getPosition().toString();
+		String output = this.getPosition().x + "@" + this.getPosition().y;
 		output += "@" + this.healthPoints;
 		output += "@" + this.currentWater;
 		output += "@" + this.selected;
 		return output;
 	}
-
-	
+ 	
+ 	@Override
+ 	public void load(String data) {
+ 		String[] values = data.split("@");
+ 		setPosition(new Vector2(Float.parseFloat(values[0]),Float.parseFloat(values[1])));
+ 		setHealthPoints(Integer.parseInt(values[2]));
+ 		setWater(Float.parseFloat(values[3]));
+ 		setSelected(Boolean.parseBoolean(values[4]));
+ 	}
+ 	
+ 	@Override
+ 	public String getUUID() {
+ 		return ("truck" + index);
+ 	}
 	
 }

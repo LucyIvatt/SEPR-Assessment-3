@@ -126,4 +126,9 @@ public class Fortress extends Entity {
 		String output = Integer.toString(this.healthPoints);
 		return output;
 	}
+	
+	@Override
+ 	public String getUUID() {
+ 		return ("fortress" + getPosition().toString());
+ 	}
 }

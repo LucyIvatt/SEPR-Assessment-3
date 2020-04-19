@@ -116,4 +116,22 @@ public abstract class GameObject {
 	public String save() {
 		return null;
 	}
+	
+	/**
+	 * Loads the data from the prefs file
+	 * 
+	 */
+	public void load(String data) {
+	}
+	
+	/**
+	 * Gets a unique identifier for each game object
+	 */
+	public String getUUID() {
+		return null;
+	}
+	
+	public Boolean shouldSave() {
+		return shouldSave;
+	}
 }
