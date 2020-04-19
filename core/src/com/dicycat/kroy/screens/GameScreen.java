@@ -79,7 +79,7 @@ public class GameScreen implements Screen{
 		};
 
 	// Changes variable of truckNum to activeTruck
-	private int activeTruck; // Identifies the truck that is currently selected
+	public int activeTruck; // Identifies the truck that is currently selected
 	// Deleted the variable player and replaced it with an ArrayList containing the 4 trucks and named it players
 	private ArrayList<FireTruck> players;
 	// TRUCK_SELECT_CHANGE_11 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
@@ -163,7 +163,7 @@ public class GameScreen implements Screen{
 				}
 			}
 			else {
-				System.out.println("ruh roh");
+				System.err.println("ruh roh");
 				//players.get(i).applyDamage(20000);
 			}
 			gameObjects.add(players.get(i));    //Player
@@ -315,9 +315,7 @@ public class GameScreen implements Screen{
 		}
 		for (GameObject rObject : toRemove) {	//Remove game objects set for removal
 			gameObjects.remove(rObject);
-			if (rObject.isDisplayable()) {
 				deadObjects.add(rObject);
-			}
 		}
 		for (GameObject aObject : objectsToAdd) {		//Add game objects to be added
 			gameObjects.add(aObject);
@@ -326,7 +324,9 @@ public class GameScreen implements Screen{
 		objectsToAdd.clear();	// Clears list as not to add new objects twice
 
 		for (GameObject dObject : deadObjects) { // loops through the destroyed but displayed items (such as destroyed bases)
-			objectsToRender.add(dObject);
+			if (dObject.isDisplayable()) {
+				objectsToRender.add(dObject);
+			}
 		}
 		// TRUCK_SELECT_CHANGE_15 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		// Changed to check if the active truck is destroyed and then updates lives if so
@@ -558,44 +558,41 @@ public class GameScreen implements Screen{
 		pauseWindow.load.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				
-				
-				Preferences pref = Gdx.app.getPreferences("deadObjects");
-				gameObjects.forEach(o -> {
-					if(o.shouldSave() && pref.contains(o.getUUID())) {
-						o.setRemove(true);
-						gameObjects.remove(o);
-						deadObjects.add(o);
-					}
-				});
-				List<GameObject> kill = new ArrayList<GameObject>();
-				Preferences pref2 = Gdx.app.getPreferences("gameObjects");
-				deadObjects.forEach(o -> {
-					if(o.shouldSave() && pref2.contains(o.getUUID())) {
-						System.out.println("AAAA");
-						o.setRemove(false);
-						kill.add(o);
-						gameObjects.add(o);
-					}
-				});
-				kill.forEach(o -> deadObjects.remove(o));
+	
+				swapObjects(gameObjects, deadObjects, "deadObjects");
+				swapObjects(deadObjects, gameObjects, "gameObjects");
 				
 				loadObjects(gameObjects, "gameObjects");
-				System.out.println("BBB");
 				loadObjects(deadObjects, "deadObjects");
-				System.out.println("CC");
 				
-					
+				//TODO Figure out how fortresses die, and undo that lol
+				//TODO Figure out why the game gets loaded a bunch of times every click
+				//TODO Add load function for powerups
+				
 			}
-		});//if something in gameobjects is in the deadobjects prefs, delete it, and vice versa
-		   // do some crazy X crossrail stuff
+			
+		});
 		
 	}
+	
+	//X crossover stuff
+	public void swapObjects(List<GameObject> originalObjects, List<GameObject> newObjects, String prefName) {
+		List<GameObject> objectsToRemove = new ArrayList<GameObject>();
+		Preferences pref = Gdx.app.getPreferences(prefName);
+		originalObjects.forEach(o -> {
+			if(o.shouldSave() && pref.contains(o.getUUID())) {
+				o.setRemove(true);
+				objectsToRemove.add(o);
+				newObjects.add(o);
+			}
+		});
+		objectsToRemove.forEach(originalObjects::remove);
+		}
 
 	public void loadObjects(List<GameObject> data, String prefName) {
 		Preferences pref = Gdx.app.getPreferences(prefName);
 		data.stream().filter(GameObject::shouldSave)
-		.filter(FireTruck.class::isInstance)
+		//.filter(FireTruck.class::isInstance)
 		.forEach(gObject -> {
 			try {
 				System.out.format("ID: %s, Data: %s \n",gObject.getUUID(),pref.getString(gObject.getUUID()));

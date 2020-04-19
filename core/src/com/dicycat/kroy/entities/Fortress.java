@@ -17,6 +17,7 @@ public class Fortress extends Entity {
 	private BulletDispenser dispenser;
 	private Texture deadTexture;
 	private StatBar healthBar;
+	private Texture aliveTexture;
 	// FORTRESS_DAMAGE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 	private int damage; 	// Added a new attribute 'damage'
 	// FORTRESS_DAMAGE_1 - END OF MODIFICATION - NP STUDIOS
@@ -60,6 +61,7 @@ public class Fortress extends Entity {
 		healthBar = new StatBar(new Vector2(getCentre().x, getCentre().y + 100), "Red.png", 10);
 		Kroy.mainGameScreen.addGameObject(healthBar);
 		shouldSave = true;
+		this.aliveTexture = fortressTexture;
 	}
 
 	/**
@@ -70,7 +72,8 @@ public class Fortress extends Entity {
 		super.die();
 		sprite.setTexture(deadTexture);
 		Kroy.mainGameScreen.getHud().updateScore(1000);
-		healthBar.setRemove(true);
+		//healthBar.setRemove(true);
+		setHealthPoints(0);
 		displayable = true;
 		Kroy.mainGameScreen.removeFortress();
 		if (Kroy.mainGameScreen.getFortressesCount() == 0) {//If last fortress
@@ -126,7 +129,22 @@ public class Fortress extends Entity {
 		String output = Integer.toString(this.healthPoints);
 		return output;
 	}
-	
+
+	@Override
+	public void load(String data) {
+		int hdata = Integer.parseInt(data);
+		if(hdata == 0) {
+			super.die();
+			sprite.setTexture(deadTexture);
+			displayable = true;
+		}
+		else if(this.healthPoints <= 0) {
+			sprite.setTexture(aliveTexture);
+			Kroy.mainGameScreen.addGameObject(healthBar);
+		}
+		setHealthPoints(hdata);
+	}
+
 	@Override
  	public String getUUID() {
  		return ("fortress" + getPosition().toString());

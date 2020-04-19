@@ -271,9 +271,10 @@ public class FireTruck extends Entity{
 	public void die() {
 		super.die();
 		water.setRemove(true);
-		tank.setRemove(true);
-		healthBar.setRemove(true);
-		displayable = true;
+		//tank.setRemove(true);
+		//healthBar.setRemove(true);
+		setWater(0);
+		setHealthPoints(0);
 	}
 
 	public Rectangle getHitbox(){
@@ -395,6 +396,11 @@ public class FireTruck extends Entity{
  		setHealthPoints(Integer.parseInt(values[2]));
  		setWater(Float.parseFloat(values[3]));
  		setSelected(Boolean.parseBoolean(values[4]));
+ 		
+		Kroy.mainGameScreen.addGameObject(tank);
+		Kroy.mainGameScreen.addGameObject(healthBar);
+		if(Boolean.parseBoolean(values[4])) Kroy.mainGameScreen.activeTruck = index;
+
  	}
  	
  	@Override
