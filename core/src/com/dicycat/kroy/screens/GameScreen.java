@@ -547,7 +547,8 @@ public class GameScreen implements Screen{
 				
 				Preferences pref = Gdx.app.getPreferences("gameData");
 				pref.putFloat("gametime", gameTimer);
-				pref.putInteger("score", Kroy.mainGameScreen.hud.getScore());
+				pref.putInteger("score", hud.getScore());
+				pref.putInteger("fortressesCount", fortressesCount);
 				pref.flush();
 				
 			}
@@ -565,9 +566,12 @@ public class GameScreen implements Screen{
 				loadObjects(gameObjects, "gameObjects");
 				loadObjects(deadObjects, "deadObjects");
 				
-				//TODO Figure out how fortresses die, and undo that lol
 				//TODO Figure out why the game gets loaded a bunch of times every click
 				//TODO Add load function for powerups
+				System.out.println("gameobjects");
+				gameObjects.forEach(o -> {if(o.shouldSave) System.out.print(o.getUUID());});
+				System.out.println("deadobjects");
+				deadObjects.forEach(o -> {if(o.shouldSave) System.out.print(o.getUUID());});
 				
 			}
 			
@@ -579,9 +583,10 @@ public class GameScreen implements Screen{
 	public void swapObjects(List<GameObject> originalObjects, List<GameObject> newObjects, String prefName) {
 		List<GameObject> objectsToRemove = new ArrayList<GameObject>();
 		Preferences pref = Gdx.app.getPreferences(prefName);
+		Boolean trueIfDead = prefName.equals("deadObjects");
 		originalObjects.forEach(o -> {
 			if(o.shouldSave() && pref.contains(o.getUUID())) {
-				o.setRemove(true);
+				o.setRemove(trueIfDead);
 				objectsToRemove.add(o);
 				newObjects.add(o);
 			}
@@ -595,7 +600,7 @@ public class GameScreen implements Screen{
 		//.filter(FireTruck.class::isInstance)
 		.forEach(gObject -> {
 			try {
-				System.out.format("ID: %s, Data: %s \n",gObject.getUUID(),pref.getString(gObject.getUUID()));
+				//System.out.format("ID: %s, Data: %s \n",gObject.getUUID(),pref.getString(gObject.getUUID()));
 				gObject.load(pref.getString(gObject.getUUID()));
 			} catch (Exception e) {
 				System.err.println(e);
