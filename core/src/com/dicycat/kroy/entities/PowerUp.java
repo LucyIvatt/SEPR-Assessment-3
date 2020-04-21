@@ -16,7 +16,7 @@ import com.dicycat.kroy.Kroy;
 public class PowerUp extends Entity {
 
 	// Static variables that should be the same across all power ups, unless a fully
-	// custom powerup is constructed.
+	// custom power up is constructed.
 	private static int radius = 25;
 	private static int health = 1;
 	private static Vector2 imSize = new Vector2(16, 16);
@@ -32,6 +32,15 @@ public class PowerUp extends Entity {
 
 	private PowerUpType type = null;
 
+	/**
+	 * Super type for generating a custom power up with no type
+	 * 
+	 * @param spawnPos The position the power up is spawned at
+	 * @param img      The texture of the power up
+	 * @param imSize   The size of the texture, default is 16x16
+	 * @param health   The health value, default is 1
+	 * @param radius   The radius it can be picked up from
+	 */
 	public PowerUp(Vector2 spawnPos, Texture img, Vector2 imSize, int health, int radius) {
 		super(spawnPos, img, imSize, health, radius);
 		shouldSave = true;
@@ -54,16 +63,22 @@ public class PowerUp extends Entity {
 	public PowerUp(Vector2 spawnPos, Texture img, PowerUpType type) {
 		this(spawnPos, img, imSize, health, radius);
 		this.type = type;
-		shouldSave = true;
 	}
 
+	/**
+	 * @param spawnPos
+	 */
 	public PowerUp(Vector2 spawnPos) {
 		this(spawnPos, new Texture("PowerUpGeneric.png"), imSize, health, radius);
 		type = PowerUpType.getRandomType();
 		setType(type);
-		shouldSave = true;
 	}
 	
+	/**
+	 * Private method to change the powerup type
+	 * 
+	 * @param type The type to set
+	 */
 	private void setType(PowerUpType type) {
 		switch (type) {
 		case DAMAGE:
@@ -121,22 +136,21 @@ public class PowerUp extends Entity {
 		}
 	}
 
-	/**
-	 * Convert PowerUp attributes into a format we need to save
-	 */
 	@Override
 	public String save() {
-		//For powerups, we need it's type. The position is already encoded in the UUID.
 		return this.type.toString();
 	}
 	
 	@Override
 	public void load(String data) {
+		// Sets the power up type to the value of data
 		setType(PowerUpType.valueOf(data));
 	}
 	
 	@Override
  	public String getUUID() {
+		// This encodes the power ups location in it's UUID, as there is only one power
+		// up at each location
  		return ("powerup" + getPosition().toString());
  	}
 	

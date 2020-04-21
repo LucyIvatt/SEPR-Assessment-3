@@ -271,8 +271,7 @@ public class FireTruck extends Entity{
 	public void die() {
 		super.die();
 		water.setRemove(true);
-		//tank.setRemove(true);
-		//healthBar.setRemove(true);
+		// Water and health bars disappear when set to 0
 		setWater(0);
 		setHealthPoints(0);
 	}
@@ -376,9 +375,6 @@ public class FireTruck extends Entity{
 		}
 	}
 
-	/**
-	 * Convert FireTruck attributes into a format we need to save
-	 */
  	@Override
 	public String save() {
 		//For firetrucks, we need the position, health, water, index, and whether its selected.
@@ -391,14 +387,23 @@ public class FireTruck extends Entity{
  	
  	@Override
  	public void load(String data) {
+ 		//The data is split into an array of strings
  		String[] values = data.split("@");
+ 		
+ 		// Indices 0 and 1 are the x and y co-ordinates of the truck
  		setPosition(new Vector2(Float.parseFloat(values[0]),Float.parseFloat(values[1])));
+ 		
+ 		// Indices 2, 3, and 4 are the health, water, and selected truck values
  		setHealthPoints(Integer.parseInt(values[2]));
  		setWater(Float.parseFloat(values[3]));
  		setSelected(Boolean.parseBoolean(values[4]));
  		
+		// The stat bars for each firetruck are re-added, as they were removed while
+		// loading the new save to prevent duplicates
 		Kroy.mainGameScreen.addGameObject(tank);
 		Kroy.mainGameScreen.addGameObject(healthBar);
+		
+		// If the "selected" value returns true then the truck is set as the active truck
 		if(Boolean.parseBoolean(values[4])) Kroy.mainGameScreen.activeTruck = index;
 
  	}

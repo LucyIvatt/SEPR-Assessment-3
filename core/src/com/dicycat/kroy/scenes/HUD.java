@@ -117,6 +117,9 @@ public class HUD {
 		return score;
 	}
 	
+	/**
+	 * @param score The score to display in the hud
+	 */
 	public void setScore(int score) {
 		this.score = score;
 	}

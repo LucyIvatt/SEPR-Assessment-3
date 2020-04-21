@@ -120,17 +120,26 @@ public abstract class GameObject {
 	/**
 	 * Loads the data from the prefs file
 	 * 
+	 * @param data The data to load
 	 */
 	public void load(String data) {
 	}
 	
 	/**
-	 * Gets a unique identifier for each game object
+	 * Gets a unique identifier for this GameObject
+	 *
+	 * @return The UUID for the object
 	 */
 	public String getUUID() {
 		return null;
 	}
 	
+	
+	/**
+	 * Check if a GameObject should be saved
+	 * 
+	 * @return A boolean value of whether to save or not
+	 */
 	public Boolean shouldSave() {
 		return shouldSave;
 	}

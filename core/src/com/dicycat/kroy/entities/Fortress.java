@@ -18,8 +18,9 @@ public class Fortress extends Entity {
 	private Texture deadTexture;
 	private StatBar healthBar;
 	private Texture aliveTexture;
-	// FORTRESS_DAMAGE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
-	private int damage; 	// Added a new attribute 'damage'
+	// FORTRESS_DAMAGE_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+	// ----
+	private int damage; // Added a new attribute 'damage'
 	// FORTRESS_DAMAGE_1 - END OF MODIFICATION - NP STUDIOS
 	public int index;
 
@@ -30,15 +31,19 @@ public class Fortress extends Entity {
 	 * @param size
 	 */
 
-	// FORTRESS_HEALTH_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
-	// Added health parameter to Fortress constructor and changed it in the call to super from "500" to "health"
-	public Fortress(Vector2 spawnPos, Texture fortressTexture, Texture deadTexture, Vector2 size, int health, int fortressDamage, int index ) { ////
+	// FORTRESS_HEALTH_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+	// ----
+	// Added health parameter to Fortress constructor and changed it in the call to
+	// super from "500" to "health"
+	public Fortress(Vector2 spawnPos, Texture fortressTexture, Texture deadTexture, Vector2 size, int health,
+			int fortressDamage, int index) { ////
 		super(spawnPos, fortressTexture, size, health, 500);
-	// FORTRESS_HEALTH_2 - END OF MODIFICATION - NP STUDIOS
+		// FORTRESS_HEALTH_2 - END OF MODIFICATION - NP STUDIOS
 		this.damage = fortressDamage;
 		this.index = index;
 		System.out.println(index);
-		// FORTRESS_DAMAGE_3 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
+		// FORTRESS_DAMAGE_3 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+		// ----
 		// Added fortressDamage as a parameter to the constructor above
 		// Passed the damage to the Pattern constructors
 
@@ -48,7 +53,7 @@ public class Fortress extends Entity {
 		dispenser.addPattern(new Pattern(0, 50, 800, 2f, 3, 36, 4, this.getDamage()));
 		dispenser.addPattern(new Pattern(200, 600, 0.3f, 12, 2, 0.3f, this.getDamage()));
 		dispenser.addPattern(new Pattern(false, 0, 3, 100, 900, 0.02f, 1, 0.2f, this.getDamage()));
-		dispenser.addPattern(new Pattern(true, 0, 1, 100, 900, 0.02f, 1, 1.2f,this.getDamage()));
+		dispenser.addPattern(new Pattern(true, 0, 1, 100, 900, 0.02f, 1, 1.2f, this.getDamage()));
 
 		// FORTRESS_HEALTH_3 - END OF MODIFICATION - NP STUDIOS
 
@@ -72,39 +77,44 @@ public class Fortress extends Entity {
 		super.die();
 		sprite.setTexture(deadTexture);
 		Kroy.mainGameScreen.getHud().updateScore(1000);
-		//healthBar.setRemove(true);
+		// healthBar.setRemove(true);
 		setHealthPoints(0);
 		displayable = true;
 		Kroy.mainGameScreen.removeFortress();
-		if (Kroy.mainGameScreen.getFortressesCount() == 0) {//If last fortress
+		if (Kroy.mainGameScreen.getFortressesCount() == 0) {// If last fortress
 			// HIGHSCORE_5 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-			// Added a bonus to the score if the use finishes the game before the firestation is destroyed. Calculated
+			// Added a bonus to the score if the use finishes the game before the
+			// firestation is destroyed. Calculated
 			// using time remaining.
-			Kroy.mainGameScreen.getHud().updateScore((int) ((15 * 60) - Kroy.mainGameScreen.getHud().timer) * 10); //time remaining bonus
+			Kroy.mainGameScreen.getHud().updateScore((int) ((15 * 60) - Kroy.mainGameScreen.getHud().timer) * 10); // time
+																													// remaining
+																													// bonus
 			// HIGHSCORE_5 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-			Kroy.mainGameScreen.gameOver(true); 					//End game WIN
+			Kroy.mainGameScreen.gameOver(true); // End game WIN
 		}
 	}
 
 	/**
 	 * Apply certain amount of damage to the entity and updates the health bar
+	 * 
 	 * @param damage Amount of damage to apply to the Fortress
 	 *
-	 * Edited by Lucy Ivatt - NP STUDIOS
+	 *               Edited by Lucy Ivatt - NP STUDIOS
 	 */
 	@Override
 	public void applyDamage(float damage) {
 		super.applyDamage(damage);
 		healthBar.setPosition(getCentre().add(0, (getHeight() / 2) + 25));
-		healthBar.setBarDisplay((healthPoints*500)/maxHealthPoints);
+		healthBar.setBarDisplay((healthPoints * 500) / maxHealthPoints);
 	}
 
 	/**
-	 * Updates the dispenser associated with the fortress and adds bullets to the mainGameScreen
+	 * Updates the dispenser associated with the fortress and adds bullets to the
+	 * mainGameScreen
 	 */
 	@Override
 	public void update() {
-		//weapons
+		// weapons
 		Bullet[] toShoot = dispenser.update(playerInRadius());
 		if (toShoot != null) {
 			for (Bullet bullet : toShoot) {
@@ -115,37 +125,41 @@ public class Fortress extends Entity {
 
 	}
 
-	public int getDamage(){				// FORTRESS_DAMAGE_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
-		return this.damage;				// Implemented a getter for damage
-	}									// FORTRESS_DAMAGE_2 - END OF MODIFICATION - NP STUDIOS
+	public int getDamage() { // FORTRESS_DAMAGE_2 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+								// ----
+		return this.damage; // Implemented a getter for damage
+	} // FORTRESS_DAMAGE_2 - END OF MODIFICATION - NP STUDIOS
 
 
-	/**
-	 * Convert Fortress attributes into a format we need to save
-	 */
 	@Override
 	public String save() {
-		//For Fortresses, we need the health.
-		String output = Integer.toString(this.healthPoints);
-		return output;
+		// Return the health value
+		return Integer.toString(this.healthPoints);
 	}
 
 	@Override
 	public void load(String data) {
+		// hdata is an integer representation of a fortress' health
 		int hdata = Integer.parseInt(data);
-		if(hdata < 1) {
+
+		// if the health loaded is 0 or lower, kill the fortress. Else set its new
+		// health value and change the texture. It will automatically be moved between
+		// gameObjects and deadObjects in the main GameScreen class so we don't need to
+		// worry about that here
+		if (hdata < 1) {
 			super.die();
 			sprite.setTexture(deadTexture);
 			displayable = true;
-		}
-		else sprite.setTexture(aliveTexture);
+		} else
+			sprite.setTexture(aliveTexture);
 
 		setHealthPoints(hdata);
 		Kroy.mainGameScreen.addGameObject(healthBar);
 	}
 
 	@Override
- 	public String getUUID() {
- 		return ("fortress" + getPosition().toString());
- 	}
+	public String getUUID() {
+		// Each fortress has a unique uuid because there is only one at each location
+		return ("fortress" + getPosition().toString());
+	}
 }
