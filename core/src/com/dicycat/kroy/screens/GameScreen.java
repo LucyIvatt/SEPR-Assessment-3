@@ -68,7 +68,6 @@ public class GameScreen implements Screen{
 	private OptionsWindow optionsWindow;
 	private Minigame minigame;
 
-	private Preferences save = null;
 	// TRUCK_SELECT_CHANGE_11 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Slightly edited trucks statistics to make the game more balanced.
 	private Float[][] truckStats = {	//Each list is a configuration of a specific truck. {speed, flowRate, capacity, range}
@@ -118,7 +117,6 @@ public class GameScreen implements Screen{
 		hud = new HUD(game.batch, gameTimer);
 		players = new ArrayList<>(); // Initialise the array which will contain the 4 fire trucks
 
-		this.save = save;
 
 	}
 
@@ -146,26 +144,6 @@ public class GameScreen implements Screen{
 
 		// Iterates through the players array lists and adds them to gameObjects.
 		for (int i = 0; i < 4; i++) {
-			if (save != null) {
-				String value = save.getString("firetruck" + i);
-				if (value != "") {
-					String[] split = value.split("@");
-					Vector2 pos = getPos(split[0]);
-					int health = Integer.parseInt(split[1]);
-					float water = Float.parseFloat(split[2]);
-					boolean selected = (split[3] == "true");
-					players.get(i).setPosition(pos);
-					players.get(i).setHealthPoints(health);
-					players.get(i).setWater(water);
-					if (selected) {
-						this.activeTruck = i;
-					}
-				}
-			}
-			else {
-				System.err.println("ruh roh");
-				//players.get(i).applyDamage(20000);
-			}
 			gameObjects.add(players.get(i));    //Player
 		}
 
@@ -567,11 +545,8 @@ public class GameScreen implements Screen{
 				loadObjects(deadObjects, "deadObjects");
 				
 				//TODO Figure out why the game gets loaded a bunch of times every click
-				//TODO Add load function for powerups
-				System.out.println("gameobjects");
-				gameObjects.forEach(o -> {if(o.shouldSave) System.out.print(o.getUUID());});
-				System.out.println("deadobjects");
-				deadObjects.forEach(o -> {if(o.shouldSave) System.out.print(o.getUUID());});
+				//	  -Could be because the click is held down and it just repeatedly loads;
+				//	  -Requires more investigation
 				
 			}
 			
@@ -600,7 +575,7 @@ public class GameScreen implements Screen{
 		//.filter(FireTruck.class::isInstance)
 		.forEach(gObject -> {
 			try {
-				//System.out.format("ID: %s, Data: %s \n",gObject.getUUID(),pref.getString(gObject.getUUID()));
+				System.out.format("ID: %s, Data: %s \n",gObject.getUUID(),pref.getString(gObject.getUUID()));
 				gObject.load(pref.getString(gObject.getUUID()));
 			} catch (Exception e) {
 				System.err.println(e);
@@ -687,11 +662,5 @@ public class GameScreen implements Screen{
 		players.get(activeTruck).setSelected(true);
 	}
 	// TRUCK_SELECT_CHANGE_18 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-	//Convenience function to grab the position quickly
-	private Vector2 getPos (String values) {
-		String stripped = values.substring(1, values.length() - 1);
-		String[] split = stripped.split(",");
-		return new Vector2(Float.parseFloat(split[0]), Float.parseFloat(split[1]));
-	}
 
 }

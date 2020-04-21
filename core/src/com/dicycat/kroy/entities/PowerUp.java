@@ -60,6 +60,11 @@ public class PowerUp extends Entity {
 	public PowerUp(Vector2 spawnPos) {
 		this(spawnPos, new Texture("PowerUpGeneric.png"), imSize, health, radius);
 		type = PowerUpType.getRandomType();
+		setType(type);
+		shouldSave = true;
+	}
+	
+	private void setType(PowerUpType type) {
 		switch (type) {
 		case DAMAGE:
 			setTexture(new Texture("PowerUpRed.png"));
@@ -79,10 +84,9 @@ public class PowerUp extends Entity {
 		default:
 			System.err.println("Power up texture selection error");
 			break;
-
 		}
-		shouldSave = true;
 	}
+	
 
 	/**
 	 * Refills the trucks water; This will be delegated to its own subclass in the
@@ -122,10 +126,13 @@ public class PowerUp extends Entity {
 	 */
 	@Override
 	public String save() {
-		//For powerups, we need the position, and which powerup it is.
-		String output = this.getPosition().toString();
-		output += "@" + this.type.toString();
-		return output;
+		//For powerups, we need it's type. The position is already encoded in the UUID.
+		return this.type.toString();
+	}
+	
+	@Override
+	public void load(String data) {
+		setType(PowerUpType.valueOf(data));
 	}
 	
 	@Override
