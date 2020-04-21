@@ -133,16 +133,15 @@ public class Fortress extends Entity {
 	@Override
 	public void load(String data) {
 		int hdata = Integer.parseInt(data);
-		if(hdata == 0) {
+		if(hdata < 1) {
 			super.die();
 			sprite.setTexture(deadTexture);
 			displayable = true;
 		}
-		else if(this.healthPoints <= 0) {
-			sprite.setTexture(aliveTexture);
-			Kroy.mainGameScreen.addGameObject(healthBar);
-		}
+		else sprite.setTexture(aliveTexture);
+
 		setHealthPoints(hdata);
+		Kroy.mainGameScreen.addGameObject(healthBar);
 	}
 
 	@Override

@@ -27,6 +27,7 @@ import com.dicycat.kroy.debug.DebugRect;
 import com.dicycat.kroy.entities.*;
 import com.dicycat.kroy.gamemap.TiledGameMap;
 import com.dicycat.kroy.minigame.Minigame;
+import com.dicycat.kroy.misc.StatBar;
 import com.dicycat.kroy.scenes.HUD;
 import com.dicycat.kroy.scenes.OptionsWindow;
 import com.dicycat.kroy.scenes.PauseWindow;
@@ -544,6 +545,14 @@ public class GameScreen implements Screen{
 				loadObjects(gameObjects, "gameObjects");
 				loadObjects(deadObjects, "deadObjects");
 				
+				Preferences pref = Gdx.app.getPreferences("gameData");
+				System.out.println("gametimer before= "+gameTimer);
+				gameTimer = pref.getFloat("gametime");
+				System.out.println("gametimer after= "+gameTimer);
+				hud.setScore(pref.getInteger("score"));
+				fortressesCount = pref.getInteger("fortressesCount");
+				System.out.println("gameObjects size = " + gameObjects.size());
+				
 				//TODO Figure out why the game gets loaded a bunch of times every click
 				//	  -Could be because the click is held down and it just repeatedly loads;
 				//	  -Requires more investigation
@@ -571,11 +580,12 @@ public class GameScreen implements Screen{
 
 	public void loadObjects(List<GameObject> data, String prefName) {
 		Preferences pref = Gdx.app.getPreferences(prefName);
+		data.removeIf(StatBar.class::isInstance);
 		data.stream().filter(GameObject::shouldSave)
 		//.filter(FireTruck.class::isInstance)
 		.forEach(gObject -> {
 			try {
-				System.out.format("ID: %s, Data: %s \n",gObject.getUUID(),pref.getString(gObject.getUUID()));
+				//System.out.format("ID: %s, Data: %s \n",gObject.getUUID(),pref.getString(gObject.getUUID()));
 				gObject.load(pref.getString(gObject.getUUID()));
 			} catch (Exception e) {
 				System.err.println(e);
