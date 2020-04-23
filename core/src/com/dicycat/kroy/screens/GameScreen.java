@@ -227,90 +227,91 @@ public class GameScreen implements Screen{
 		pauseWindow.stage.act();
 
 		switch (state) {
-			case RUN:
-				if (Gdx.input.isKeyPressed(Keys.P) || Gdx.input.isKeyPressed(Keys.O) || Gdx.input.isKeyPressed(Keys.M)|| Gdx.input.isKeyPressed(Keys.ESCAPE)){
-					pauseWindow.visibility(true);
-					pause();
-				}
-				// TRUCK_SELECT_CHANGE_14 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-				// Sets active truck depending on which number key is pressed
-				if (Gdx.input.isKeyPressed(Keys.NUM_1) && !players.get(0).isRemove()) {
-					activeTruck = 0;
-				}
-				else if (Gdx.input.isKeyPressed(Keys.NUM_2) && !players.get(1).isRemove()) {
-					activeTruck = 1;
-				}
-				else if (Gdx.input.isKeyPressed(Keys.NUM_3) && !players.get(2).isRemove()) {
-					activeTruck = 2;
-				}
-				else if (Gdx.input.isKeyPressed(Keys.NUM_4) && !players.get(3).isRemove()) {
-					activeTruck = 3;
-				}
+		case RUN:
+			if (Gdx.input.isKeyPressed(Keys.P) || Gdx.input.isKeyPressed(Keys.O) || Gdx.input.isKeyPressed(Keys.M)
+					|| Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+				pauseWindow.visibility(true);
+				pause();
+			}
+			// TRUCK_SELECT_CHANGE_14 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+			// Sets active truck depending on which number key is pressed
+			if (Gdx.input.isKeyPressed(Keys.NUM_1) && !players.get(0).isRemove()) {
+				activeTruck = 0;
+			} else if (Gdx.input.isKeyPressed(Keys.NUM_2) && !players.get(1).isRemove()) {
+				activeTruck = 1;
+			} else if (Gdx.input.isKeyPressed(Keys.NUM_3) && !players.get(2).isRemove()) {
+				activeTruck = 2;
+			} else if (Gdx.input.isKeyPressed(Keys.NUM_4) && !players.get(3).isRemove()) {
+				activeTruck = 3;
+			}
 
-				selectTruck();
-				
-				//This code was added by Sam Hutchings to implement power ups.
-				Random random = new Random();
-				if(random.nextFloat() < 0.01f) { // Every frame, there is a 1% chance of a power up spawning.
+			selectTruck();
+
+			// This code was added by Sam Hutchings to implement power ups.
+			Random random = new Random();
+			if (random.nextFloat() < 0.01f) { // Every frame, there is a 1% chance of a power up spawning.
 				PowerUp powerUpToAdd = new PowerUp();
-				// This lambda function filters out any old power ups at the location of the new power up to avoid stacking effects.
+				// This lambda function filters out any old power ups at the location of the new
+				// power up to avoid stacking effects.
 				gameObjects = gameObjects.stream()
-						.filter(object -> (!((object instanceof PowerUp) // Checks if the object is of type PowerUp.
-								&& (object.getPosition().equals(powerUpToAdd.getPosition()))))) // Checks if the object has the same coordinates.
-						// If both criteria are met, then the predicate returns false and the object is filtered out.
+						.filter(object -> (!((object instanceof PowerUp)
+						&& (object.getPosition().equals(powerUpToAdd.getPosition())))))
+						// This filter removes any PowerUps at the location of powerUpToAdd
 						.collect(Collectors.toList());
 				// The new power up is then added.
 				gameObjects.add(powerUpToAdd);
 			}
-				
-				// TRUCK_SELECT_CHANGE_14 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
-				gameTimer -= delta;		//Decrement timer
+			// TRUCK_SELECT_CHANGE_14 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
-				updateLoop(); //Update all game objects positions but does not render them as to be able to render everything as quickly as possible
+			gameTimer -= delta; // Decrement timer
 
-				gameMap.renderRoads(gamecam); // Render the background roads, fields and rivers
+			updateLoop(); // Update all game objects positions but does not render them as to be able to
+							// render everything as quickly as possible
 
-				game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-				game.batch.setProjectionMatrix(gamecam.combined);	//Mic:only renders the part of the map where the camera is
-				game.batch.begin(); // Game loop Start
+			gameMap.renderRoads(gamecam); // Render the background roads, fields and rivers
 
-				hud.update(delta);
+			game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+			game.batch.setProjectionMatrix(gamecam.combined); // Mic:only renders the part of the map where the camera is
+			game.batch.begin(); // Game loop Start
 
-				renderObjects(); // Renders objects specified in the UpdateLoop() called previously
+			hud.update(delta);
 
-				game.batch.end();
-				
-				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
-				
-				hud.stage.draw();
-				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------
-				drawMinimap();
-				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE ---------------------
-				pauseWindow.stage.draw();
+			renderObjects(); // Renders objects specified in the UpdateLoop() called previously
 
-				if (showDebug) {
-					DrawDebug(); //Draw all debug items as they have to be drawn outside the batch
-				}
+			game.batch.end();
 
-				break;
-			case PAUSE:
-				pauseWindow.stage.draw();
-				clickCheck();
-				break;
-			case RESUME:
-				pauseWindow.visibility(false);
-				setGameState(GameScreenState.RUN);
-				break;
-			case MINIGAME:
-				Gdx.input.setInputProcessor(minigame.stage);
-				minigame.visibility(true);
-				minigame.stage.draw();
-				minigame.stage.act();
-				minigame.clickCheck();
-				break;
-			default:
-				break;
+			gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
+
+			hud.stage.draw();
+			// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
+			// -----------------
+			drawMinimap();
+			// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE
+			// ---------------------
+			pauseWindow.stage.draw();
+
+			if (showDebug) {
+				DrawDebug(); // Draw all debug items as they have to be drawn outside the batch
+			}
+			break;
+		case PAUSE:
+			pauseWindow.stage.draw();
+			clickCheck();
+			break;
+		case RESUME:
+			pauseWindow.visibility(false);
+			setGameState(GameScreenState.RUN);
+			break;
+		case MINIGAME:
+			Gdx.input.setInputProcessor(minigame.stage);
+			minigame.visibility(true);
+			minigame.stage.draw();
+			minigame.stage.act();
+			minigame.clickCheck();
+			break;
+		default:
+			break;
 		}
 	}
 
