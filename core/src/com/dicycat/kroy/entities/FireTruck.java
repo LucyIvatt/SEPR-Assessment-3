@@ -398,11 +398,6 @@ public class FireTruck extends Entity{
  		setWater(Float.parseFloat(values[3]));
  		setSelected(Boolean.parseBoolean(values[4]));
  		
-		// The stat bars for each firetruck are re-added, as they were removed while
-		// loading the new save to prevent duplicates
-		Kroy.mainGameScreen.addGameObject(tank);
-		Kroy.mainGameScreen.addGameObject(healthBar);
-		
 		// If the "selected" value returns true then the truck is set as the active truck
 		if(Boolean.parseBoolean(values[4])) Kroy.mainGameScreen.activeTruck = index;
 

@@ -151,7 +151,6 @@ public class Fortress extends Entity {
 			sprite.setTexture(aliveTexture);
 
 		setHealthPoints(hdata);
-		Kroy.mainGameScreen.addGameObject(healthBar);
 	}
 
 	@Override

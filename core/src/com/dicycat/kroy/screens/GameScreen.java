@@ -2,6 +2,7 @@ package com.dicycat.kroy.screens;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -338,6 +339,7 @@ public class GameScreen implements Screen {
 	 */
 	private void updateLoop() {
 		List<GameObject> toRemove = new ArrayList<GameObject>();
+		List<GameObject> garbageCollection = new ArrayList<GameObject>();
 		for (GameObject gObject : gameObjects) { // Go through every game object
 			gObject.update(); // Update the game object
 			if (gObject.isRemove()) { // Check if game object is to be removed
@@ -360,8 +362,13 @@ public class GameScreen implements Screen {
 													// bases)
 			if (dObject.isDisplayable()) {
 				objectsToRender.add(dObject);
+			} else {
+				garbageCollection.add(dObject);
 			}
 		}
+		// Remove any dead game objects that aren't displayable
+		garbageCollection.forEach(deadObjects::remove);
+		garbageCollection.clear();
 		// TRUCK_SELECT_CHANGE_15 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		// Changed to check if the active truck is destroyed and then updates lives if
 		// so
@@ -674,14 +681,13 @@ public class GameScreen implements Screen {
 	public void loadObjects(List<GameObject> data, String prefName) {
 		// Retrieved once to avoid repeated getPreferences method calls
 		Preferences pref = Gdx.app.getPreferences(prefName);
-
-		// All stat bars are deleted
-		data.removeIf(StatBar.class::isInstance);
+		
 
 		// The data list is first turned into a stream and filtered to remove
 		// GameObjects that shouldn't be saved, such as patrols. Then for each object,
 		// it is loaded based on the data passed from the Preference
-		data.stream().filter(GameObject::shouldSave).forEach(gObject -> {
+		data.stream().filter(GameObject::shouldSave)
+		.forEach(gObject -> {
 			try {
 				// System.out.format("ID: %s, Data: %s\n",gObject.getUUID(),pref.getString(gObject.getUUID()));
 				gObject.load(pref.getString(gObject.getUUID()));
