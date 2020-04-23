@@ -2,6 +2,9 @@ package com.dicycat.kroy.screens;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -88,6 +91,8 @@ public class GameScreen implements Screen{
 	private List<GameObject> objectsToRender = new ArrayList<GameObject>(); // List of game objects that have been updated but need rendering
 	private List<GameObject> objectsToAdd;
 	private List<DebugDraw> debugObjects; //List of debug items
+	
+	
 
 	// TRUCK_SELECT_CHANGE_12 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Removed truckNum from constructor parameters
@@ -144,12 +149,12 @@ public class GameScreen implements Screen{
 		// TRUCK_SELECT_CHANGE_13 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
 		gameObjects.add(new FireStation());
-		gameObjects.add(new PowerUp(new Vector2(1772,4633)));
+		/*gameObjects.add(new PowerUp(new Vector2(1772,4633)));
 		gameObjects.add(new PowerUp(new Vector2(4344,3729)));
 		gameObjects.add(new PowerUp(new Vector2(5512,2696)));
 		gameObjects.add(new PowerUp(new Vector2(5055,1415)));
 		gameObjects.add(new PowerUp(new Vector2(1608, 585)));
-		gameObjects.add(new PowerUp(new Vector2(1919,3871)));
+		gameObjects.add(new PowerUp(new Vector2(1919,3871)));*/
 		
 		
 
@@ -243,7 +248,20 @@ public class GameScreen implements Screen{
 				}
 
 				selectTruck();
-				//System.out.println(players.get(activeTruck).getCentre());
+				
+				//This code was added by Sam Hutchings to implement power ups.
+				Random random = new Random();
+				if(random.nextFloat() < 0.01f) { // Every frame, there is a 1% chance of a power up spawning.
+				PowerUp powerUpToAdd = new PowerUp();
+				// This lambda function filters out any old power ups at the location of the new power up to avoid stacking effects.
+				gameObjects = gameObjects.stream()
+						.filter(object -> (!((object instanceof PowerUp) // Checks if the object is of type PowerUp.
+								&& (object.getPosition().equals(powerUpToAdd.getPosition()))))) // Checks if the object has the same coordinates.
+						// If both criteria are met, then the predicate returns false and the object is filtered out.
+						.collect(Collectors.toList());
+				// The new power up is then added.
+				gameObjects.add(powerUpToAdd);
+			}
 				
 				// TRUCK_SELECT_CHANGE_14 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 

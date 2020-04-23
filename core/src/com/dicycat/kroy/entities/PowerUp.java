@@ -20,7 +20,21 @@ public class PowerUp extends Entity {
 	private static int radius = 25;
 	private static int health = 1;
 	private static Vector2 imSize = new Vector2(16, 16);
-
+	
+	private static Vector2[] powerUpLocations = new Vector2[] {
+			new Vector2(268 * 16, (400 - 254) * 16), new Vector2(344 * 16, (400 - 254) * 16),
+			new Vector2(344 * 16, (400 - 310) * 16), new Vector2(246 * 16, (400 - 310) * 16),
+			new Vector2(246 * 16, (400 - 279) * 16), new Vector2(268 * 16, (400 - 279) * 16),
+			new Vector2(101 * 16, (400 - 232) * 16), new Vector2(190 * 16, (400 - 232) * 16),
+			new Vector2(190 * 16, (400 - 279) * 16), new Vector2(179 * 16, (400 - 279) * 16),
+			new Vector2(179 * 16, (400 - 363) * 16), new Vector2(101 * 16, (400 - 362) * 16),
+			new Vector2(211 * 16, (400 - 84 ) * 16), new Vector2(255 * 16, (400 - 84 ) * 16),
+			new Vector2(255 * 16, (400 - 106) * 16), new Vector2(212 * 16, (400 - 106) * 16),
+			new Vector2(111 * 16, (400 - 110) * 16), new Vector2(111 * 16, (400 - 157) * 16),
+			new Vector2(120 * 16, (400 - 157) * 16), new Vector2(120 * 16, (400 - 176) * 16),
+			new Vector2(91  * 16, (400 - 176) * 16), new Vector2(91  * 16, (400 - 138) * 16),
+			new Vector2(49  * 16, (400 - 138) * 16), new Vector2(49  * 16, (400 - 110) * 16) };
+	
 	private enum PowerUpType {
 		WATER, HEALTH, DAMAGE, SPEED, SHIELD;
 
@@ -38,10 +52,10 @@ public class PowerUp extends Entity {
 	}
 
 	/**
-	 * Generates a generic power up, with no attributes and a grey texture, at (0,0)
+	 * Generates a power up at a random location with a random ability.
 	 */
 	public PowerUp() {
-		this(new Vector2(0, 0), new Texture("PowerUpGeneric.png"), imSize, health, radius);
+		this(powerUpLocations[new Random().nextInt(powerUpLocations.length)]);
 	}
 
 	/**
@@ -59,6 +73,7 @@ public class PowerUp extends Entity {
 	public PowerUp(Vector2 spawnPos) {
 		this(spawnPos, new Texture("PowerUpGeneric.png"), imSize, health, radius);
 		type = PowerUpType.getRandomType();
+		//type = PowerUpType.SPEED;
 		switch (type) {
 		case DAMAGE:
 			setTexture(new Texture("PowerUpRed.png"));
