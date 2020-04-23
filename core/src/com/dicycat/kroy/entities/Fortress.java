@@ -147,10 +147,11 @@ public class Fortress extends Entity {
 			super.die();
 			sprite.setTexture(deadTexture);
 			displayable = true;
-		} else
+		} else {
 			sprite.setTexture(aliveTexture);
-
+		}
 		setHealthPoints(hdata);
+		healthBar.setBarDisplay((healthPoints * 500) / maxHealthPoints);
 	}
 
 	@Override
