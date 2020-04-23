@@ -32,7 +32,8 @@ public class PauseWindow {
     public TextButton resume = new TextButton("RESUME", skin);
     public TextButton exit = new TextButton("EXIT", skin);
     public TextButton menu = new TextButton("MENU", skin);
-
+    public TextButton load = new TextButton("LOAD", skin);
+	public TextButton save = new TextButton("SAVE", skin);
 	public PauseWindow(Kroy game) {
 		sb = game.batch;
 		Viewport viewport = new ScreenViewport(new OrthographicCamera());
@@ -41,6 +42,10 @@ public class PauseWindow {
 		table.setBackground(background);
 		table.row();
 	    table.add(resume).width(Kroy.CentreWidth());
+		table.row();
+		table.add(save).width(Kroy.CentreWidth());
+		table.row();
+		table.add(load).width(Kroy.CentreWidth());
 		table.row();
 	    table.add(menu).width(Kroy.CentreWidth());
 	    table.row();
