@@ -30,6 +30,11 @@ public class HUD {
 	// FORTRESS_IMPROVE_2 - END OF MODIFICATION - NP STUDIOS
 
 	private Integer score = 0;
+
+	// SCREEN_COUNTDOWN_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
+	// Added attribute for the timer that shows on screen - set to 15 minutes
+	private float screenTimer;
+	// SCREEN_COUNTDOWN_1 - END OF MODIFICATION - NP STUDIOS
 	
 	private Label scoreLabel;
 	private Label timeLabel;
@@ -43,7 +48,7 @@ public class HUD {
 	/**
 	 */
 	public HUD(SpriteBatch sb, float timeLimit) {
-		float screenTimer = timeLimit;
+		screenTimer = timeLimit;
 		viewport = new ScreenViewport(new OrthographicCamera());
 		stage = new Stage(viewport, sb);	//Where we are going to put the HUD elements 
 		
@@ -86,8 +91,10 @@ public class HUD {
 	public void update(float dt) {
 		// SCREEN_COUNTDOWN_3 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
 		// Decrementing the timer shown on screen
+		if (screenTimer > 0) {
+		screenTimer -= dt; }
 		timer += dt;
-		timerLabel.setText(String.format("%.0f", abs(Kroy.mainGameScreen.gameTimer)));
+		timerLabel.setText(String.format("%.0f", abs(screenTimer)));
 		// SCREEN_COUNTDOWN_3 - END OF MODIFICATION - NP STUDIOS
 
 		scoreCountLabel.setText(String.format("%06d", score));
@@ -112,17 +119,5 @@ public class HUD {
 	public void updateScore(Integer x){
 		score += x;
 	}
-
-	public int getScore() {
-		return score;
-	}
-	
-	/**
-	 * @param score The score to display in the hud
-	 */
-	public void setScore(int score) {
-		this.score = score;
-	}
-
 }
 
