@@ -100,9 +100,8 @@ public class MenuScreen implements Screen{
 	  OPTIONS,
 	  MINIGAME,
 	  // CONTROL_SCREEN_4 - START OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-	  CONTROLS, // adding a new window state, the controls window, has the code that calls the creation and setup of the controls window
+	  CONTROLS // adding a new window state, the controls window, has the code that calls the creation and setup of the controls window
 	  // CONTROL_SCREEN_4 - END OF MODIFICATION - NP STUDIOS - JORDAN SPOONER
-	  LOADGAME
   }
   
   public MenuScreenState state = MenuScreenState.MAINMENU;
@@ -323,8 +322,6 @@ public class MenuScreen implements Screen{
 			 game.newGame(); // Calls the function in Kroy to start a new game
 		 }
 	}
-
-
 	// TRUCK_SELECT_CHANGE_20 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 
   public void setCurrentlyRunningGame(boolean state) {

@@ -16,8 +16,6 @@ public abstract class Entity extends GameObject{
 	protected int radius;
 	protected int maxHealthPoints;
 
-
-
 	/**
 	 * @param spawnPos The position the entity will spawn at.
 	 * @param img The texture of the entity.
@@ -96,7 +94,5 @@ public abstract class Entity extends GameObject{
 		} else
 			System.err.println("healthPoints > maxHealthPoints");
 	}
-
-
 
 }
