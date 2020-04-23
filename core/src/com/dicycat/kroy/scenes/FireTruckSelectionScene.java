@@ -36,7 +36,12 @@ public class FireTruckSelectionScene {
     public Label truck2 = new Label("Damage", skin);
     public Label truck3 = new Label("Capacity", skin);
     public Label truck4 = new Label("Range", skin);
-	public TextButton startGameButton = new TextButton("Start Game", skin);
+//	public TextButton startGameButton = new TextButton("Start Game", skin);
+    
+    public TextButton easyGameButton = new TextButton("EASY", skin);
+    public TextButton normalGameButton = new TextButton("NORMAL", skin);
+    public TextButton hardGameButton = new TextButton("HARD", skin);
+
 	// TRUCK_SELECT_CHANGE_9 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
     private float width = Gdx.graphics.getWidth();
     private float centre = width* 0.7f;
@@ -72,12 +77,14 @@ public class FireTruckSelectionScene {
 	    table.row(); // Added a new row to the table
 
 		// Added the startGameButton to the table and centered it in the table.
-	    table.add(startGameButton).width(centre/2.0f).colspan(4);
-		// TRUCK_SELECT_CHANGE_10 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+//	    table.add(startGameButton).width(centre/2.0f).colspan(4);
+	    
+	    table.add(easyGameButton);
+	    table.add(normalGameButton);
+	    table.add(hardGameButton);
 	    
 		table.setFillParent(true);
 	    stage.addActor(table);
-	    
 	    
 	}
 	

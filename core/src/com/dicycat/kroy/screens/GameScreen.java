@@ -166,18 +166,51 @@ public class GameScreen implements Screen{
 		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE ----
 		// Added health and damage values for each fortress instantiation
 		// Added new fortresses and set position in accordance with collisions on tiled map
-		gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
-				new Vector2(256, 218), 400, 5));
-		gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
-				new Vector2(256, 320), 500, 10));
-		gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
-				new Vector2(400, 240), 600, 15));
-		gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
-				new Vector2(345, 213), 700, 20));
-		gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
-				new Vector2(300, 240), 800, 25)); //382, 319
-		gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
-				new Vector2(300, 270), 900, 30)); //45, 166
+		switch(MenuScreen.gameModeSelect) {
+		case 1:
+			gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+					new Vector2(256, 218), 200, 3));
+			gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+					new Vector2(256, 320), 250, 5));
+			gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+					new Vector2(400, 240), 300, 8));
+			gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
+					new Vector2(345, 213), 350, 10));
+			gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
+					new Vector2(300, 240), 400, 12)); //382, 319
+			gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
+					new Vector2(300, 270), 450, 15)); //45, 166
+			break;
+		case 2:
+			gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+					new Vector2(256, 218), 400, 5));
+			gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+					new Vector2(256, 320), 500, 10));
+			gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+					new Vector2(400, 240), 600, 15));
+			gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
+					new Vector2(345, 213), 700, 20));
+			gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
+					new Vector2(300, 240), 800, 25)); //382, 319
+			gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
+					new Vector2(300, 270), 900, 30)); //45, 166
+			break;
+		case 3:
+			gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+					new Vector2(256, 218), 500, 7));
+			gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+					new Vector2(256, 320), 700, 12));
+			gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+					new Vector2(400, 240), 700, 18));
+			gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
+					new Vector2(345, 213), 800, 22));
+			gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
+					new Vector2(300, 240), 900, 27)); //382, 319
+			gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
+					new Vector2(300, 270), 1000, 33)); //45, 166
+			break;
+		
+		}
 		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
 	}
 

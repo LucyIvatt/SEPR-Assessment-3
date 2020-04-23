@@ -87,6 +87,8 @@ public class MenuScreen implements Screen{
   
   private FireTruckSelectionScene fireTruckSelector;
   private boolean currentlyRunningGame = false;
+  
+  public static int gameModeSelect;
 
   /**
    *  Used to define the current state of the screen, 
@@ -272,9 +274,33 @@ public class MenuScreen implements Screen{
 	public void clickCheck() {
 		// TRUCK_SELECT_CHANGE_19 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		// Start Game Button click event
-		fireTruckSelector.startGameButton.addListener(new ClickListener() {
+//		fireTruckSelector.startGameButton.addListener(new ClickListener() {
+//			@Override
+//	    	public void clicked(InputEvent event, float x, float y) {
+//				startGame();// Starts game
+//	    	}
+//	    });
+		
+		fireTruckSelector.easyGameButton.addListener(new ClickListener() {
 			@Override
 	    	public void clicked(InputEvent event, float x, float y) {
+				gameModeSelect = 1;
+				startGame();// Starts game
+	    	}
+	    });
+		
+		fireTruckSelector.normalGameButton.addListener(new ClickListener() {
+			@Override
+	    	public void clicked(InputEvent event, float x, float y) {
+				gameModeSelect = 2;
+				startGame();// Starts game
+	    	}
+	    });
+		
+		fireTruckSelector.hardGameButton.addListener(new ClickListener() {
+			@Override
+	    	public void clicked(InputEvent event, float x, float y) {
+				gameModeSelect = 3;
 				startGame();// Starts game
 	    	}
 	    });
