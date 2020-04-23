@@ -2,6 +2,7 @@ package com.dicycat.kroy.screens;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
@@ -89,10 +90,10 @@ public class GameScreen implements Screen {
 	private Vector2 spawnPosition; // Coordinates the player spawns at
 
 	private List<GameObject> gameObjects, deadObjects; // List of active game objects
-	private List<GameObject> objectsToRender = new ArrayList<GameObject>(); // List of game objects that have been
-																			// updated but need rendering
+	private List<GameObject> objectsToRender = new ArrayList<GameObject>(); // List of game objects that have been updated but need rendering
 	private List<GameObject> objectsToAdd;
 	private List<DebugDraw> debugObjects; // List of debug items
+
 
 	// TRUCK_SELECT_CHANGE_12 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 	// Removed truckNum from constructor parameters
@@ -156,12 +157,13 @@ public class GameScreen implements Screen {
 																											// position
 		// TRUCK_SELECT_CHANGE_13 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
 		gameObjects.add(new FireStation());
-		gameObjects.add(new PowerUp(new Vector2(1772, 4633)));
-		gameObjects.add(new PowerUp(new Vector2(4344, 3729)));
-		gameObjects.add(new PowerUp(new Vector2(5512, 2696)));
-		gameObjects.add(new PowerUp(new Vector2(5055, 1415)));
+
+		/*gameObjects.add(new PowerUp(new Vector2(1772,4633)));
+		gameObjects.add(new PowerUp(new Vector2(4344,3729)));
+		gameObjects.add(new PowerUp(new Vector2(5512,2696)));
+		gameObjects.add(new PowerUp(new Vector2(5055,1415)));
 		gameObjects.add(new PowerUp(new Vector2(1608, 585)));
-		gameObjects.add(new PowerUp(new Vector2(1919, 3871)));
+		gameObjects.add(new PowerUp(new Vector2(1919,3871)));*/
 
 		// PATROLS_3 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT ------------
 		// Creates the aliens for the patrols and adds them to gameObjects so they can
@@ -176,23 +178,54 @@ public class GameScreen implements Screen {
 		// FORTRESS_HEALTH_1 - START OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE
 		// ----
 		// Added health and damage values for each fortress instantiation
-		// Added new fortresses and set position in accordance with collisions on tiled
-		// map
-		gameObjects.add(new Fortress(new Vector2(2903, 3211), textures.getFortress(0), textures.getDeadFortress(0),
-				new Vector2(256, 218), 400, 5, 0));
-		gameObjects.add(new Fortress(new Vector2(3200, 5681), textures.getFortress(1), textures.getDeadFortress(1),
-				new Vector2(256, 320), 500, 10, 1));
-		gameObjects.add(new Fortress(new Vector2(2050, 1937), textures.getFortress(2), textures.getDeadFortress(2),
-				new Vector2(400, 240), 600, 15, 2));
-		gameObjects.add(new Fortress(new Vector2(4496, 960), textures.getFortress(3), textures.getDeadFortress(3),
-				new Vector2(345, 213), 700, 20, 3));
-		gameObjects.add(new Fortress(new Vector2(6112, 1100), textures.getFortress(4), textures.getDeadFortress(4),
-				new Vector2(300, 240), 800, 25, 4)); // 382, 319
-		gameObjects.add(new Fortress(new Vector2(600, 4000), textures.getFortress(5), textures.getDeadFortress(5),
-				new Vector2(300, 270), 900, 30, 5)); // 45, 166
-		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS -
-		// CASSANDRA LILLYSTONE & ALASDAIR PILMORE-BEDFORD
 
+		// Added new fortresses and set position in accordance with collisions on tiled map
+		switch(MenuScreen.gameModeSelect) {
+		case 1:
+			gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+					new Vector2(256, 218), 200, 3));
+			gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+					new Vector2(256, 320), 250, 5));
+			gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+					new Vector2(400, 240), 300, 8));
+			gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
+					new Vector2(345, 213), 350, 10));
+			gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
+					new Vector2(300, 240), 400, 12)); //382, 319
+			gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
+					new Vector2(300, 270), 450, 15)); //45, 166
+			break;
+		case 2:
+			gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+					new Vector2(256, 218), 400, 5));
+			gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+					new Vector2(256, 320), 500, 10));
+			gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+					new Vector2(400, 240), 600, 15));
+			gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
+					new Vector2(345, 213), 700, 20));
+			gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
+					new Vector2(300, 240), 800, 25)); //382, 319
+			gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
+					new Vector2(300, 270), 900, 30)); //45, 166
+			break;
+		case 3:
+			gameObjects.add(new Fortress(new Vector2(2903,3211),textures.getFortress(0), textures.getDeadFortress(0),
+					new Vector2(256, 218), 500, 7));
+			gameObjects.add(new Fortress(new Vector2(3200,5681), textures.getFortress(1), textures.getDeadFortress(1),
+					new Vector2(256, 320), 700, 12));
+			gameObjects.add(new Fortress(new Vector2(2050,1937), textures.getFortress(2), textures.getDeadFortress(2),
+					new Vector2(400, 240), 700, 18));
+			gameObjects.add(new Fortress(new Vector2(4496,960), textures.getFortress(3), textures.getDeadFortress(3),
+					new Vector2(345, 213), 800, 22));
+			gameObjects.add(new Fortress(new Vector2(6112,1100), textures.getFortress(4), textures.getDeadFortress(4),
+					new Vector2(300, 240), 900, 27)); //382, 319
+			gameObjects.add(new Fortress(new Vector2(600,4000), textures.getFortress(5), textures.getDeadFortress(5),
+					new Vector2(300, 270), 1000, 33)); //45, 166
+			break;
+		
+		}
+		// FORTRESS_HEALTH_1 & NEW_FORTRESSES_2 - END OF MODIFICATION - NP STUDIOS - CASSANDRA LILLYSTONE  & ALASDAIR PILMORE-BEDFORD
 	}
 
 	/**
@@ -204,23 +237,72 @@ public class GameScreen implements Screen {
 		pauseWindow.stage.act();
 
 		switch (state) {
-		case RUN:
-			if (Gdx.input.isKeyPressed(Keys.P) || Gdx.input.isKeyPressed(Keys.O) || Gdx.input.isKeyPressed(Keys.M)
-					|| Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-				pauseWindow.visibility(true);
-				pause();
+			case RUN:
+				if (Gdx.input.isKeyPressed(Keys.P) || Gdx.input.isKeyPressed(Keys.O) || Gdx.input.isKeyPressed(Keys.M)|| Gdx.input.isKeyPressed(Keys.ESCAPE)){
+					pauseWindow.visibility(true);
+					pause();
+				}
+				// TRUCK_SELECT_CHANGE_14 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+				// Sets active truck depending on which number key is pressed
+				if (Gdx.input.isKeyPressed(Keys.NUM_1) && !players.get(0).isRemove()) {
+					activeTruck = 0;
+				}
+				else if (Gdx.input.isKeyPressed(Keys.NUM_2) && !players.get(1).isRemove()) {
+					activeTruck = 1;
+				}
+				else if (Gdx.input.isKeyPressed(Keys.NUM_3) && !players.get(2).isRemove()) {
+					activeTruck = 2;
+				}
+				else if (Gdx.input.isKeyPressed(Keys.NUM_4) && !players.get(3).isRemove()) {
+					activeTruck = 3;
+				}
+
+				selectTruck();
+				
+				//This code was added by Sam Hutchings to implement power ups.
+				Random random = new Random();
+				if(random.nextFloat() < 0.01f) { // Every frame, there is a 1% chance of a power up spawning.
+				PowerUp powerUpToAdd = new PowerUp();
+				// This lambda function filters out any old power ups at the location of the new power up to avoid stacking effects.
+				gameObjects = gameObjects.stream()
+						.filter(object -> (!((object instanceof PowerUp) // Checks if the object is of type PowerUp.
+								&& (object.getPosition().equals(powerUpToAdd.getPosition()))))) // Checks if the object has the same coordinates.
+						// If both criteria are met, then the predicate returns false and the object is filtered out.
+						.collect(Collectors.toList());
+				// The new power up is then added.
+				gameObjects.add(powerUpToAdd);
 			}
-			// TRUCK_SELECT_CHANGE_14 - START OF MODIFICATION - NP STUDIOS - LUCY IVATT----
-			// Sets active truck depending on which number key is pressed
-			if (Gdx.input.isKeyPressed(Keys.NUM_1) && !players.get(0).isRemove()) {
-				activeTruck = 0;
-			} else if (Gdx.input.isKeyPressed(Keys.NUM_2) && !players.get(1).isRemove()) {
-				activeTruck = 1;
-			} else if (Gdx.input.isKeyPressed(Keys.NUM_3) && !players.get(2).isRemove()) {
-				activeTruck = 2;
-			} else if (Gdx.input.isKeyPressed(Keys.NUM_4) && !players.get(3).isRemove()) {
-				activeTruck = 3;
-			}
+				
+				// TRUCK_SELECT_CHANGE_14 - END OF MODIFICATION - NP STUDIOS - LUCY IVATT----
+
+				gameTimer -= delta;		//Decrement timer
+
+				updateLoop(); //Update all game objects positions but does not render them as to be able to render everything as quickly as possible
+
+				gameMap.renderRoads(gamecam); // Render the background roads, fields and rivers
+
+				game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+				game.batch.setProjectionMatrix(gamecam.combined);	//Mic:only renders the part of the map where the camera is
+				game.batch.begin(); // Game loop Start
+
+				hud.update(delta);
+
+				renderObjects(); // Renders objects specified in the UpdateLoop() called previously
+
+				game.batch.end();
+				
+				gameMap.renderBuildings(gamecam); // Renders the buildings and the foreground items which are not entities
+				
+				hud.stage.draw();
+				// MINIMAP_2 - START OF MODIFICATION - NP STUDIOS - BETHANY GILMORE -----------------
+				drawMinimap();
+				// MINIMAP_2 - END OF MODIFICATION - NP STUDIOS - BETHANY GILMORE ---------------------
+				pauseWindow.stage.draw();
+
+				if (showDebug) {
+					DrawDebug(); //Draw all debug items as they have to be drawn outside the batch
+				}
+
 
 			selectTruck();
 

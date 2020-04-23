@@ -340,14 +340,14 @@ public class FireTruck extends Entity{
 	public void setFlowRate(float flowRate) { this.flowRate = flowRate; }
 	public float getMaxWater() { return maxWater; }
 	public void setMaxWater(float maxWater) { this.maxWater = maxWater; }
-	
+
 	public void increaseSpeed() {
-		setSpeed(getSpeed()*1.5f);
+		setSpeed(getSpeed() + 150f);
 	}
-	
+
 	public void increaseDamage() {
-		setFlowRate(getFlowRate()*3f);
-		setMaxWater(getMaxWater()*3f);
+		setFlowRate(getFlowRate() * 3f);
+		setMaxWater(getMaxWater() * 3f);
 		currentWater = currentWater * 3f;
 	}
 	
