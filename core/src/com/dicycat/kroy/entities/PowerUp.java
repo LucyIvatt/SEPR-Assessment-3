@@ -15,6 +15,7 @@ import com.dicycat.kroy.Kroy;
  */
 public class PowerUp extends Entity {
 
+
 	// Static variables that should be the same across all power ups, unless a fully
 	// custom power up is constructed.
 	private static int radius = 25;
@@ -35,7 +36,7 @@ public class PowerUp extends Entity {
 			new Vector2(91  * 16, (400 - 176) * 16), new Vector2(91  * 16, (400 - 138) * 16),
 			new Vector2(49  * 16, (400 - 138) * 16), new Vector2(49  * 16, (400 - 110) * 16) };
 	
-	private enum PowerUpType {
+	public enum PowerUpType {
 		WATER, HEALTH, DAMAGE, SPEED, SHIELD;
 
 		public static PowerUpType getRandomType() {
@@ -92,7 +93,7 @@ public class PowerUp extends Entity {
 	 * 
 	 * @param type The type to set
 	 */
-	private void setType(PowerUpType type) {
+	public void setType(PowerUpType type) {
     this.type = type;
 		switch (type) {
 		case DAMAGE:
@@ -114,6 +115,13 @@ public class PowerUp extends Entity {
 			System.err.println("Power up texture selection error");
 			break;
 		}
+	}
+	
+	/**
+	 * @return the type
+	 */
+	public PowerUpType getType() {
+		return type;
 	}
 	
 
