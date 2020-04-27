@@ -362,7 +362,7 @@ public class GameScreen implements Screen {
 													// bases)
 			if (dObject.isDisplayable()) {
 				objectsToRender.add(dObject);
-			} else {
+			} else if (!dObject.shouldSave()){
 				garbageCollection.add(dObject);
 			}
 		}
